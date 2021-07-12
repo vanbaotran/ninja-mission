@@ -40,13 +40,13 @@ let userSchema = new Schema(
     },
     funfact: {
       type: String,
-      maxlength: 250, // voir si utile
+      maxlength: 250, 
     },
     usefullLinks: {
       linkedin: String,
       github: String,
       CV: String,
-      portfolio: String
+      portfolio: String,
     },
     /* voir avec tran quel badge et type number ou string
     badge: {
@@ -55,7 +55,7 @@ let userSchema = new Schema(
       ...
     }
     */
-    swipedOfferId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }]
+    swipedOfferId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
   },
   {
     timestamps: true,
