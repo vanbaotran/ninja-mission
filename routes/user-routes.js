@@ -6,7 +6,7 @@ const User = require("../models/User.model");
 router.get("/", (req, res, next) => {
   User.find({})
     .then((ret) => res.status(200).json(ret))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json({message:'Users not found'}));
 });
 router.get("/:id", (req, res, next) => {
   User.findById(req.params.id)

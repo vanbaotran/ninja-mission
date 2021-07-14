@@ -56,6 +56,10 @@ let userSchema = new Schema(
       ...
     }
     */
+    companyName: String,
+    companyLogo: String,
+    companyWebsite: String,
+    industry: String,
     swipedOfferId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
   },
   {

@@ -50,9 +50,11 @@ app.use(session({
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
-const userRouter = require("./routes/User.router");
+const userRouter = require("./routes/user-routes");
 app.use('/users', userRouter)
 const authRouter = require('./routes/auth-routes');
 app.use('/auth', authRouter)
+const postRouter = require('./routes/post-routes');
+app.use('/posts', postRouter)
 
 module.exports = app;
