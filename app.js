@@ -6,6 +6,7 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 mongoose
   .connect('mongodb://localhost/ninja-mission', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
@@ -44,7 +45,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret:"some secret goes here",
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  // cookie: { maxAge: 60000*60*24*14 },
+  store: MongoStore.create({ mongoUrl: 'mongodb://localhost/ninja-mission',
+  autoRemove: 'interval',
+  autoRemoveInterval: 60*24*14 // In minutes. Default)
+ })
 }));
 
 // default value for title local

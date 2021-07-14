@@ -15,7 +15,7 @@ postRoutes.post("/", (req, res, next) => {
   } else {
     const {description, position, contract, experienceLevel,codeLanguage,location,funFact,remote, companyLogo} = req.body;
   }
-  req.body.recruiterID = req.session.currentUser._id
+  req.body.recruiterId = req.session.currentUser._id
   Post.create({...req.body})
     .then(newPost=>{
       Application.create({
@@ -66,5 +66,25 @@ postRoutes.put('/:id',(req,res,next)=>{
     })
   })
   .catch(err=>res.status(500).json({message:"Saving changes went wrong"}))
+})
+postRoutes.delete('/:id',(req,res,next)=>{
+  if (!req.session.currentUser.profileType ==='recruiter'){
+    res.status(403).json({message:'You are not allowed to edit this post'});
+    return;
+  }
+  Post.findById(req.params.id)
+  .then(thePost=>{
+    if(postFromDB.recruiterId !== req.session.currentUser._id){
+      res.status(403).json({message:'You are not allowed to edit this post 2222'});
+    return;
+    }
+    Post.deleteOne({_id:thePost._id},function(err){
+      if (err){
+        return res.status(500).json({message:"Deleting post went wrong"})
+      } else {
+        return res.status(200).json({message:"Post successfully deleted"})
+      }
+    })
+  })
 })
 module.exports = postRoutes;

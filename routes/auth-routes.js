@@ -44,8 +44,7 @@ authRoutes.post('/signup',(req,res,next)=>{
 authRoutes.post('/login',(req,res,next)=>{
   const {email,password}=req.body;
   console.log(email,password)
-  User.findOne({email},'+password')
-    .exec()
+  User.findOne({email})
     .then(user=>{
       console.log(user)
       if(!user){
