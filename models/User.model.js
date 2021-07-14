@@ -16,11 +16,12 @@ let userSchema = new Schema(
       type: String,
       required: true,
       minlength: 8,
-      // select: false, // voir avec tran
+      select: false 
     },
     profileType: {
       type: String,
       enum: ["recruiter", "candidate"],
+      required:true
     },
     avatar: {
       type: String,
