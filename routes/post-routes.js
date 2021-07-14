@@ -17,7 +17,7 @@ postRoutes.post("/", (req, res, next) => {
   Post.create({...req.body})
     .then(newPost=>{
       Application.create({
-        jobPostID: newPost._id
+        jobPostId: newPost._id
       })
       .then(newApplication=>{
         newPost.applicationId = newApplication._id;

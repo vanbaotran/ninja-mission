@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 let applicationSchema = new Schema(
   {
-    candidateID: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    acceptedCandidateID: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    jobPostID: { type: mongoose.Schema.Types.ObjectId, ref: "Job" }
+    candidateId: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    acceptedCandidateId: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    jobPostId: { type: mongoose.Schema.Types.ObjectId, ref: "Post" }
   },
   {
     timestamps: true,
