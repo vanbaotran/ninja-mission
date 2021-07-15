@@ -10,21 +10,16 @@ router.post("/signup", (req, res, next) => {
     res.status(400).json({ message: "Provide name, email and password" });
   }
   if (password.length < 8) {
-    res
-      .status(400)
-      .json({
-        message:
-          "Please make your password at least 8 characters long for security purposes.",
-      });
+    res.status(400).json({
+      message: "Please make your password at least 8 characters long for security purposes.",
+    });
     return;
   }
 
   User.findOne({ email })
     .then((foundUser) => {
       if (foundUser) {
-        res
-          .status(400)
-          .json({ message: "Email already taken. Please enter another one." });
+        res.status(400).json({ message: "Email already taken. Please enter another one." });
         return;
       }
       const salt = bcrypt.genSaltSync(10);
@@ -43,9 +38,7 @@ router.post("/signup", (req, res, next) => {
           res.status(200).json(aNewUser);
         })
         .catch((err) => {
-          res
-            .status(400)
-            .json({ message: "Saving user to database went wrong" });
+          res.status(400).json({ message: "Saving user to database went wrong" });
         });
     })
     .catch((err) => res.status(500).json({ message: "Email check went bad" }));
@@ -58,9 +51,7 @@ router.post("/login", (req, res, next) => {
       console.log(user);
       if (!user) {
         return next(
-          new Error(
-            "No user with that email. Please sign up if you are new to Ninja Mission"
-          )
+          new Error("No user with that email. Please sign up if you are new to Ninja Mission")
         );
       }
       if (bcrypt.compareSync(password, user.password) !== true) {
@@ -91,36 +82,31 @@ router.get("/loggedin", (req, res, next) => {
 });
 
 /* GET */
-router.get("/random", (req, res, next) => {
-  // User.findOne({ _id: req.session.currentUser._id })
-  //   .populate('currentApplicationId')
-  //   .then((theUser) => {
-  //     User.count().exec(function (err, count) {
-  //       // Get a random entry
-  //       var random = Math.floor(Math.random() * count);
-
-  //       // Again query all users but only fetch one offset by our random #
-  //       User.count().exec(function (err, count) {
-  //         // Get a random entry
-  //         var random = Math.floor(Math.random() * count);
-  //           // Tada! random user
-  //           let randomUser = theUser;
-  //           while(theUser.currentApplicationId.refusedCandidateId.includes(randomUser._id){
-  //             User.count().exec(function (err, count) {
-  //               // Get a random entry
-  //               var random = Math.floor(Math.random() * count);
-  //               User.count().exec(function (err, count) {
-  //                 // Get a random entry
-  //                 var random = Math.floor(Math.random() * count);
-  //                 randomUser = 
-  //               }
-  //           }
-  //           )
-  //           console.log(result);
-  //         });
-  //     });
-  //   })
-  //   .catch((err) => res.status(500).json({ message: "Users not found" }));
+router.get("/random", async (req, res, next) => {
+  let random, randomUser, countDoc, user;
+  try {
+    await User.countDocuments(function (err, count) {
+      // Get a random entry
+      countDoc = count;
+      random = Math.floor(Math.random() * count);
+    });
+    user = await User.findOne({ _id: req.session.currentUser._id }).populate(
+      "currentApplicationId"
+    );
+    console.log(user);
+    randomUser = await User.findOne().skip(random);
+    while (
+      user.currentApplicationId.refusedCandidateId.includes(randomUser._id) ||
+      randomUser.profileType === "recruiter"
+    ) {
+      /// voir si pas plutot mettre un filtre au findone
+      random = Math.floor(Math.random() * countDoc);
+      randomUser = await User.findOne().skip(random);
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Users not found1" });
+  }
+  res.status(200).json(randomUser);
 });
 router.get("/:id", (req, res, next) => {
   User.findById(req.params.id)
@@ -182,10 +168,7 @@ router.patch("/:jobPostId/swipeLeft", (req, res, next) => {
 });
 /* DELETE*/
 router.delete("/:id", (req, res, next) => {
-  if (
-    req.session.currentUser &&
-    req.params.id !== req.session.currentUser._id
-  ) {
+  if (req.session.currentUser && req.params.id !== req.session.currentUser._id) {
     return res.status(403).json("You cannot delete this user.");
   }
   User.findOneAndDelete({ _id: req.params.id })
@@ -195,12 +178,10 @@ router.delete("/:id", (req, res, next) => {
         return;
       }
       req.session.destroy();
-      res
-        .status(200)
-        .json({
-          status: "ok",
-          message: `User with id ${deleteUser._id} was deleted.`,
-        });
+      res.status(200).json({
+        status: "ok",
+        message: `User with id ${deleteUser._id} was deleted.`,
+      });
     })
     .catch((err) => res.status(500).json({ message: "Deleting went bad" }));
 });

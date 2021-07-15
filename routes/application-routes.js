@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
 const Application = require("../models/Application.model");
-const {isCandidate,isRecruiter} = require('./useful.js')
+const {isCandidate,isRecruiter, isLoggedIn} = require('./useful.js')
 // get application by candidateId
 router.get("/", isCandidate, (req, res, next) => {
   let id = req.session.currentUser._id;
@@ -130,7 +130,8 @@ router.patch("/:applicationId/undoAccept", isRecruiter, (req, res, next) => {
 //REFUSING A CANDIDATE 
 router.patch("/:applicationId/refuse", isRecruiter, (req, res, next) => {
   let id = req.body.id;
-  if (!id) {
+  console.log("heeeeeeeeeeeeeeeeeeeeeeeeee")
+  if (!req.session.currentUser._id) {
     res.status(403).json({ message: "Your must be logged to do this action." });
     return;
   }
@@ -156,7 +157,7 @@ router.patch("/:applicationId/refuse", isRecruiter, (req, res, next) => {
     .catch((err) => res.status(500).json({ message: "Refusing candidate went wrong" }));
 });
 //UNDO REFUSE A CANDIDATE 
-router.patch("/:applicationId/undoRefuse", isRecruiter, (req, res, next) => {
+router.patch("/:applicationId/undoRefuse", [isLoggedIn,isRecruiter], (req, res, next) => {
   let id = req.body.id;
   if (!id) {
     res.status(403).json({ message: "Your must be logged to do this action." });
