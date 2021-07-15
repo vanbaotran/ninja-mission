@@ -110,7 +110,7 @@ router.put("/accept/add/:applicationId", (req, res, next) => {
         return;
       });
     })
-    .catch((err) => res.status(500).json({ message: "Added candidate was wrong" }));
+    .catch((err) => res.status(500).json({ message: "Adding candidate went wrong" }));
 });
 // remove acceptedCandidate in acceptedCandidateId
 router.put("/accept/remove/:applicationId", (req, res, next) => {
