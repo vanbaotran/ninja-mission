@@ -28,8 +28,8 @@ postRoutes.post("/", (req, res, next) => {
     }).catch(err=>res.status(500).json({message:err}))
 });
 
-postRoutes.get("/", (req, res, next) => {
-  Post.find({})
+postRoutes.get("/random", (req, res, next) => {
+  Post.findOne({})
     .then((ret) => res.status(200).json(ret))
     .catch((err) => res.status(500).json({message:'Users not found'}));
 });
@@ -51,7 +51,7 @@ postRoutes.get("/:id", (req, res, next) => {
     })
     .catch((err) => res.status(400).json(err));
 });
-postRoutes.put('/:id',(req,res,next)=>{
+postRoutes.patch('/:id',(req,res,next)=>{
   if (!req.session.currentUser.profileType ==='recruiter' ){
     res.status(403).json({message:'You are not allowed to edit this post'});
     return;
