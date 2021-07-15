@@ -1,4 +1,4 @@
-# Ninja-mission
+# NINJA-MISSION
 Welcome to our website Ninja Mission! 
 
 
