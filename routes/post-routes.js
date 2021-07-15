@@ -29,9 +29,12 @@ postRoutes.post("/", (req, res, next) => {
 });
 
 postRoutes.get("/random", (req, res, next) => {
-  Post.findOne({})
-    .then((ret) => res.status(200).json(ret))
-    .catch((err) => res.status(500).json({message:'Users not found'}));
+  // Post.findOne({})
+  //   .then((ret) => res.status(200).json(ret))
+  //   .catch((err) => res.status(500).json({message:'Users not found'}));
+  // Get the count of all users
+
+ 
 });
 //GET POST BY RECRUITER ID
 postRoutes.get("/recruiter/:recruiterId", (req, res, next) => {
