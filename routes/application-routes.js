@@ -2,31 +2,25 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
 const Application = require("../models/Application.model");
-const {isCandidate,isRecruiter, isLoggedIn} = require('./useful.js')
+const { isCandidate, isRecruiter, isLoggedIn } = require("./useful.js");
 // get application by candidateId
-router.get("/", isCandidate, (req, res, next) => {
+router.get("/", [isLoggedIn,isCandidate], (req, res, next) => {
   let id = req.session.currentUser._id;
-  if (!id) {
-    res.status(403).json({ message: "Your must be logged to show your applications." });
-    return;
-  }
   Application.find({ candidateId: id })
     .populate("jobPostId")
     .then((AppsfromDb) => {
       res.status(200).json(AppsfromDb);
       return;
     })
-    .catch((err) => res.status(500).json({ message: "Something went wrong when finding applications." }));
+    .catch((err) =>
+      res.status(500).json({ message: "Something went wrong when finding applications." })
+    );
 });
 
 /* patch */
 // APPLY TO A JOB POST: add candidate in candidateId
-router.patch("/:applicationId/add",isCandidate, (req, res, next) => {
+router.patch("/:applicationId/add", [isLoggedIn,isCandidate], (req, res, next) => {
   let id = req.session.currentUser._id;
-  if (!id) {
-    res.status(403).json({ message: "Your must be logged to do this action." });
-    return;
-  }
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.candidateId.includes(id)) {
@@ -45,12 +39,8 @@ router.patch("/:applicationId/add",isCandidate, (req, res, next) => {
     .catch((err) => res.status(500).json({ message: "Applying to this job went wrong" }));
 });
 // UNDO THE APPLICATION: remove candidate in candidateId
-router.patch("/:applicationId/remove",isCandidate, (req, res, next) => {
+router.patch("/:applicationId/remove", [isLoggedIn,isCandidate], (req, res, next) => {
   let id = req.session.currentUser._id;
-   if (!id) {
-    res.status(403).json({ message: "Your must be logged to do this action." });
-    return;
-  }
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.candidateId.includes(id)) {
@@ -73,12 +63,8 @@ router.patch("/:applicationId/remove",isCandidate, (req, res, next) => {
 });
 
 // add candidate in acceptedCandidateId
-router.patch("/:applicationId/accept", isRecruiter, (req, res, next) => {
+router.patch("/:applicationId/accept", [isLoggedIn, isRecruiter], (req, res, next) => {
   let id = req.body.id;
-  if (!id) {
-    res.status(403).json({ message: "Your must be logged to do this action." });
-    return;
-  }
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.acceptedCandidateId.includes(id)) {
@@ -86,7 +72,9 @@ router.patch("/:applicationId/accept", isRecruiter, (req, res, next) => {
         return;
       }
       if (AppfromDb.refusedCandidatedId.includes(id)) {
-        res.status(400).json({ message: `Candidate ${id} cannot be accepted because he/she was refused.` });
+        res
+          .status(400)
+          .json({ message: `Candidate ${id} cannot be accepted because he/she was refused.` });
         return;
       }
       AppfromDb.acceptedCandidateId.push(id);
@@ -101,12 +89,8 @@ router.patch("/:applicationId/accept", isRecruiter, (req, res, next) => {
     .catch((err) => res.status(500).json({ message: "Adding candidate went wrong" }));
 });
 // remove acceptedCandidate in acceptedCandidateId
-router.patch("/:applicationId/undoAccept", isRecruiter, (req, res, next) => {
+router.patch("/:applicationId/undoAccept", [isLoggedIn, isRecruiter], (req, res, next) => {
   let id = req.body.id;
-  if (!id) {
-    res.status(403).json({ message: "Your must be logged to do this action." });
-    return;
-  }
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.acceptedCandidateId.includes(id)) {
@@ -125,24 +109,23 @@ router.patch("/:applicationId/undoAccept", isRecruiter, (req, res, next) => {
         return;
       }
     })
-    .catch((err) => res.status(500).json({ message: "Removing candidate from accepted applications went wrong" }));
+    .catch((err) =>
+      res.status(500).json({ message: "Removing candidate from accepted applications went wrong" })
+    );
 });
-//REFUSING A CANDIDATE 
-router.patch("/:applicationId/refuse", isRecruiter, (req, res, next) => {
+//REFUSING A CANDIDATE
+router.patch("/:applicationId/refuse", [isLoggedIn, isRecruiter], (req, res, next) => {
   let id = req.body.id;
-  console.log("heeeeeeeeeeeeeeeeeeeeeeeeee")
-  if (!req.session.currentUser._id) {
-    res.status(403).json({ message: "Your must be logged to do this action." });
-    return;
-  }
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.refusedCandidateId.includes(id)) {
         res.status(403).json({ message: `Candidate ${id} was already refused.` });
         return;
       }
-      if(AppfromDb.acceptedCandidateId.includes(id)){
-        res.status(403).json({ message: `Candidate ${id} cannot be refused because he/she already accepted.` });
+      if (AppfromDb.acceptedCandidateId.includes(id)) {
+        res
+          .status(403)
+          .json({ message: `Candidate ${id} cannot be refused because he/she already accepted.` });
         return;
       }
       AppfromDb.refusedCandidateId.push(id);
@@ -156,13 +139,9 @@ router.patch("/:applicationId/refuse", isRecruiter, (req, res, next) => {
     })
     .catch((err) => res.status(500).json({ message: "Refusing candidate went wrong" }));
 });
-//UNDO REFUSE A CANDIDATE 
-router.patch("/:applicationId/undoRefuse", [isLoggedIn,isRecruiter], (req, res, next) => {
+//UNDO REFUSE A CANDIDATE
+router.patch("/:applicationId/undoRefuse", [isLoggedIn, isRecruiter], (req, res, next) => {
   let id = req.body.id;
-  if (!id) {
-    res.status(403).json({ message: "Your must be logged to do this action." });
-    return;
-  }
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.refusedCandidateId.includes(id)) {
@@ -181,6 +160,8 @@ router.patch("/:applicationId/undoRefuse", [isLoggedIn,isRecruiter], (req, res, 
         return;
       }
     })
-    .catch((err) => res.status(500).json({ message: "Removing candidate from refused applications went wrong" }));
+    .catch((err) =>
+      res.status(500).json({ message: "Removing candidate from refused applications went wrong" })
+    );
 });
 module.exports = router;
