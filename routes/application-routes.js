@@ -4,7 +4,7 @@ const User = require("../models/User.model");
 const Application = require("../models/Application.model");
 const { isCandidate, isRecruiter, isLoggedIn } = require("./useful.js");
 // get application by candidateId
-router.get("/", [isLoggedIn,isCandidate], (req, res, next) => {
+router.get("/", [isLoggedIn, isCandidate], (req, res, next) => {
   let id = req.session.currentUser._id;
   Application.find({ candidateId: id })
     .populate("jobPostId")
@@ -19,7 +19,7 @@ router.get("/", [isLoggedIn,isCandidate], (req, res, next) => {
 
 /* patch */
 // APPLY TO A JOB POST: add candidate in candidateId
-router.patch("/:applicationId/add", [isLoggedIn,isCandidate], (req, res, next) => {
+router.patch("/:applicationId/add", [isLoggedIn, isCandidate], (req, res, next) => {
   let id = req.session.currentUser._id;
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
@@ -39,7 +39,7 @@ router.patch("/:applicationId/add", [isLoggedIn,isCandidate], (req, res, next) =
     .catch((err) => res.status(500).json({ message: "Applying to this job went wrong" }));
 });
 // UNDO THE APPLICATION: remove candidate in candidateId
-router.patch("/:applicationId/remove", [isLoggedIn,isCandidate], (req, res, next) => {
+router.patch("/:applicationId/remove", [isLoggedIn, isCandidate], (req, res, next) => {
   let id = req.session.currentUser._id;
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
