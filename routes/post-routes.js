@@ -1,6 +1,8 @@
 const express = require('express')
 const postRoutes = express.Router();
-const Post = require('../models/Post.model')
+const Post = require('../models/Post.model');
+const User = require("../models/User.model");
+
 const Application = require('../models/Application.model')
 
 postRoutes.post("/", (req, res, next) => {
@@ -21,8 +23,18 @@ postRoutes.post("/", (req, res, next) => {
       })
       .then(newApplication=>{
         newPost.applicationId = newApplication._id;
+        User.findById(req.session.currentUser._id)
+          .then(userFromDb => {
+            userFromDb.applicationId.push(newApplication._id);
+            userFromDb.save()
+              .then(updatedUser => console.log(updatedUser));
+          })
+          .then(updatedUser => console.log(updatedUser))
+          .catch(err => next(err));
         newPost.save()
-        .then(()=>res.status(200).json({newPost}))
+          .then(() => {
+            res.status(200).json({ newPost });
+          })
         
       })
     }).catch(err=>res.status(500).json({message:err}))

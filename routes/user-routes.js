@@ -93,20 +93,16 @@ router.get("/random", async (req, res, next) => {
     user = await User.findOne({ _id: req.session.currentUser._id }).populate(
       "currentApplicationId"
     );
-    console.log(user);
     randomUser = await User.findOne().skip(random);
-    while (
-      user.currentApplicationId.refusedCandidateId.includes(randomUser._id) ||
-      randomUser.profileType === "recruiter"
-    ) {
-      /// voir si pas plutot mettre un filtre au findone
+    while (user.currentApplicationId.refusedCandidateId.includes(randomUser._id) || randomUser.profileType === "recruiter") {
       random = Math.floor(Math.random() * countDoc);
       randomUser = await User.findOne().skip(random);
     }
+    res.status(200).json(randomUser);
+    return;
   } catch (error) {
-    return res.status(500).json({ message: "Users not found1" });
+    return res.status(500).json({ message: "Users not found1", error: error });
   }
-  res.status(200).json(randomUser);
 });
 router.get("/:id", (req, res, next) => {
   User.findById(req.params.id)
