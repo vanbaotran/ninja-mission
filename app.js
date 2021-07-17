@@ -7,6 +7,7 @@ const logger       = require('morgan');
 const path         = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const cors = require('cors')
 
 mongoose
   .connect('mongodb://localhost/ninja-mission', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
@@ -51,6 +52,11 @@ app.use(session({
   autoRemove: 'interval',
   autoRemoveInterval: 60*24*14 // In minutes. Default)
  })
+}));
+
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
 }));
 
 // default value for title local

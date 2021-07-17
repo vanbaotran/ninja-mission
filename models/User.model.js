@@ -35,10 +35,12 @@ let userSchema = new Schema(
     },
     codeLanguage: [String], // voir si enum et ou vérification bonne donnée
     scope: { city: { type: [String] }, country: { type: [String] } },
+    birthday:Date,
     bio: {
       type: String,
       maxlength: 500,
     },
+    title: String,
     funfact: {
       type: String,
       maxlength: 250, 
