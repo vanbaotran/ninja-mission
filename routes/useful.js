@@ -21,5 +21,12 @@ const isRecruiter = (req,res,next)=>{
   }
   next();
 }
+// const recruiterIsOwnerOfPost = (currentId, postOwnerId) => {
+//     if (currentId.toString() !== postOwnerId) {
+//       res.status(403).json({ message: "You are not allowed to delete this posttt" });
+//       return;
+// }
+//   next();
+// }
 
 module.exports = {isCandidate,isRecruiter,isLoggedIn}
