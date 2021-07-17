@@ -48,7 +48,6 @@ let userSchema = new Schema(
     usefullLinks: {
       linkedin: String,
       github: String,
-      CV: String,
       portfolio: String,
     },
     /* voir avec tran quel badge et type number ou string

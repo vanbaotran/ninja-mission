@@ -8,6 +8,14 @@ class ProfileEdit extends React.Component{
       portfolio: '',
     }
   }
+  handleSubmit = (event) => {
+    event.preventDefault()
+  }
+  handleChange = (event) =>{
+    const {name,value} = target.event;
+    this.setState({[name]:value})
+  }
+  
   render(){
     return(
       <div className='form'>
