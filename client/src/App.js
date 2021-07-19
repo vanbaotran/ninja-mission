@@ -3,6 +3,7 @@ import './App.css';
 import Homepage from './components/Homepage';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import PostForm from './components/PostForm';
 import {Switch, Route} from 'react-router-dom'
 class App extends React.Component {
   render(){
@@ -11,7 +12,9 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={Homepage}/>
           <Route path='/login' component={Login}/>
-          <Route path='/signup' component={Signup}/>
+          <Route path='/signup' component={Signup} />
+          <Route path='/postForm' component={PostForm}/>
+
         </Switch>
       </div> 
     );

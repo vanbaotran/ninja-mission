@@ -61,7 +61,7 @@ app.use(cors({
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-
+app.use('/upload', require('./routes/upload-routes.js'));
 const userRouter = require("./routes/user-routes");
 app.use('/users', userRouter)
 const postRouter = require('./routes/post-routes');

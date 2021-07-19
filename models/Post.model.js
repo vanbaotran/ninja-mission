@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 let postSchema = new Schema(
   {
     companyLogo: String, // voir si default ou required
+    companyBio: {
+      type: String,
+      maxlength: 250,
+    },
+    companyName: String,
     description: {
       type: String,
       maxlength: 500,
@@ -24,6 +29,7 @@ let postSchema = new Schema(
       type: String,
       maxlength: 250,
     },
+    website:String,
     recruiterId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     applicationId: { type: mongoose.Schema.Types.ObjectId, ref: "Application" },
   },
