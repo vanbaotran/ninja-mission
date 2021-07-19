@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export class TextInput extends Component {
+class TextInput extends Component {
   render() {
     return (
       <label className={this.props.className}>

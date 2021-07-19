@@ -1,7 +1,13 @@
 import React, { Component } from "react";
-import { uploadFile } from "./service";
+import  service,{ uploadFile } from "./service";
+import SelectInput from "./inputs/SelectInput";
+import TextInput from "./inputs/TextInput";
+const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
+const ContractOptions = ["Internship", "Freelance", "Permanent", "Temporary"];
+const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
 export class PostForm extends Component {
   state = {
+    offerName: "",
     companyLogo: "",
     companyBio: "",
     companyName: "",
@@ -28,32 +34,24 @@ export class PostForm extends Component {
   };
   handleLogo = (e) => {
     const uploadData = new FormData();
-    uploadData.append('imageUrl', e.target.files[0]);
+    uploadData.append("imageUrl", e.target.files[0]);
     uploadFile(uploadData)
-      .then(response => {
+      .then((response) => {
         this.setState({ companyLogo: response.secure_url });
       })
-      .catch(err => {
-        console.log('Error while uploading the file: ', err);
+      .catch((err) => {
+        console.log("Error while uploading the file: ", err);
       });
   };
-  handleChangeMultiple = (e) => {
-    let arrMultiple = [];
-    for (const key in e.target.options) {
-      if (Object.hasOwnProperty.call(e.target.options, key)) {
-        const element = e.target.options[key];
-        if (element.selected) {
-          arrMultiple.push(element.value);
-        }
-      }
-    }
+  handleChangeMultiple = (name, value) => {
     this.setState({
-      [e.target.name]: arrMultiple,
+      [name]: value,
     });
   };
 
   handleSubmit = (e) => {
-    e.prenventDefault();
+    e.preventDefault();
+    service.post('/posts', {...this.state})
   };
 
   render() {
@@ -64,148 +62,25 @@ export class PostForm extends Component {
           {
             <label>
               <img src={this.state.companyLogo || "/images/temple.png"} alt="logo" />
-              <input type="file" name="companyLogo" accept=".png,.jpg,.jpeg" onChange={this.handleLogo}/>
+              <input
+                type="file"
+                name="companyLogo"
+                accept=".png,.jpg,.jpeg"
+                onChange={this.handleLogo}
+              />
             </label>
           }
-          <label>
-            Name
-            <input
-              type="text"
-              name="companyName"
-              value={this.state.companyName}
-              onChange={(e) => this.handleChange(e)}
-            />
-          </label>
-          <label>
-            Position
-            <input
-              type="text"
-              name="position"
-              value={this.state.position}
-              onChange={(e) => this.handleChange(e)}
-            />
-          </label>
-          <label>
-            Exp Level
-            {/* experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"], */}
-            <select name="experienceLevel" onChange={(e) => this.handleChange(e)}>
-              <option value="">Please choose an option</option>
-              <option value="Warrior">Warrior 0-2yrs</option>
-              <option value="Ninja">Ninja 2-3yrs</option>
-              <option value="Samurai">Samurai 3-5yrs</option>
-              <option value="Sensei">Sensei 5yrs+</option>
-            </select>
-          </label>
-          <label>
-            Contract
-            <select name="contract" onChange={(e) => this.handleChange(e)}>
-              <option value="">Please choose an option</option>
-              <option value="Internship">Internship</option>
-              <option value="Freelance">Freelance</option>
-              <option value="Permanent">Permanent</option>
-              <option value="Temporary">Temporary</option>
-            </select>
-          </label>
-          <label>
-            Remote
-            <input
-              name="remote"
-              type="checkbox"
-              checked={this.state.remote}
-              onChange={this.handleCheckbox}
-            />
-          </label>
-          <label>
-            Languages
-            {/* experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"], */}
-            <select
-              multiple={true}
-              name="codeLanguage"
-              onChange={(e) => this.handleChangeMultiple(e)}
-            >
-              <option value="">Please choose options</option>
-              <option value="PHP">PHP </option>
-              <option value="JS"> JS</option>
-              <option value="Python"> Python</option>
-              <option value="Ruby"> Ruby </option>
-              <option value="HTML"> HTML</option>
-              <option value="CSS"> CSS</option>
-              <option value="C++"> C++</option>
-              <option value="C">C</option>
-              <option value="Rust">Rust</option>
-            </select>
-          </label>
-          <label>
-            Company bio
-            <textarea
-              name="companyBio"
-              value={this.state.companyBio}
-              onChange={(e) => this.handleChange(e)}
-              rows={5}
-              cols={20}
-            />
-          </label>
-          <label>
-            Description
-            <textarea
-              name="description"
-              value={this.state.description}
-              onChange={(e) => this.handleChange(e)}
-              rows={10}
-              cols={20}
-            />
-          </label>
-          <label>
-            Fun fact
-            <textarea
-              name="funFact"
-              value={this.state.funFact}
-              onChange={(e) => this.handleChange(e)}
-              rows={3}
-              cols={20}
-            />
-          </label>
-          <label>
-            Website
-            <input type="text" name="" value="" onChange={(e) => this.handleChange(e)} />
-          </label>
-        </form>
-      </div>
-    );
-  }
-}
-
-export default PostForm;
-
-/* <TextInput
-            label="Company Bio"
-            name="companyBio"
-            value={this.state.companyBio}
-            change={this.handleChange}
-            area={true}
-            rows={10}
-          />
           <TextInput
-            label="Description"
-            name="description"
-            value={this.state.description}
+            label="Name"
+            name="offerName"
+            value={this.state.offerName}
             change={this.handleChange}
-            area={true}
-            rows={15}
           />
           <TextInput
             label="Position"
             name="position"
             value={this.state.position}
             change={this.handleChange}
-          />
-          <SelectInput
-            label="Contract"
-            name="contract"
-            value={this.state.contract}
-            change={this.handleChange}
-            options={ContractOptions}
-            multiple={false}
           />
           <SelectInput
             label="Exp Level"
@@ -216,11 +91,69 @@ export default PostForm;
             multiple={false}
           />
           <SelectInput
+            label="Contract"
+            name="contract"
+            value={this.state.contract}
+            change={this.handleChange}
+            options={ContractOptions}
+            multiple={false}
+          />
+
+          <label>
+            Remote
+            <input
+              name="remote"
+              type="checkbox"
+              checked={this.state.remote}
+              onChange={this.handleCheckbox}
+            />
+          </label>
+          <SelectInput
             label="Languages"
             name="codeLanguage"
-            value={this.state.codeLanguage}
-            change={this.handleChange}
+            currentValue={this.state.codeLanguage}
+            change={this.handleChangeMultiple}
             options={LanguageOptions}
             multiple={true}
           />
-           */
+          <TextInput
+            label="Company Bio"
+            name="companyBio"
+            value={this.state.companyBio}
+            change={this.handleChange}
+            area={true}
+            rows={5}
+            cols={20}
+          />
+          <TextInput
+            label="Description"
+            name="description"
+            value={this.state.description}
+            change={this.handleChange}
+            area={true}
+            rows={10}
+            cols={20}
+          />
+          <TextInput
+            label="Fun fact"
+            name="funFact"
+            value={this.state.funFact}
+            change={this.handleChange}
+            area={true}
+            rows={3}
+            cols={20}
+          />
+          <TextInput
+            label="Website"
+            name="website"
+            value={this.state.website}
+            change={this.handleChange}
+          />
+          <button>Add new post</button>
+        </form>
+      </div>
+    );
+  }
+}
+
+export default PostForm;

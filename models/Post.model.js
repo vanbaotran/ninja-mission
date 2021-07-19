@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 let postSchema = new Schema(
   {
+    offerName: String,
     companyLogo: String, // voir si default ou required
     companyBio: {
       type: String,
