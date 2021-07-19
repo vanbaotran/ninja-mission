@@ -17,6 +17,10 @@ function signup(name, email, password, profileType) {
 }
 export {signup}
  
+function editProfile(name, email, password, birthday, bio, avatar, title, codeLanguage, funFact, linkedin, github, portfolio){
+  return service.put('/users',{name, email, password, birthday, bio, avatar, title, codeLanguage, funFact, linkedin, github, portfolio})
+}
+export {editProfile}
 
 //// UPLOAD
 const errorHandler = err => {
