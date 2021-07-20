@@ -41,11 +41,11 @@ let userSchema = new Schema(
       maxlength: 500,
     },
     title: String,
-    funfact: {
+    funFact: {
       type: String,
       maxlength: 250, 
     },
-    usefullLinks: {
+    usefulLinks: {
       linkedin: String,
       github: String,
       portfolio: String,

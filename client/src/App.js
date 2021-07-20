@@ -8,6 +8,7 @@ import {Switch, Route} from 'react-router-dom';
 import EditProfile from './components/EditProfile'
 import {loggedIn} from './components/service';
 import NavBar from './components/NavBar'
+
 class App extends React.Component {
   state = {loggedInUser:null}
   fetchUser() {

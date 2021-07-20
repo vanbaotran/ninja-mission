@@ -6,6 +6,7 @@ const { isCandidate, isRecruiter, isLoggedIn } = require("./useful");
 const Application = require("../models/Application.model");
 
 postRoutes.post("/", [isLoggedIn, isRecruiter], (req, res, next) => {
+  console.log('CREATING POST')
   if (!req.body.companyLogo) {
     // if no logo choose for post job, logo post job = default company recruiter logo
     req.body.companyLogo = req.session.currentUser.companyLogo;
