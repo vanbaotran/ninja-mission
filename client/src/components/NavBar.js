@@ -8,6 +8,8 @@ const NavBar = () =>{
       <Link to='/postForm'>Create a Job post</Link>
       <Link to='/editProfile'>Edit my profile</Link>
       <Link to='/profilepage'>Candidate profile</Link>
+      <Link to='/intest'>test</Link>
+
     </div>
   )
 }

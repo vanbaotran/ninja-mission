@@ -37,6 +37,7 @@ class EditProfile extends React.Component{
       })
     } 
   }
+
   handleSubmit = (event) => {
     event.preventDefault()
     editProfile({...this.state})

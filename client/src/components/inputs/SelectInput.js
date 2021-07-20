@@ -14,13 +14,15 @@ class SelectInput extends Component {
     }
     this.props.change(e.target.name, arrMultiple);
   };
+
   render() {
     return (
       <label>
         {this.props.label}
         <select
+          multiple={this.props.multiple ? true : false}
           name={this.props.name}
-          defaultValue={this.props.currentValue}
+          value={this.props.value}
           onChange={(e) => {
             if (this.props.multiple) {
               this.change(e);
@@ -28,12 +30,11 @@ class SelectInput extends Component {
               this.props.change(e);
             }
           }}
-          multiple={this.props.multiple ? true : false}
         >
-          <option value="">Choose {this.props.multiple ? "options" : "option"}</option>
+          <option value="none">Choose {this.props.multiple ? "options" : "option"}</option>
           {this.props.options.map((option, idx) => {
             return (
-              <option key={idx} value={option}>
+              <option key={idx} value={option} >
                 {option}
               </option>
             );

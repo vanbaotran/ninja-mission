@@ -32,6 +32,39 @@ function getUserData(id){
 }
 export {getUserData}
 
+function dataPostToStatePost(id) {
+  return service.get(`/posts/${id}`).then(response => {
+    let {
+      offerName,
+      companyLogo,
+      companyBio,
+      companyName,
+      description,
+      position,
+      contract,
+      experienceLevel,
+      codeLanguage,
+      remote,
+      funFact,
+      website,
+    } = response.data;
+    return {
+      offerName,
+      companyLogo,
+      companyBio,
+      companyName,
+      description,
+      position,
+      contract,
+      experienceLevel,
+      codeLanguage,
+      remote,
+      funFact,
+      website,
+    };
+  })
+}
+export {dataPostToStatePost}
 //// UPLOAD
 const errorHandler = err => {
   // console.error(err);
