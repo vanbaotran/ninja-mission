@@ -14,7 +14,10 @@ import NavBar from './components/NavBar'
 // import PostDetails from './components/details/PostDetails';
 
 class App extends React.Component {
-  state = {loggedInUser:null}
+  state = {
+    loggedInUser: null,
+    currentPostId: null
+  }
  fetchUser() {
     if (this.state.loggedInUser === null || this.state.loggedInUser === false){
       loggedIn()
@@ -25,9 +28,15 @@ class App extends React.Component {
           this.setState({loggedInUser: false}) 
         })
     } 
+ }
+  updateCurrentPostId = (id) => {
+    this.setState({ currentPostId: id });
   }
   componentDidMount() {
     this.fetchUser()
+  }
+  componentDidUpdate(prevProps) {
+    console.log(this.state.currentPostId);
   }
   updateLoggedInUser = (userObj) =>{
     this.setState({loggedInUser:userObj})
@@ -41,9 +50,9 @@ class App extends React.Component {
           <Route path='/login'  render={()=><Login currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>
           <Route path='/signup' render={()=><Signup currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/candidateform' render={()=><CandidateForm currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
-          <Route path='/postForm' render={()=><PostForm {...this.props}/>}/>
+          {/* <Route path='/createpost' render={() => <PostForm {...this.props} updateCurrentPost={this.updateCurrentPost}/>}/> */}
           <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser}/>} />
-          <Route path='/postForm/:id' component={PostForm} />
+          <Route path='/postform/:id' render={(props) => <PostForm {...props} updateCurrentPost={this.updateCurrentPostId}/>}/> 
           {/* <Route path='/intest/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} />} /> */}
           <Route path='/intest' render={(props)=><RecruiterForm {...props} currentUserId={this.state.loggedInUser?this.state.loggedInUser._id:false}/>}/>
 

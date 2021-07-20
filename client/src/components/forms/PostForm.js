@@ -56,6 +56,8 @@ export class PostForm extends Component {
       service
         .post("/posts", { ...this.state })
         .then((response) => {
+          console.log("in submi", response)
+          this.props.updateCurrentPost(response.data.newPost._id);
           this.props.history.push("/");
         })
         .catch((err) => console.log(err));
@@ -80,7 +82,7 @@ export class PostForm extends Component {
       website: "",
     });
   };
-  componentDidMount() {
+  componentDidMount = () => {
     if (!(this.props.match.params.id === "new")) {
       dataPostToStatePost(this.props.match.params.id).then((data) => {
         this.setState({ ...data });
@@ -89,7 +91,7 @@ export class PostForm extends Component {
     }
   }
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div className="post-form-main">
         <h2>{this.props.match.params.id === "new" ? "Add new Offer" : "Edit the Offer"}</h2>

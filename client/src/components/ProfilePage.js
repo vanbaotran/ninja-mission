@@ -19,12 +19,22 @@ class ProfilePage extends React.Component {
     if(prevProps.currentUser !== this.props.currentUser){
       getUserData(this.props.currentUser._id)
       .then(response=>{
-        this.setState({...response})
+        this.setState(response)
         console.log(response)
       })
       .catch(err=>console.log(err))
     }
   }
+  // componentDidMount(){
+  //     // if(prevProps.currentUser !== this.props.currentUser){
+  //       getUserData(this.props.currentUser._id)
+  //       .then(response=>{
+  //         this.setState(response)
+  //         console.log(response)
+  //       })
+  //       .catch(err=>console.log(err))
+  //     // }
+  //   }
   render(){
     if(this.state.currentUser.profileType==='candidate'){
       return(
@@ -105,7 +115,7 @@ class ProfilePage extends React.Component {
               <div className='row'>
                 <img src='/images/my-current-post.png' alt='current-post'/>
                 <h3>My Current Post</h3>
-                <p>{this.props.currentUser.currentApplicationId.jobPostId}</p>
+                <p>{this.props.currentUser?.currentApplicationId?.jobPostId?.offerName|| "" }</p>
               </div>
             </Link>
           </main>
