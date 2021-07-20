@@ -129,7 +129,7 @@ router.patch("/", isLoggedIn, (req, res, next) => {
   }
   if (id) {
     User.findByIdAndUpdate(
-      id,
+      id.toString(),
       { ...req.body },
       { new: true, runValidators: true },
       function (err, updatedUser) {
