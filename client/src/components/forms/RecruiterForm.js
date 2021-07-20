@@ -1,6 +1,6 @@
 import React from "react";
 import TextInput from "../inputs/TextInput";
-import service, { uploadFile, loggedIn } from "../service";
+import service, { uploadFile } from "../service";
 
 class RecruiterForm extends React.Component {
   state = {

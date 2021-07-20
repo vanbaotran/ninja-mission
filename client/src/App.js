@@ -3,7 +3,7 @@ import './App.css';
 import Homepage from './components/Homepage';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import PostForm from './components/PostForm';
+import PostForm from './components/forms/PostForm';
 // import RecruiterForm from "./components/forms/RecruiterForm";
 // import PostDetails from './components/details/PostDetails';
 import {Switch, Route} from 'react-router-dom';
@@ -40,8 +40,10 @@ class App extends React.Component {
           <Route path='/login'  render={()=><Login currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>
           <Route path='/signup' render={()=><Signup currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/editProfile' render={()=><EditProfile currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
-          <Route path='/postForm' render={(props) => <PostForm {...props} />} />
-          <Route path='/intest/:id' render={(props)=><PostDetails {...props} currentUserId={this.state.loggedInUser?this.state.loggedInUser._id:false}/>}/>
+          <Route path='/postForm/:id' component={PostForm} />
+          <Route path='/intest/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} />} />
+          {/* <Route path='/intest' render={(props)=><RecruiterForm {...props} currentUserId={this.state.loggedInUser?this.state.loggedInUser._id:false}/>}/> */}
+
         </Switch>
       </div> 
     );
