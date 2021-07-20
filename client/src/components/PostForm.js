@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import  service,{ uploadFile } from "./service";
+import service, { uploadFile } from "./service";
 import SelectInput from "./inputs/SelectInput";
 import TextInput from "./inputs/TextInput";
 const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
@@ -51,27 +51,28 @@ export class PostForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    service.post('/posts', {...this.state})
-    .then(response=>{
-      console.log(response.data, this.props)
-      this.props.history.push('/')
-      this.setState({
-        offerName: "",
-        companyLogo: "",
-        companyBio: "",
-        companyName: "",
-        description: "", /// verif 500 char
-        position: "",
-        contract: "", //  enum: ["Internship", "Freelance", "Permanent", "Temporary"],
-        experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
-        codeLanguage: [], // voir si enum et ou vérification bonne donnée
-        location: { city: [], country: [] },
-        remote: false,
-        funFact: "", //maxlength: 250,
-        website: "",
+    service
+      .post("/posts", { ...this.state })
+      .then((response) => {
+        console.log(response.data, this.props);
+        this.props.history.push("/");
+        this.setState({
+          offerName: "",
+          companyLogo: "",
+          companyBio: "",
+          companyName: "",
+          description: "", /// verif 500 char
+          position: "",
+          contract: "", //  enum: ["Internship", "Freelance", "Permanent", "Temporary"],
+          experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
+          codeLanguage: [], // voir si enum et ou vérification bonne donnée
+          location: { city: [], country: [] },
+          remote: false,
+          funFact: "", //maxlength: 250,
+          website: "",
+        });
       })
-    })
-    .catch(err=>console.log(err))
+      .catch((err) => console.log(err));
   };
 
   render() {
@@ -79,17 +80,16 @@ export class PostForm extends Component {
       <div className="post-form-main">
         <h2>Add A New Offer</h2>
         <form onSubmit={(e) => this.handleSubmit(e)}>
-          {
-            <label>
-              <img src={this.state.companyLogo || "/images/temple.png"} alt="logo" />
-              <input
-                type="file"
-                name="companyLogo"
-                accept=".png,.jpg,.jpeg"
-                onChange={this.handleLogo}
-              />
-            </label>
-          }
+          <label>
+            <img src={this.state.companyLogo || "/images/temple.png"} alt="logo" />
+            <input
+              type="file"
+              name="companyLogo"
+              accept=".png,.jpg,.jpeg"
+              onChange={this.handleLogo}
+            />
+          </label>
+
           <TextInput
             label="Name"
             name="offerName"

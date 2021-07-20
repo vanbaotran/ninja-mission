@@ -47,8 +47,7 @@ class RecruiterForm extends React.Component {
       service.get(`/users/${this.props.currentUserId}`).then(response => {
         let { name, email, bio, companyName, companyLogo, companyWebsite, industry } = response.data;
         this.setState({ name, email, bio, companyName, companyLogo, companyWebsite, industry });
-      }); 
-      
+      });  
     }
   }
   render() {
