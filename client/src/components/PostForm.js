@@ -53,7 +53,7 @@ export class PostForm extends Component {
     e.preventDefault();
     service.post('/posts', {...this.state})
     .then(response=>{
-      console.log(response.data)
+      console.log(response.data, this.props)
       this.props.history.push('/')
       this.setState({
         offerName: "",

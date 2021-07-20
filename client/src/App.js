@@ -36,7 +36,7 @@ class App extends React.Component {
           <Route path='/login'  render={()=><Login currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>
           <Route path='/signup' render={()=><Signup currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/editProfile' render={()=><EditProfile currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
-          <Route path='/postForm' render={()=><PostForm {...this.props}/>}/>
+          <Route path='/postForm' render={(props)=><PostForm {...props}/>}/>
         </Switch>
       </div> 
     );
