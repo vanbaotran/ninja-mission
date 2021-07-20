@@ -1,8 +1,8 @@
 import React from 'react'
-import {uploadFile,editProfile} from './service'
+import {uploadFile,editProfile} from '../service'
 // import axios from 'axios';
 
-class EditProfile extends React.Component{
+class CandidateForm extends React.Component{
   state = {
     name:this.props.currentUser?.name || "",
     email:this.props.currentUser?.email || "", 
@@ -105,4 +105,4 @@ class EditProfile extends React.Component{
   }
 }
 
-export default EditProfile
+export default CandidateForm
