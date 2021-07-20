@@ -1,31 +1,42 @@
 import React from 'react'
 import {uploadFile,editProfile} from './service'
-import axios from 'axios';
+// import axios from 'axios';
 
 class EditProfile extends React.Component{
   state = {
-    name:this.props.currentUser.name ? this.props.currentUser.name : "",
-    email:this.props.currentUser.email? this.props.currentUser.email : "", 
-    birthday:this.props.currentUser.birthday? this.props.currentUser.birthday : "", 
-    bio:this.props.currentUser.bio? this.props.currentUser.bio : "",
-    avatar:this.props.currentUser.avatar? this.props.currentUser.avatar : "", 
-    title:this.props.currentUser.title?this.props.currentUser.title : "", 
-    codeLanguage:this.props.currentUser.codeLanguage?this.props.currentUser.codeLanguage : "", 
-    funFact:this.props.currentUser.funFact?this.props.currentUser.funFact : "",
+    name:this.props.currentUser?.name || "",
+    email:this.props.currentUser?.email || "", 
+    birthday:this.props.currentUser?.birthday || "",
+    bio:this.props.currentUser?.bio ||"",
+    avatar:this.props.currentUser?.avatar || "", 
+    title:this.props.currentUser?.title|| "", 
+    codeLanguage:this.props.currentUser?.codeLanguage|| "", 
+    funFact:this.props.currentUser?.funFact|| "",
     usefulLinks:{
-      linkedin: this.props.currentUser.usefulLinks? this.props.currentUser.usefulLinks.linkedin: "",
-      github: this.props.currentUser.usefulLinks? this.props.currentUser.usefulLinks.github : "",
-      portfolio: this.props.currentUser.usefulLinks? this.props.currentUser.usefulLinks.portfolio : "" ,
-    },
-
+      linkedin: this.props.currentUser?.usefulLinks.linkedin || "",
+      github: this.props.currentUser?.usefulLinks.github || "",
+      portfolio: this.props.currentUser?.usefulLinks.portfolio|| "" ,
+    }
   }
-  // state = {
-  //   this.fetchUser()
-  // }
-  fetchUser = () =>{
-    axios.get(`/users/${this.props.currentUser._id}`).then(response=>response.data)
+  componentDidUpdate(prevProps) {
+    if(prevProps.currentUser !== this.props.currentUser){
+      this.setState({
+        name:this.props.currentUser.name,
+        email:this.props.currentUser.email,
+        birthday:this.props.currentUser.birthday,
+        bio:this.props.currentUser.bio,
+        avatar:this.props.currentUser.avatar,
+        title:this.props.currentUser.title,
+        codeLanguage:this.props.currentUser.codeLanguage,
+        funFact:this.props.currentUser.funFact,
+        usefulLinks:{
+          linkedin: this.props.currentUser.usefulLinks.linkedin,
+          github: this.props.currentUser.usefulLinks.github,
+          portfolio: this.props.currentUser.usefulLinks.portfolio,
+        }
+      })
+    } 
   }
-
   handleSubmit = (event) => {
     event.preventDefault()
     editProfile({...this.state})

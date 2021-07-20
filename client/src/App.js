@@ -7,6 +7,7 @@ import PostForm from './components/PostForm';
 import {Switch, Route} from 'react-router-dom';
 import EditProfile from './components/EditProfile'
 import {loggedIn} from './components/service';
+import ProfilePage from './components/ProfilePage'
 import NavBar from './components/NavBar'
 
 class App extends React.Component {
@@ -38,6 +39,7 @@ class App extends React.Component {
           <Route path='/signup' render={()=><Signup currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/editProfile' render={()=><EditProfile currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/postForm' render={()=><PostForm {...this.props}/>}/>
+          <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser}/>} />
         </Switch>
       </div> 
     );

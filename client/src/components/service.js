@@ -27,6 +27,11 @@ function loggedIn(){
 }
 export {loggedIn}
 
+function getUserData(id){
+  return service.get(`/users/${id}`).then(response => response.data)
+}
+export {getUserData}
+
 //// UPLOAD
 const errorHandler = err => {
   // console.error(err);

@@ -28,7 +28,7 @@ class Signup extends React.Component{
           password:'',
           profileType:''
         })
-        // this.props.updateUser(response)
+        this.props.updateUser(response)
       })
       .catch(error => console.log(error))
 
