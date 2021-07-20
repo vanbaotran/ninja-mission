@@ -4,8 +4,10 @@ import axios from 'axios';
 
 class EditProfile extends React.Component{
   state = {
-    name:this.props.currentUser.name ? this.props.currentUser.name : "",
-    email:this.props.currentUser.email? this.props.currentUser.email : "", 
+   
+    name: this.props.currentUser?.name || "",
+
+    email:this.props.currentUser?.email || "", 
     birthday:this.props.currentUser.birthday? this.props.currentUser.birthday : "", 
     bio:this.props.currentUser.bio? this.props.currentUser.bio : "",
     avatar:this.props.currentUser.avatar? this.props.currentUser.avatar : "", 
@@ -25,6 +27,15 @@ class EditProfile extends React.Component{
   fetchUser = () =>{
     axios.get(`/users/${this.props.currentUser._id}`).then(response=>response.data)
   }
+
+  // componentDidUpdate(prevProps) {
+  //   // executee des qu'une prop ou un state change
+  //   if (prevProps.currentUser !== this.props.currentUser) {
+  //     this.setState({
+        
+  //     })
+  //   }
+  // }
 
   handleSubmit = (event) => {
     event.preventDefault()
