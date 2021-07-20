@@ -1,5 +1,5 @@
 import React from 'react';
-import {login} from './service'
+import {login} from './service';
 
 class Login extends React.Component{
   state = {email:'', password:''}

@@ -17,10 +17,15 @@ function signup(name, email, password, profileType) {
 }
 export {signup}
  
-function editProfile(name, email, password, birthday, bio, avatar, title, codeLanguage, funFact, linkedin, github, portfolio){
-  return service.put('/users',{name, email, password, birthday, bio, avatar, title, codeLanguage, funFact, linkedin, github, portfolio})
+function editProfile(user){
+  return service.patch('/users',{...user}).then(response => response.data)
 }
 export {editProfile}
+
+function loggedIn(){
+  return service.get('/users/loggedin').then(response => response.data)
+}
+export {loggedIn}
 
 //// UPLOAD
 const errorHandler = err => {

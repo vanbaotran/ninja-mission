@@ -52,6 +52,26 @@ export class PostForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     service.post('/posts', {...this.state})
+    .then(response=>{
+      console.log(response.data)
+      this.props.history.push('/')
+      this.setState({
+        offerName: "",
+        companyLogo: "",
+        companyBio: "",
+        companyName: "",
+        description: "", /// verif 500 char
+        position: "",
+        contract: "", //  enum: ["Internship", "Freelance", "Permanent", "Temporary"],
+        experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
+        codeLanguage: [], // voir si enum et ou vérification bonne donnée
+        location: { city: [], country: [] },
+        remote: false,
+        funFact: "", //maxlength: 250,
+        website: "",
+      })
+    })
+    .catch(err=>console.log(err))
   };
 
   render() {
