@@ -13,9 +13,9 @@ class CandidateForm extends React.Component{
     codeLanguage:this.props.currentUser?.codeLanguage|| "", 
     funFact:this.props.currentUser?.funFact|| "",
     usefulLinks:{
-      linkedin: this.props.currentUser?.usefulLinks.linkedin || "",
-      github: this.props.currentUser?.usefulLinks.github || "",
-      portfolio: this.props.currentUser?.usefulLinks.portfolio|| "" ,
+      linkedin: this.props.currentUser?.usefulLinks?.linkedin || "",
+      github: this.props.currentUser?.usefulLinks?.github || "",
+      portfolio: this.props.currentUser?.usefulLinks?.portfolio|| "" ,
     }
   }
   componentDidUpdate(prevProps) {

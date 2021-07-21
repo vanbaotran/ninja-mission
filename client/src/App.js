@@ -5,13 +5,12 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import PostForm from './components/forms/PostForm';
 import RecruiterForm from "./components/forms/RecruiterForm";
-// import PostDetails from './components/details/PostDetails';
 import {Switch, Route} from 'react-router-dom';
 import CandidateForm from './components/forms/CandidateForm'
 import {loggedIn} from './components/service';
 import ProfilePage from './components/ProfilePage'
 import NavBar from './components/NavBar'
-// import PostDetails from './components/details/PostDetails';
+import PostDetails from './components/details/PostDetails';
 
 class App extends React.Component {
   state = {loggedInUser:null}
@@ -44,7 +43,7 @@ class App extends React.Component {
           <Route path='/postForm' render={()=><PostForm {...this.props}/>}/>
           <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser}/>} />
           <Route path='/postForm/:id' component={PostForm} />
-          {/* <Route path='/intest/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} />} /> */}
+          <Route path='/intest/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} />} />
           <Route path='/intest' render={(props)=><RecruiterForm {...props} currentUserId={this.state.loggedInUser?this.state.loggedInUser._id:false}/>}/>
 
         </Switch>

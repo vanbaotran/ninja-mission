@@ -8,7 +8,7 @@ const NavBar = () =>{
       <Link to='/postForm'>Create a Job post</Link>
       <Link to='/candidateform'>Edit my Candidate profile</Link>
       <Link to='/profilepage'>Candidate profile</Link>
-      <Link to='/intest'>test</Link>
+      <Link to='/intest/60ef1681123c8ce910f55475'>test</Link>
 
     </div>
   )
