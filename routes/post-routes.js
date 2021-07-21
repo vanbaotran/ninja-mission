@@ -55,11 +55,11 @@ postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
     // get currentUser
     let user = await User.findOne({ _id: req.session.currentUser._id });
     //get random post
-    randomPost = await Post.findOne().skip(random);
+    randomPost = await Post.findOne().populate("recruiterId").skip(random);
     // if offers is swipped repeat find random post job
     while (user.swipedOfferId.includes(randomPost._id)) {
       random = Math.floor(Math.random() * countDoc);
-      randomPost = await Post.findOne().skip(random);
+      randomPost = await Post.findOne().populate("recruiterId").skip(random);
     }
     // return random postdata
     res.status(200).json(randomPost);

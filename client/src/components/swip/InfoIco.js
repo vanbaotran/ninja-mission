@@ -1,0 +1,40 @@
+import React, { Component } from 'react'
+const level = {
+  Warrior: "0-2 Years",
+  Ninja: "2-3 Years",
+  Samurai: "3-5 Years",
+  Sensei: "5+ years"
+};
+
+class InfoIco extends Component {
+  state = {
+    image: `/images/${this.props.type.toLowerCase()}.png`,
+    blueText: "",
+    redText: "",
+  }
+  componentDidMount() {
+    if (["Warrior","Ninja", "Samurai", "Sensei"].includes(this.props.type)) {
+      this.setState({
+        blueText: level[this.props.type],
+        redText: "Experience",
+      });
+    }
+    if (["Internship", "Freelance", "Permanent", "Temporary"].includes(this.props.type)) {
+      this.setState({
+        blueText: this.props.type,
+        redText: "Contract",
+      });
+    }
+  }
+  render() {
+    return (
+      <div className="info-block">
+        <img src={this.state.image} alt="ico info" />
+        <p className="text-blue">{this.state.blueText}</p>
+        <p className="text-red">{this.state.redText}</p>
+      </div>
+    )
+  }
+}
+
+export default InfoIco

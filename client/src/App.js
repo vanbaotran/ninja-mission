@@ -10,7 +10,8 @@ import {Switch, Route} from 'react-router-dom';
 import CandidateForm from './components/forms/CandidateForm'
 import {loggedIn} from './components/service';
 import ProfilePage from './components/ProfilePage'
-import NavBar from './components/NavBar'
+import NavBar from './components/NavBar';
+import SwipJobPost from './components/SwipJobPost';
 // import PostDetails from './components/details/PostDetails';
 
 class App extends React.Component {
@@ -54,7 +55,8 @@ class App extends React.Component {
           <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser}/>} />
           <Route path='/postform/:id' render={(props) => <PostForm {...props} updateCurrentPost={this.updateCurrentPostId}/>}/> 
           {/* <Route path='/intest/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} />} /> */}
-          <Route path='/intest' render={(props)=><RecruiterForm {...props} currentUserId={this.state.loggedInUser?this.state.loggedInUser._id:false}/>}/>
+          <Route path='/recruiterform' render={(props) => <RecruiterForm {...props} currentUserId={this.state.loggedInUser ? this.state.loggedInUser._id : false} />} />
+          <Route path='/intest' render={()=><SwipJobPost currentUser={this.state.loggedInUser}/>} />
 
         </Switch>
       </div> 
