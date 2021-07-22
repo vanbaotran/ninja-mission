@@ -39,6 +39,7 @@ class App extends React.Component {
     this.fetchUser()
   }
   componentDidUpdate(prevProps){
+    console.log(this.state.currentUser)
     if(prevProps.currentUser !== this.props.currentUser){
       editProfile({currentPostId:this.state.currentPostId})
       .then(response=>{
@@ -66,8 +67,8 @@ class App extends React.Component {
           <Route path='/postform/:id' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
           <Route path='/posts/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId} />} />
           <Route path='/recruiterform' render={(props) => <RecruiterForm {...props} currentUserId={this.state.loggedInUser ? this.state.loggedInUser._id : false} />} />
-          <Route path='/intest' render={()=><SwipJobPost currentUser={this.state.loggedInUser}/>} />
-          <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser}/>} />
+          <Route path='/intest' render={()=><SwipJobPost currentUser={this.state.loggedInUser} />} />
+          <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
         </Switch>
       </div> 
