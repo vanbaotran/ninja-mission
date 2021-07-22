@@ -12,7 +12,7 @@ class InfoIco extends Component {
     blueText: "",
     redText: "",
   }
-  componentDidMount() {
+  setgoogState = () => {
     if (["Warrior","Ninja", "Samurai", "Sensei"].includes(this.props.type)) {
       this.setState({
         blueText: level[this.props.type],
@@ -24,6 +24,15 @@ class InfoIco extends Component {
         blueText: this.props.type,
         redText: "Contract",
       });
+    }
+  }
+  componentDidMount() {
+    this.setgoogState();
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.type !== this.props.type) {
+      
+      this.setgoogState();
     }
   }
   render() {
