@@ -40,7 +40,7 @@ class App extends React.Component {
   }
   componentDidUpdate(prevProps){
     // console.log(this.state.currentUser)
-    if(prevProps.currentUser !== this.props.currentUser){
+    if(prevProps.currentUser !== this.props.currentUser && this.props.currentUser!==null){
       editProfile({currentPostId:this.state.currentPostId})
       .then(response=>{
         this.setState({currentPostId:this.state.currentPostId})
