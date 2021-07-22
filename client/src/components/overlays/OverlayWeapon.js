@@ -4,7 +4,7 @@ class OverlayWeapon extends Component {
   state = {
     chooseFilter: [],
   };
-  filterDataSwipParent = () => {
+  filterDataSwipeParent = () => {
     if (this.state.chooseFilter.length === 0) {
       this.props.filter();
     } else {
@@ -25,7 +25,7 @@ class OverlayWeapon extends Component {
   render() {
     return (
       <div className="overlay">
-          <img onClick={this.filterDataSwipParent} src="/images/icons/close_black.png" alt="close ico" />
+          <img onClick={this.filterDataSwipeParent} src="/images/icons/close_black.png" alt="close ico" />
         <h1>CHOOSE YOUR WEAPON</h1>
         <p>
           the weapon you are looking for stands for the contract type for your next position. By

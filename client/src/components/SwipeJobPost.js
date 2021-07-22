@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import OverlayWeapon from "./overlays/OverlayWeapon";
 import "../css/SwipJobPost.css";
 import service from "./service";
-import InfoIco from "./swip/InfoIco";
-class SwipJobPost extends Component {
+import InfoIco from "./swipe/InfoIco";
+class SwipeJobPost extends Component {
   state = {
     optionsIsOpen: false,
     offer: false,
@@ -45,24 +45,24 @@ class SwipJobPost extends Component {
     let compagnyLogo = this.state.offer?.companyLogo || this.state.offer?.recruiterId?.companyLogo || "/images/temple.png";
     
     return (
-      <div className="swip">
-        <div className="header-swip">
-          <img className="ico-swip ico-profile" src="/images/icons/profile.png" alt="ico" />
+      <div className="swipe">
+        <div className="header-swipe">
+          <img className="ico-swipe ico-profile" src="/images/icons/profile.png" alt="ico" />
           <img
-            className="ico-swip ico-filter"
+            className="ico-swipe ico-filter"
             src="/images/icons/filter.png"
             alt="ico"
             onClick={this.openFilter}
           />
-          <img className="logo-header-swip" src="/images/ninja-logo.png" alt="ico" />
-          <img className="ico-swip ico-chat" src="/images/icons/chat.png" alt="ico" />
+          <img className="logo-header-swipe" src="/images/ninja-logo.png" alt="ico" />
+          <img className="ico-swipe ico-chat" src="/images/icons/chat.png" alt="ico" />
         </div>
-        <div className="body-swip">
+        <div className="body-swipe">
           {(!this.state.offer
             &&
               <h1>{(this.state.errorMessage && <div className="text-red">{this.state.errorMessage}</div> )|| "Loading..."}</h1>)
             || (
-            <div className="block-to-swip">
+            <div className="block-to-swipe">
               <img className="company-logo" src={compagnyLogo} alt="logo" />
               <h1>{this.state.offer.position}</h1>
               <div className="block-infoico">
@@ -78,4 +78,4 @@ class SwipJobPost extends Component {
   }
 }
 
-export default SwipJobPost;
+export default SwipeJobPost;
