@@ -1,5 +1,8 @@
 import React from 'react'
-import {uploadFile,editProfile} from '../service'
+import {uploadFile,editProfile} from '../service';
+import SelectInput from "../inputs/SelectInput";
+const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
+const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
 // import axios from 'axios';
 
 class CandidateForm extends React.Component{
@@ -12,10 +15,11 @@ class CandidateForm extends React.Component{
     title:this.props.currentUser?.title|| "", 
     codeLanguage:this.props.currentUser?.codeLanguage|| "", 
     funFact:this.props.currentUser?.funFact|| "",
+    level:this.props.currentUser?.level|| "",
     usefulLinks:{
-      linkedin: this.props.currentUser?.usefulLinks.linkedin || "",
-      github: this.props.currentUser?.usefulLinks.github || "",
-      portfolio: this.props.currentUser?.usefulLinks.portfolio|| "" ,
+      linkedin: this.props.currentUser?.usefulLinks?.linkedin || "",
+      github: this.props.currentUser?.usefulLinks?.github || "",
+      portfolio: this.props.currentUser?.usefulLinks?.portfolio|| "" ,
     }
   }
   componentDidUpdate(prevProps) {
@@ -29,6 +33,7 @@ class CandidateForm extends React.Component{
         title:this.props.currentUser.title,
         codeLanguage:this.props.currentUser.codeLanguage,
         funFact:this.props.currentUser.funFact,
+        level:this.props.currentUser.level,
         usefulLinks:{
           linkedin: this.props.currentUser.usefulLinks.linkedin,
           github: this.props.currentUser.usefulLinks.github,
@@ -86,10 +91,24 @@ class CandidateForm extends React.Component{
             <input type='text' name='bio' value={this.state.bio} onChange={(e)=>this.handleChange(e)} /> 
             <label>Avatar</label>
             <input type='file' name='avatar'  onChange={(e)=>this.handleChangeFile(e)} />
+            <SelectInput
+            label="Exp Level"
+            name="level"  
+            value={this.state.experienceLevel}
+            change={this.handleChange}
+            options={LevelOptions}
+            multiple={false}
+          />
             <label>Job Title</label>
             <input type='text' name='title' value={this.state.title} onChange={(e)=>this.handleChange(e)} />
-            <label>Code language</label>
-            <input type='select' name='codeLanguage' value={this.state.codeLanguage} onChange={(e)=>this.handleChange(e)} />
+            <SelectInput
+            label="Languages"
+            name="codeLanguage"
+            value={[...this.state.codeLanguage]}
+            change={this.handleChangeMultiple}
+            options={LanguageOptions}
+            multiple={true}
+          />
             <label>Fun fact</label>
             <input type='text' name='funFact' value={this.state.funFact} onChange={(e)=>this.handleChange(e)} />
             <label>LinkedIn</label>

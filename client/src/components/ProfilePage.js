@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {getUserData} from './service'
+import {getUserData, getPostData} from './service'
 class ProfilePage extends React.Component {
   state = {
     currentUser: this.props.currentUser ? this.props.currentUser : "",
+    currentPostId: this.props.currentPostId ? this.props.currentPostId : "",
   }
   getAge = (dateString) =>{
     let today = new Date();
@@ -15,8 +16,9 @@ class ProfilePage extends React.Component {
     }
     return age
   }
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps, prevState){
     if(prevProps.currentUser !== this.props.currentUser){
+      console.log('CHANGING USER')
       getUserData(this.props.currentUser._id)
       .then(response=>{
         this.setState(response)
@@ -24,17 +26,28 @@ class ProfilePage extends React.Component {
       })
       .catch(err=>console.log(err))
     }
+    // TRYING TO GET OFFERNAME
+    // if(prevState.currentPostId !== this.props.currentPostId){
+    //   console.log('changing CURRENTPOST ID')
+    //   getPostData(this.props.currentPostId)
+    //   .then(response=>{
+    //     this.setState(response)
+    //     console.log('CURRENT POST ID',response)
+    //   })
+    //   .catch(err=>console.log(err))
+    // }
   }
-  // componentDidMount(){
-  //     // if(prevProps.currentUser !== this.props.currentUser){
-  //       getUserData(this.props.currentUser._id)
-  //       .then(response=>{
-  //         this.setState(response)
-  //         console.log(response)
-  //       })
-  //       .catch(err=>console.log(err))
-  //     // }
-  //   }
+  getPostData = (postId) => {
+    let offerName;
+    getPostData(postId)
+      .then(response=>{
+        offerName = response.offerName
+        console.log('CURRENT POST ID',response)
+        console.log('OFFER NAME', offerName)
+      })
+      .catch(err=>console.log(err))
+    return offerName
+  }
   render(){
     if(this.state.currentUser.profileType==='candidate'){
       return(
@@ -90,32 +103,32 @@ class ProfilePage extends React.Component {
             <h1>{this.state.currentUser.name}</h1>
           </header>
           <main>
-            <Link to='/candidateDetails'>
+            <Link to='/companyDetails'>
             <div className='row'>
               <img src='/images/temple.png' alt='my-company'/>
               <h3>My Company</h3>
             </div>
             </Link>
     
-            <Link to='/myLevels'>
+            <Link to='/myOffers'>
             <div className='row'>
               <img src='/images/my-offers.png' alt='my-offers'/>
               <h3>My Offers</h3>
               </div>
             </Link>
     
-            <Link to='/'>
+            <Link to='/myDashboard'>
             <div className='row'>
               <img src='/images/my-dashboard.png' alt='my-dashboard'/>
               <h3>My Dashboard</h3>
               </div>
             </Link>
     
-            <Link to='/myBadges'>
+            <Link to='/myCurrentPost'>
               <div className='row'>
                 <img src='/images/my-current-post.png' alt='current-post'/>
                 <h3>My Current Post</h3>
-                <p>{this.props.currentUser?.currentApplicationId?.jobPostId?.offerName|| "" }</p>
+                <p>{this.getPostData(this.state.currentPostId)}</p>
               </div>
             </Link>
           </main>

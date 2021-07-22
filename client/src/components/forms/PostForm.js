@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import service, { uploadFile } from "../service";
 import SelectInput from "../inputs/SelectInput";
 import TextInput from "../inputs/TextInput";
-import { dataPostToStatePost } from "../service";
+import { dataPostToStatePost, editProfile} from "../service";
 const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
 const ContractOptions = ["Internship", "Freelance", "Permanent", "Temporary"];
 const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
@@ -56,8 +56,13 @@ export class PostForm extends Component {
       service
         .post("/posts", { ...this.state })
         .then((response) => {
-          console.log("in submi", response)
+          // console.log("in submi", response)
           this.props.updateCurrentPost(response.data.newPost._id);
+          editProfile({currentPostId:response.data.newPost._id})
+          .then(response=>{
+            console.log('CHANGING POST ID', response)
+            this.props.updateUser(response)
+          })
           this.props.history.push("/");
         })
         .catch((err) => console.log(err));

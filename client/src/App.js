@@ -8,11 +8,13 @@ import RecruiterForm from "./components/forms/RecruiterForm";
 // import PostDetails from './components/details/PostDetails';
 import {Switch, Route} from 'react-router-dom';
 import CandidateForm from './components/forms/CandidateForm'
-import {loggedIn} from './components/service';
+import {loggedIn, editProfile} from './components/service';
 import ProfilePage from './components/ProfilePage'
 import NavBar from './components/NavBar';
 import SwipJobPost from './components/SwipJobPost';
-// import PostDetails from './components/details/PostDetails';
+import PostDetails from './components/details/PostDetails';
+import Logout from './components/Logout';
+import LevelPage from './components/LevelPage';
 
 class App extends React.Component {
   state = {
@@ -36,8 +38,16 @@ class App extends React.Component {
   componentDidMount() {
     this.fetchUser()
   }
-  componentDidUpdate(prevProps) {
-    console.log(this.state.currentPostId);
+  componentDidUpdate(prevProps){
+    if(prevProps.currentUser !== this.props.currentUser){
+      editProfile({currentPostId:this.state.currentPostId})
+      .then(response=>{
+        this.setState({currentPostId:this.state.currentPostId})
+        console.log(response)
+      })
+      .catch(err=>console.log(err))
+    }
+   
   }
   updateLoggedInUser = (userObj) =>{
     this.setState({loggedInUser:userObj})
@@ -52,12 +62,13 @@ class App extends React.Component {
           <Route path='/signup' render={()=><Signup currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/candidateform' render={()=><CandidateForm currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           {/* <Route path='/createpost' render={() => <PostForm {...this.props} updateCurrentPost={this.updateCurrentPost}/>}/> */}
-          <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser}/>} />
-          <Route path='/postform/:id' render={(props) => <PostForm {...props} updateCurrentPost={this.updateCurrentPostId}/>}/> 
-          {/* <Route path='/intest/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} />} /> */}
+          <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser} currentPostId={this.state.currentPostId}/>} />
+          <Route path='/postform/:id' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
+          <Route path='/posts/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId} />} />
           <Route path='/recruiterform' render={(props) => <RecruiterForm {...props} currentUserId={this.state.loggedInUser ? this.state.loggedInUser._id : false} />} />
           <Route path='/intest' render={()=><SwipJobPost currentUser={this.state.loggedInUser}/>} />
-
+          <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser}/>} />
+          <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
         </Switch>
       </div> 
     );

@@ -62,7 +62,8 @@ let userSchema = new Schema(
     companyWebsite: String,
     industry: String,
     swipedOfferId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-    currentApplicationId: {type: mongoose.Schema.Types.ObjectId, ref: "Application"}
+    currentApplicationId: {type: mongoose.Schema.Types.ObjectId, ref: "Application"},
+    currentPostId: {type: mongoose.Schema.Types.ObjectId, ref: "Post"}
   },
   {
     timestamps: true,

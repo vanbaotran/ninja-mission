@@ -111,12 +111,6 @@ router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
 // GET USER DETAILS
 router.get("/:id", isLoggedIn, (req, res, next) => {
   User.findById(req.params.id)
-    .populate({
-      path: 'currentApplicationId',
-      populate: {
-        path: 'jobPostId'
-      }
-    })
     .then((ret) => {
       if (!ret) {
         res.status(204).json(ret);

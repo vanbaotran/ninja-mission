@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { dataPostToStatePost } from "../service";
+import { dataPostToStatePost, editProfile } from "../service";
 
 class PostDetails extends Component {
   state = {
@@ -33,6 +33,16 @@ class PostDetails extends Component {
   handleEdit = (e) => {
     this.props.history.push(`/postForm/${this.props.match.params.id}`);
   };
+  //update state.currentPostId if chosen
+  updateCurrentPost = () =>{
+    this.props.updateCurrentPost(this.props.match.params.id);
+    editProfile({currentPostId:this.props.match.params.id})
+    .then(response=>{
+      console.log('CHANGING POST ID', response)
+      this.props.updateUser(response)
+    })
+    .catch(err=>console.log(err))
+  }
   render() {
     return (
       <div>
@@ -42,7 +52,7 @@ class PostDetails extends Component {
             alt="logo comp"
           />
           <h1>{this.state.offerName}</h1>
-          <button>CHOOSE TO BE CURRENT POST</button>
+          <button onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>
         </div>
         <div className="body-post-details">
           <div className="detail-level">
