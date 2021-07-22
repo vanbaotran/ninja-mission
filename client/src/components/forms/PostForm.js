@@ -21,6 +21,8 @@ export class PostForm extends Component {
     remote: false,
     funFact: "", //maxlength: 250,
     website: "",
+
+    errorMessage: false,
   };
 
   handleChange = (e) => {
@@ -52,35 +54,44 @@ export class PostForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.props.match.params.id === "new") {
-      service
-        .post("/posts", { ...this.state })
-        .then((response) => {
-          console.log("in submi", response)
-          this.props.updateCurrentPost(response.data.newPost._id);
-          this.props.history.push("/");
-        })
-        .catch((err) => console.log(err));
+    const { contract, experienceLevel, codeLanguage } = this.state;
+    if (!contract || !experienceLevel || codeLanguage.length === 0) {
+      this.setState({
+        errorMessage: "Contract, level and code languages are required!"
+      });
+      setTimeout(() => this.setState({ errorMessage: false }), 3000);
     } else {
-      service.patch(`/posts/${this.props.match.params.id}`, { ...this.state }).then((response) => {
-        this.props.history.push("/");
+
+      if (this.props.match.params.id === "new") {
+        service
+          .post("/posts", { ...this.state })
+          .then((response) => {
+            console.log("in submi", response)
+            this.props.updateCurrentPost(response.data.newPost._id);
+            this.props.history.push("/");
+          })
+          .catch((err) => console.log(err));
+      } else {
+        service.patch(`/posts/${this.props.match.params.id}`, { ...this.state }).then((response) => {
+          this.props.history.push("/");
+        });
+      }
+      this.setState({
+        offerName: "",
+        companyLogo: "",
+        companyBio: "",
+        companyName: "",
+        description: "", /// verif 500 char
+        position: "",
+        contract: "", //  enum: ["Internship", "Freelance", "Permanent", "Temporary"],
+        experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
+        codeLanguage: [], // voir si enum et ou vérification bonne donnée
+        location: { city: [], country: [] },
+        remote: false,
+        funFact: "", //maxlength: 250,
+        website: "",
       });
     }
-    this.setState({
-      offerName: "",
-      companyLogo: "",
-      companyBio: "",
-      companyName: "",
-      description: "", /// verif 500 char
-      position: "",
-      contract: "", //  enum: ["Internship", "Freelance", "Permanent", "Temporary"],
-      experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
-      codeLanguage: [], // voir si enum et ou vérification bonne donnée
-      location: { city: [], country: [] },
-      remote: false,
-      funFact: "", //maxlength: 250,
-      website: "",
-    });
   };
   componentDidMount = () => {
     if (!(this.props.match.params.id === "new")) {
@@ -94,6 +105,7 @@ export class PostForm extends Component {
     // console.log(this.state)
     return (
       <div className="post-form-main">
+        {this.state.errorMessage && <div className="text-red"><h1>{this.state.errorMessage}</h1></div>}
         <h2>{this.props.match.params.id === "new" ? "Add new Offer" : "Edit the Offer"}</h2>
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <label>
