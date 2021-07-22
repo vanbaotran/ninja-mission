@@ -1,10 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {getUserData, getPostData} from './service'
+import { getPostData} from './service'
 class ProfilePage extends React.Component {
   state = {
-    currentUser: this.props.currentUser ? this.props.currentUser : "",
-    currentPostId: this.props.currentPostId ? this.props.currentPostId : "",
+    currentPost:{}
   }
   getAge = (dateString) =>{
     let today = new Date();
@@ -16,40 +15,43 @@ class ProfilePage extends React.Component {
     }
     return age
   }
-  componentDidUpdate(prevProps, prevState){
-    if(prevProps.currentUser !== this.props.currentUser){
-      console.log('CHANGING USER')
-      getUserData(this.props.currentUser._id)
-      .then(response=>{
-        this.setState(response)
-        console.log(response)
-      })
-      .catch(err=>console.log(err))
-    }
+  componentDidMount(){
+    getPostData(this.props.currentUser.currentPostId)
+    .then(response=>{
+      this.setState({currentPost:response})
+      console.log('CURRENT POST',this.state.currentPost, 'RESPONSE',response)
+    })
+    .catch(err=>console.log(err))
+  }
+  // componentDidUpdate(prevProps, prevState){
+  //   if(prevProps.currentUser !== this.props.currentUser){
+  //     console.log('CHANGING USER')
+  //     getUserData(this.props.currentUser._id)
+  //     .then(response=>{
+  //       this.setState(response)
+  //       console.log(response)
+  //     })
+  //     .catch(err=>console.log(err))
+  //   }
     // TRYING TO GET OFFERNAME
-    // if(prevState.currentPostId !== this.props.currentPostId){
+    // if(prevProps.currentPostId !== this.props.currentPostId){
     //   console.log('changing CURRENTPOST ID')
-    //   getPostData(this.props.currentPostId)
-    //   .then(response=>{
-    //     this.setState(response)
-    //     console.log('CURRENT POST ID',response)
-    //   })
-    //   .catch(err=>console.log(err))
+     
     // }
-  }
-  getPostData = (postId) => {
-    let offerName;
-    getPostData(postId)
-      .then(response=>{
-        offerName = response.offerName
-        console.log('CURRENT POST ID',response)
-        console.log('OFFER NAME', offerName)
-      })
-      .catch(err=>console.log(err))
-    return offerName
-  }
+  // }
+  // getPostName = (postId) => {
+  //   let offerName;
+  //   getPostData(postId)
+  //     .then(response=>{
+  //       offerName = response.offerName
+  //       console.log('CURRENT POST ID',response)
+  //       console.log('OFFER NAME', offerName)
+  //     })
+  //     .catch(err=>console.log(err))
+  //   return offerName
+  // }
   render(){
-    if(this.state.currentUser.profileType==='candidate'){
+    if(this.props.currentUser.profileType==='candidate'){
       return(
         <div className="profile candidate">
         <nav>
@@ -57,8 +59,8 @@ class ProfilePage extends React.Component {
           <Link to='/offers'><img src='/images/icons/offer.png' alt='settings'/></Link>
         </nav>
         <header>
-          <img src={this.state.currentUser.avatar} alt='avatar'/>
-          <h1>{this.state.currentUser.name}, {this.getAge(this.state.currentUser.birthday)}</h1>
+          <img src={this.props.currentUser.avatar} alt='avatar'/>
+          <h1>{this.props.currentUser.name}, {this.getAge(this.props.currentUser.birthday)}</h1>
         </header>
         <main>
           <Link to='/candidateDetails'>
@@ -99,8 +101,8 @@ class ProfilePage extends React.Component {
             <Link to='/offers'><img src='/images/icons/offer.png' alt='settings'/></Link>
           </nav>
           <header>
-            <img src={this.state.currentUser.companyLogo} alt='avatar'/>
-            <h1>{this.state.currentUser.name}</h1>
+            <img src={this.props.currentUser.companyLogo} alt='avatar'/>
+            <h1>{this.props.currentUser.name}</h1>
           </header>
           <main>
             <Link to='/companyDetails'>
@@ -128,7 +130,7 @@ class ProfilePage extends React.Component {
               <div className='row'>
                 <img src='/images/my-current-post.png' alt='current-post'/>
                 <h3>My Current Post</h3>
-                <p>{this.getPostData(this.state.currentPostId)}</p>
+                <p>{this.state.currentPost.offerName}</p>
               </div>
             </Link>
           </main>

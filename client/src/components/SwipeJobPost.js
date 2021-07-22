@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import OverlayWeapon from "./overlays/OverlayWeapon";
-import "../css/SwipJobPost.css";
+import "../css/SwipeJobPost.css";
 import service from "./service";
 import InfoIco from "./swipe/InfoIco";
+// import useSwipeable from 'react-swipeable';
+
 class SwipeJobPost extends Component {
   state = {
     optionsIsOpen: false,
@@ -57,7 +59,7 @@ class SwipeJobPost extends Component {
           <img className="logo-header-swipe" src="/images/ninja-logo.png" alt="ico" />
           <img className="ico-swipe ico-chat" src="/images/icons/chat.png" alt="ico" />
         </div>
-        <div className="body-swipe">
+        <div  className="body-swipe">
           {(!this.state.offer
             &&
               <h1>{(this.state.errorMessage && <div className="text-red">{this.state.errorMessage}</div> )|| "Loading..."}</h1>)
