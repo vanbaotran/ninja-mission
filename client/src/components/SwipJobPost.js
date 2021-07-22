@@ -6,20 +6,40 @@ import InfoIco from "./swip/InfoIco";
 class SwipJobPost extends Component {
   state = {
     optionsIsOpen: false,
-    currentOptions: ["Internship", "Freelance", "Permanent", "Temporary"],
     offer: false,
+    errorMessage: "",
   };
 
   openFilter = (e) => {
     this.setState({ optionsIsOpen: true });
   };
-  componentDidMount() {
-    service.get("/posts/random").then((resp) => {
-      this.setState({
-        offer: resp.data,
+  searchRandom = (params = false) => {
+    let url = "/posts/random";
+    if (params) {
+      url = `${url}?filterContract=${params.join("_")}`;
+    }
+    service.get(url).then((resp) => {
+      console.log(resp)
+      if (resp.status === 204) {
+        this.setState({
+          offer: false,
+          optionsIsOpen: false,
+          errorMessage: resp.statusText
+        });
+      } else {
+        this.setState({
+          offer: resp.data,
+          optionsIsOpen: false
+        });
+      }
+    })
+      .catch(err => {
+        console.log(err)
+        // this.setState({ errorMessage: err })
       });
-      console.log(this.state);
-    });
+  }
+  componentDidMount() {
+    this.searchRandom();
   }
   render() {
     let compagnyLogo = this.state.offer?.companyLogo || this.state.offer?.recruiterId?.companyLogo || "/images/temple.png";
@@ -38,18 +58,21 @@ class SwipJobPost extends Component {
           <img className="ico-swip ico-chat" src="/images/icons/chat.png" alt="ico" />
         </div>
         <div className="body-swip">
-          {(!this.state.offer && <h1>Loading...</h1>) || (
-            <div>
-              <img src={compagnyLogo} alt="logo" />
-              <h1>{this.state.position}</h1>
+          {(!this.state.offer
+            &&
+              <h1>{(this.state.errorMessage && <div className="text-red">{this.state.errorMessage}</div> )|| "Loading..."}</h1>)
+            || (
+            <div className="block-to-swip">
+              <img className="company-logo" src={compagnyLogo} alt="logo" />
+              <h1>{this.state.offer.position}</h1>
               <div className="block-infoico">
                 <InfoIco type={this.state.offer.experienceLevel} />
                 <InfoIco type={this.state.offer.contract}/>
               </div>
             </div>
           )}
-          {this.state.optionsIsOpen && <OverlayWeapon />}
         </div>
+        {this.state.optionsIsOpen && <OverlayWeapon filter={this.searchRandom}/>}
       </div>
     );
   }
