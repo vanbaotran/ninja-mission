@@ -8,6 +8,7 @@ import InfoIco from "./swipe/InfoIco";
 class SwipeJobPost extends Component {
   state = {
     optionsIsOpen: false,
+    currentOptions: ["Internship", "Freelance", "Permanent", "Temporary"],
     offer: false,
     errorMessage: "",
   };
@@ -15,6 +16,11 @@ class SwipeJobPost extends Component {
   openFilter = (e) => {
     this.setState({ optionsIsOpen: true });
   };
+  setCurrentoptions = (arrOptionsSelected) => {
+    this.setState({
+      currentOptions: arrOptionsSelected
+    })
+  }
   searchRandom = (params = false) => {
     let url = "/posts/random";
     if (params) {
@@ -89,7 +95,7 @@ class SwipeJobPost extends Component {
             </div>
           )}
         </div>
-        {this.state.optionsIsOpen && <OverlayWeapon filter={this.searchRandom}/>}
+        {this.state.optionsIsOpen && <OverlayWeapon filter={this.searchRandom} remenberOptions={this.setCurrentoptions} currentOptions={this.state.currentOptions}/>}
       </div>
     );
   }

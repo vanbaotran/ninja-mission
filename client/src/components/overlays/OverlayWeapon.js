@@ -7,8 +7,10 @@ class OverlayWeapon extends Component {
   filterDataSwipeParent = () => {
     if (this.state.chooseFilter.length === 0) {
       this.props.filter();
+      this.props.remenberOptions([]);
     } else {
       this.props.filter(this.state.chooseFilter);
+      this.props.remenberOptions(this.state.chooseFilter);
     }
   };
   toggleFilter = (contract) => {
@@ -22,6 +24,11 @@ class OverlayWeapon extends Component {
       chooseFilter: copyChoose
     })
   }
+  componentDidMount() {
+    this.setState({
+      chooseFilter: this.props.currentOptions
+    })
+  }
   render() {
     return (
       <div className="overlay">
@@ -30,21 +37,23 @@ class OverlayWeapon extends Component {
         <p>
           the weapon you are looking for stands for the contract type for your next position. By
           default, you can see all types of weapons. Choose the one(s) to your skills!
+          <br/>
+          <strong>Grey weapons are filters if no filter all job posts is selected</strong>
         </p>
         <div className="weapon-block">
-          <div onClick={() => this.toggleFilter("Internship")} className="weapon">
+          <div onClick={() => this.toggleFilter("Internship")} className={`weapon ${this.state.chooseFilter.includes("Internship") ? "bg-grey" : ""}`}>
             <img src="/images/internship.png" alt="ico weapon" />
             <p className="text-blue">Internship</p>
           </div>
-          <div onClick={() => this.toggleFilter("Freelance")} className="weapon">
+          <div onClick={() => this.toggleFilter("Freelance")} className={`weapon ${this.state.chooseFilter.includes("Freelance") ? "bg-grey" : ""}`}>
             <img src="/images/freelance.png" alt="ico weapon" />
             <p className="text-red">Freelance</p>
           </div>
-          <div onClick={() => this.toggleFilter("Permanent")} className="weapon">
+          <div onClick={() => this.toggleFilter("Permanent")} className={`weapon ${this.state.chooseFilter.includes("Permanent") ? "bg-grey" : ""}`}>
             <img src="/images/permanent.png" alt="ico weapon" />
             <p className="text-blue">Permanent</p>
           </div>
-          <div onClick={() => this.toggleFilter("Temporary")} className="weapon">
+          <div onClick={() => this.toggleFilter("Temporary")} className={`weapon ${this.state.chooseFilter.includes("Temporary") ? "bg-grey" : ""}`}>
             <img src="/images/temporary.png" alt="ico weapon" />
             <p className="text-red">Temporary</p>
           </div>
