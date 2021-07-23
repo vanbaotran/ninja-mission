@@ -5,7 +5,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import PostForm from './components/forms/PostForm';
 import RecruiterForm from "./components/forms/RecruiterForm";
-// import PostDetails from './components/details/PostDetails';
+import PostDetailsFromSwip from './components/details/PostDetailsFromSwip';
 import {Switch, Route} from 'react-router-dom';
 import CandidateForm from './components/forms/CandidateForm'
 import {loggedIn, editProfile} from './components/service';
@@ -65,9 +65,11 @@ class App extends React.Component {
           {/* <Route path='/createpost' render={() => <PostForm {...this.props} updateCurrentPost={this.updateCurrentPost}/>}/> */}
           <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser} currentPostId={this.state.currentPostId}/>} />
           <Route path='/postform/:id' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
+          <Route path='/posts/:id/fromswipe' render={(props) => <PostDetailsFromSwip {...props} currentUser={this.state.loggedInUser} />} />
           <Route path='/posts/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId} />} />
           <Route path='/recruiterform' render={(props) => <RecruiterForm {...props} currentUserId={this.state.loggedInUser ? this.state.loggedInUser._id : false} />} />
-          <Route path='/intest' render={()=><SwipeJobPost currentUser={this.state.loggedInUser} />} />
+          <Route path='/swipeOffer/random' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser}  {...props}/>} />
+          <Route path='/swipeOffer/:id' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser}  {...props}/>} />
           <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
         </Switch>

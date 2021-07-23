@@ -41,7 +41,22 @@ class SwipeJobPost extends Component {
       });
   }
   componentDidMount() {
+    // if return from detail find post by id else random post
+    if(this.props.match.params.id) {
+      service.get(`/posts/${this.props.match.params.id}`)
+      .then(resp => {
+        this.setState({
+          offer: resp.data,
+          optionsIsOpen: false
+        })
+      })
+        .catch(err => console.log(err));
+    } else {
     this.searchRandom();
+    }
+  }
+  detailPost = () => {
+    this.props.history.push(`/posts/${this.state.offer._id}/fromswipe`);
   }
   render() {
     let compagnyLogo = this.state.offer?.companyLogo || this.state.offer?.recruiterId?.companyLogo || "/images/temple.png";
@@ -64,7 +79,7 @@ class SwipeJobPost extends Component {
             &&
               <h1>{(this.state.errorMessage && <div className="text-red">{this.state.errorMessage}</div> )|| "Loading..."}</h1>)
             || (
-            <div className="block-to-swipe">
+            <div className="block-to-swipe" onClick={this.detailPost}>
               <img className="company-logo" src={compagnyLogo} alt="logo" />
               <h1>{this.state.offer.position}</h1>
               <div className="block-infoico">

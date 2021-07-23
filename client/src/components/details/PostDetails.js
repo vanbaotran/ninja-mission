@@ -16,6 +16,7 @@ class PostDetails extends Component {
     remote: false,
     funFact: "",
     website: "",
+    fromswipe: false,
   };
   componentDidMount() {
     if (!this.props.currentUser) {
@@ -23,8 +24,10 @@ class PostDetails extends Component {
     } else {
       dataPostToStatePost(this.props.match.params.id)
         .then(data => {
+
           this.setState({
             ...data,
+            fromswipe: this.props.fromswip || false
           });
       }).catch(err => console.log(err))
       
@@ -43,6 +46,9 @@ class PostDetails extends Component {
     })
     .catch(err=>console.log(err))
   }
+  back = () => {
+    this.props.history.push(`/swipeOffer/${this.props.match.params.id}`);
+  }
   render() {
     return (
       <div>
@@ -52,7 +58,7 @@ class PostDetails extends Component {
             alt="logo comp"
           />
           <h1>{this.state.offerName}</h1>
-          <button onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>
+          {this.props.fromswipe  || <button onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>}
         </div>
         <div className="body-post-details">
           <div className="detail-level">
@@ -95,7 +101,7 @@ class PostDetails extends Component {
               {this.state.website}
             </a>
           </div>
-          <button onClick={this.handleEdit}>EDIT THIS POST</button>
+          {(this.props.fromswipe && <button onClick={this.back}>GO BACK</button>) || <button onClick={this.handleEdit}>EDIT THIS POST</button>}
         </div>
       </div>
     );
