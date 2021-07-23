@@ -15,6 +15,7 @@ import SwipeJobPost from './components/SwipeJobPost';
 import PostDetails from './components/details/PostDetails';
 import Logout from './components/Logout';
 import LevelPage from './components/LevelPage';
+import CandidateDetails from "./components/details/CandidateDetails"
 
 class App extends React.Component {
   state = {
@@ -72,6 +73,7 @@ class App extends React.Component {
           <Route path='/swipeOffer/:id' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser}  {...props}/>} />
           <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
+          <Route path='/intest' render={()=><CandidateDetails currentUser={this.state.loggedInUser}/>} />
         </Switch>
       </div> 
     );

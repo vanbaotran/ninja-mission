@@ -64,6 +64,11 @@ class CandidateForm extends React.Component{
       usefulLinks:updatedLinks
     });
  }
+  handleChangeMultiple = (name, value) => {
+    this.setState({
+      [name]: value,
+    });
+  };
   handleChangeFile = (e) =>{
     const uploadData = new FormData();
     uploadData.append('imageUrl', e.target.files[0]);

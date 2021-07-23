@@ -12,6 +12,7 @@ const NavBar = () =>{
       <Link to='/posts/60f593486a935c3cfee130d2'>postDetails </Link>
       <Link to='/logout'>Log Out </Link>
       <Link to='/levelspage'>MY LEVEL </Link>
+       <Link to='/intest'> test </Link>
 
     </div>
   )
