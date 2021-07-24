@@ -4,45 +4,31 @@ import {Link} from 'react-router-dom'
 
 class CandidateDetails extends Component {
   state = {
-    name: this.props.currentUser?.name || "",
-    email: this.props.currentUser?.email || "",
-    birthday: this.props.currentUser?.birthday || "",
-    bio: this.props.currentUser?.bio || "",
-    avatar: this.props.currentUser?.avatar || "",
-    title: this.props.currentUser?.title || "",
-    codeLanguage: this.props.currentUser?.codeLanguage || "",
-    funFact: this.props.currentUser?.funFact || "",
-    level: this.props.currentUser?.level || "",
-    usefulLinks: {
-      linkedin: this.props.currentUser?.usefulLinks?.linkedin || "",
-      github: this.props.currentUser?.usefulLinks?.github || "",
-      portfolio: this.props.currentUser?.usefulLinks?.portfolio || "",
-    },
-    fromswipe: false,
+    from: false,
   };
   componentDidMount() {
     if (!this.props.currentUser) {
       this.props.history.push("/login");
     } else {
-      if (this.props.fromswipe) {
+      if (this.props.from) {
         service
           .get(`/users/${this.props.match.params.id}`)
-          .then((data) => {
-            console.log(data);
+          .then((response) => {
+            console.log(response);
             this.setState({
-              ...data.data,
-              fromswipe: this.props.fromswipe || false,
+              ...response.data,
+              from: this.props.from || false,
             });
           })
           .catch((err) => console.log(err));
       } else {
         service
           .get(`/users/${this.props.currentUser._id}`)
-          .then((data) => {
-            console.log(data);
+          .then((response) => {
+            console.log(response);
             this.setState({
-              ...data.data,
-              fromswipe: this.props.fromswipe || false,
+              ...response.data,
+              from: this.props.fromswipe || false,
             });
           })
           .catch((err) => console.log(err));
@@ -125,7 +111,9 @@ class CandidateDetails extends Component {
             </a>
           </div>
         </div>
-      {(this.props.fromswipe &&  <Link to={`/swipeCandidate/${this.props.match.params.id}`}><button>GO BACK</button></Link>) || <Link to='/editCandidateform'><button>Edit my info</button></Link> } 
+      {(this.props.from === 'swipe' &&  <Link to={`/swipeCandidate/${this.props.match.params.id}`}><button>GO BACK</button></Link>) ||
+      (this.props.from === 'dashboard' &&  <Link to={`/dashboard`}><button>GO BACK</button></Link>)||
+      <Link to='/editCandidateform'><button>Edit my info</button></Link> } 
       </div>
     );
   }
