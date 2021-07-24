@@ -23,33 +23,7 @@ class ProfilePage extends React.Component {
     })
     .catch(err=>console.log(err))
   }
-  // componentDidUpdate(prevProps, prevState){
-  //   if(prevProps.currentUser !== this.props.currentUser){
-  //     console.log('CHANGING USER')
-  //     getUserData(this.props.currentUser._id)
-  //     .then(response=>{
-  //       this.setState(response)
-  //       console.log(response)
-  //     })
-  //     .catch(err=>console.log(err))
-  //   }
-    // TRYING TO GET OFFERNAME
-    // if(prevProps.currentPostId !== this.props.currentPostId){
-    //   console.log('changing CURRENTPOST ID')
-     
-    // }
-  // }
-  // getPostName = (postId) => {
-  //   let offerName;
-  //   getPostData(postId)
-  //     .then(response=>{
-  //       offerName = response.offerName
-  //       console.log('CURRENT POST ID',response)
-  //       console.log('OFFER NAME', offerName)
-  //     })
-  //     .catch(err=>console.log(err))
-  //   return offerName
-  // }
+
   render(){
     if(this.props.currentUser.profileType==='candidate'){
       return(

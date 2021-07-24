@@ -1,33 +1,79 @@
 import React from "react";
 import service from "./service";
-import '../css/SwipeCandidateProfile.css'
+import "../css/Swipe.css";
+import OverlayExperience from "./overlays/OverlayExperience";
 class SwipeCandidateProfile extends React.Component {
   state = {
     optionsIsOpen: false,
-    // currentOptions: ["Internship", "Freelance", "Permanent", "Temporary"],
+    currentOptions: [],
     candidate: false,
     errorMessage: "",
   };
   openFilter = (e) => {
     this.setState({ optionsIsOpen: true });
   };
-  searchRandom = () => {
+  // searchRandom = () => {
+  //   service
+  //     .get("/users/random")
+  //     .then((response) => {
+  //       console.log(response.data)
+  //       this.setState({
+  //         candidate: response.data,
+  //       });
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+  searchRandom = (params = false) => {
+    let url = "/users/random";
+    if (params) {
+      url = `${url}?filterLevel=${params.join("_")}`;
+    }
     service
-      .get("/users/random")
-      .then((response) => {
-        console.log(response.data)
-        this.setState({
-          candidate: response.data,
-        });
+      .get(url)
+      .then((resp) => {
+        console.log(resp);
+        if (resp.status === 204) {
+          this.setState({
+            candidate: false,
+            optionsIsOpen: false,
+            errorMessage: resp.statusText,
+          });
+        } else {
+          this.setState({
+            candidate: resp.data,
+            optionsIsOpen: false,
+          });
+        }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        // this.setState({ errorMessage: err })
+      });
   };
+  setCurrentoptions = (arrOptionsSelected) => {
+    this.setState({
+      currentOptions: arrOptionsSelected,
+    });
+  };
+  detailPost = () => {
+    this.props.history.push(`/users/${this.state.candidate._id}/fromswipe`);
+  }
   componentDidMount = () => {
+    if(this.props.match.params.id){
+      service.get(`/users/${this.props.match.params.id}`)
+      .then(response=>{
+        this.setState({
+          candidate:response.data
+        })
+      })
+      .catch(err=>console.log(err))
+    } else {
     this.searchRandom();
+    }
   };
   render() {
     return (
-      <div>
+      <div className="swipeCandidate">
         <div className="swipe">
           <div className="header-swipe">
             <img
@@ -53,7 +99,8 @@ class SwipeCandidateProfile extends React.Component {
             />
           </div>
           <div className="body-swipe">
-            {(!this.state.candidate && <h1>Loading...</h1>) || (
+            {(!this.state.candidate && 
+             <h1>{(this.state.errorMessage && <div className="text-red">{this.state.errorMessage}</div> )|| "Loading..."}</h1>) || (
               <div className="block-to-swipe" onClick={this.detailPost}>
                 <img
                   className="avatar"
@@ -62,15 +109,28 @@ class SwipeCandidateProfile extends React.Component {
                 />
                 <div className="block-footer">
                   <h1>{this.state.candidate.title}</h1>
-                  <img
-                    src={this.state.candidate ? `/images/${this.state.candidate.level.toLowerCase()}.png`:`/images/ninja.png`}
-                    alt="level-icon"
-                  />
+                  <div className="image-level">
+                    <img
+                      src={
+                        this.state.candidate
+                          ? `/images/${this.state.candidate.level.toLowerCase()}.png`
+                          : `/images/ninja.png`
+                      }
+                      alt="level-icon"
+                    />
+                  </div>
                 </div>
               </div>
             )}
           </div>
         </div>
+        {this.state.optionsIsOpen && (
+          <OverlayExperience
+            filter={this.searchRandom}
+            rememberOptions={this.setCurrentoptions}
+            currentOptions={this.state.currentOptions}
+          />
+        )}
       </div>
     );
   }

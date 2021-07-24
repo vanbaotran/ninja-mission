@@ -41,6 +41,10 @@ function getPostData(id){
   return service.get(`/posts/${id}`).then(response => response.data)
 }
 export {getPostData}
+function getOfferList(recruiterId){
+  return service.get(`/posts/recruiter/${recruiterId}`).then(response => response.data)
+}
+export {getOfferList}
 
 function dataPostToStatePost(id) {
   return service.get(`/posts/${id}`).then(response => {

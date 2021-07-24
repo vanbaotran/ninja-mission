@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import service from "../service.js"
+import service from "../service.js";
+import {Link} from 'react-router-dom'
 
 class CandidateDetails extends Component {
   state = {
@@ -21,16 +22,31 @@ class CandidateDetails extends Component {
   };
   componentDidMount() {
     if (!this.props.currentUser) {
-      this.props.history.push("/");
+      this.props.history.push("/login");
     } else {
-     service.get(`/users/${this.props.currentUser._id}`)
-        .then(data => {
-          console.log(data)
-          this.setState({
-            ...data.data,
-            fromswipe: this.props.fromswip || false
-          });
-      }).catch(err => console.log(err))
+      if (this.props.fromswipe) {
+        service
+          .get(`/users/${this.props.match.params.id}`)
+          .then((data) => {
+            console.log(data);
+            this.setState({
+              ...data.data,
+              fromswipe: this.props.fromswipe || false,
+            });
+          })
+          .catch((err) => console.log(err));
+      } else {
+        service
+          .get(`/users/${this.props.currentUser._id}`)
+          .then((data) => {
+            console.log(data);
+            this.setState({
+              ...data.data,
+              fromswipe: this.props.fromswipe || false,
+            });
+          })
+          .catch((err) => console.log(err));
+      }
     }
   }
   handleEdit = (e) => {
@@ -54,12 +70,22 @@ class CandidateDetails extends Component {
       <div>
         <div className="head-candidate-detail">
           <div className="head-avatar-candidate">
-            <img src={this.state.avatar ? this.state.avatar : "/images/ninja.png"} alt="avatar" />
+            <img
+              src={this.state.avatar ? this.state.avatar : "/images/ninja.png"}
+              alt="avatar"
+            />
             <p>location</p>
           </div>
           <div className="head-name-candidate">
             <h1>{this.state.name}</h1>
-            <img src={`/images/${this.props.currentUser ? this.props.currentUser.level.toLowerCase() : "ninja.png"}`} alt="level ico"/>
+            <img
+              src={`/images/${
+                this.state.level
+                  ? `${this.state.level.toLowerCase()}.png`
+                  : "ninja.png"
+              }`}
+              alt="level ico"
+            />
           </div>
           {/* {this.props.fromswipe  || <button onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>} */}
         </div>
@@ -67,27 +93,39 @@ class CandidateDetails extends Component {
           <div className="detail-level">
             <div>
               <h4>CODE LANGUAGES</h4>
-              <p>{this.props.currentUser ? this.props.currentUser.codeLanguage.join(',') : "none"}</p>
+              <p>
+                {this.state.codeLanguage
+                  ? this.state.codeLanguage.join(",")
+                  : "none"}
+              </p>
             </div>
-            <img src={`/images/${this.props.currentUser.experienceLevel ? this.props.currentUser.experienceLevel.toLowerCase() : "ninja.png"}.png`} alt="logo level" />
+            {/* <img
+              src={`/images/${
+                this.state.level
+                  ? this.state.experienceLevel.toLowerCase()
+                  : "ninja.png"
+              }.png`}
+              alt="logo level"
+            /> */}
           </div>
           <div>
             <h4>BIO</h4>
-            <p>{this.props.currentUser.bio}</p>
+            <p>{this.state.bio}</p>
           </div>
-          {this.props.currentUser.funFact && (
+          {this.state.funFact && (
             <div className="fun-fact">
               <h4>FUN FACT</h4>
-              <p>{this.props.currentUser.funFact}</p>
+              <p>{this.state.funFact}</p>
             </div>
           )}
-         
+
           <div className="link-candidate">
             <a href={this.state.website} rel="noreferrer" target="_blank">
               {this.state.website}
             </a>
           </div>
         </div>
+      {(this.props.fromswipe &&  <Link to={`/swipeCandidate/${this.props.match.params.id}`}><button>GO BACK</button></Link>) || <Link to='/editCandidateform'><button>Edit my info</button></Link> } 
       </div>
     );
   }

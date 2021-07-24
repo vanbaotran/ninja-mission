@@ -93,12 +93,12 @@ p {
   
 
 }
-.weapon-block {
+.weapon-block, .level-block {
   display: flex;
   margin: 0.2em;
  
 }
-.weapon {
+.weapon, .level {
   display: flex;
   flex-direction: column;
   border: 1px solid rgb(196, 194, 194);
@@ -108,11 +108,36 @@ p {
   font-size: 0.7em;
   margin: auto;  
 }
-.weapon-block img {
+.weapon-block, .level-block img {
   width: 50px;
   height: 50px;
   margin: auto;
 }
 .bg-grey{
 background-color: rgb(196, 194, 194);
+}
+/*
+######  ##      ## #### ########  ########     ######     ###    ##    ## ########  #### ########     ###    ######## ######## 
+##    ## ##  ##  ##  ##  ##     ## ##          ##    ##   ## ##   ###   ## ##     ##  ##  ##     ##   ## ##      ##    ##       
+##       ##  ##  ##  ##  ##     ## ##          ##        ##   ##  ####  ## ##     ##  ##  ##     ##  ##   ##     ##    ##       
+ ######  ##  ##  ##  ##  ########  ######      ##       ##     ## ## ## ## ##     ##  ##  ##     ## ##     ##    ##    ######   
+      ## ##  ##  ##  ##  ##        ##          ##       ######### ##  #### ##     ##  ##  ##     ## #########    ##    ##       
+##    ## ##  ##  ##  ##  ##        ##          ##    ## ##     ## ##   ### ##     ##  ##  ##     ## ##     ##    ##    ##       
+ ######   ###  ###  #### ##        ########     ######  ##     ## ##    ## ########  #### ########  ##     ##    ##    ######## */
+
+.swipeCandidate .block-footer {
+  display: flex;
+  
+} 
+.swipeCandidate .image-level {
+  border: 3px solid #0D3B66;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  padding: 0.5em;
+}
+.swipeCandidate .image-level img {
+  margin: auto;
+  height: 90%;
 }

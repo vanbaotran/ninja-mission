@@ -91,8 +91,13 @@ router.get("/loggedin", (req, res, next) => {
 /* GET */
 router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
   let random, randomUser, countDoc, user;
+    // FILTER EXP LEVEL:
+  let filter = {};
+  if (req.query?.filterLevel) {
+    filter = { level: { $in: req.query.filterLevel.split("_") } };
+  }
   try {
-    await User.countDocuments({ profileType: "candidate" })
+    await User.countDocuments({ profileType: "candidate", ...filter })
       .then((count) => {
         countDoc = count;
         random = Math.floor(Math.random() * count);
@@ -105,15 +110,17 @@ router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
     if (!user.currentApplicationId) {
       return res.status(204).json();
     }
-    randomUser = await User.findOne({ profileType: "candidate" }).skip(random);
-    console.log(randomUser);
+    randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(random);
+    if (!randomUser){
+      return res.status(204).json()
+     }
     while (
       user.currentApplicationId.refusedCandidateId.includes(randomUser._id) ||
       randomUser.profileType === "recruiter"
     ) {
       console.log("test");
       random = Math.floor(Math.random() * countDoc);
-      randomUser = await User.findOne({ profileType: "candidate" }).skip(
+      randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(
         random
       );
     }

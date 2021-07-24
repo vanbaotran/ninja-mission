@@ -27,7 +27,7 @@ class PostDetails extends Component {
 
           this.setState({
             ...data,
-            fromswipe: this.props.fromswip || false
+            fromswipe: this.props.fromswipe || false
           });
       }).catch(err => console.log(err))
       

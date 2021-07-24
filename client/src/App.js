@@ -17,6 +17,7 @@ import Logout from './components/Logout';
 import LevelPage from './components/LevelPage';
 import CandidateDetails from "./components/details/CandidateDetails"
 import SwipeCandidateProfile from './components/SwipeCandidateProfile'
+import MyOffersList from './components/MyOffersList'
 class App extends React.Component {
   state = {
     loggedInUser: null,
@@ -62,7 +63,7 @@ class App extends React.Component {
           <Route exact path='/' component={Homepage}/>
           <Route path='/login'  render={()=><Login currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>
           <Route path='/signup' render={()=><Signup currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
-          <Route path='/candidateform' render={()=><CandidateForm currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
+          <Route path='/editCandidateform' render={()=><CandidateForm currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           {/* <Route path='/createpost' render={() => <PostForm {...this.props} updateCurrentPost={this.updateCurrentPost}/>}/> */}
           <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser} currentPostId={this.state.currentPostId}/>} />
           <Route path='/postform/:id' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
@@ -74,7 +75,10 @@ class App extends React.Component {
           <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/intest' render={()=><CandidateDetails currentUser={this.state.loggedInUser}/>} />
-          <Route path='/swipeCandidate/random' render={()=><SwipeCandidateProfile currentUser={this.state.loggedInUser}/>} />
+          <Route path='/swipeCandidate/random' render={(props)=><SwipeCandidateProfile  {...props} currentUser={this.state.loggedInUser}/>} />
+          <Route path='/swipeCandidate/:id' render={(props)=><SwipeCandidateProfile {...props} currentUser={this.state.loggedInUser}/>} />
+          <Route path='/users/:id/fromswipe' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} fromswipe={true}/>} />
+          <Route path='/myoffers' render={()=><MyOffersList currentUser={this.state.loggedInUser}/>} />
         </Switch>
       </div> 
     );

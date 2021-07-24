@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import OverlayWeapon from "./overlays/OverlayWeapon";
-import "../css/SwipeJobPost.css";
+import '../css/Swipe.css'
 import service from "./service";
 import InfoIco from "./swipe/InfoIco";
 // import useSwipeable from 'react-swipeable';
@@ -95,7 +95,7 @@ class SwipeJobPost extends Component {
             </div>
           )}
         </div>
-        {this.state.optionsIsOpen && <OverlayWeapon filter={this.searchRandom} remenberOptions={this.setCurrentoptions} currentOptions={this.state.currentOptions}/>}
+        {this.state.optionsIsOpen && <OverlayWeapon filter={this.searchRandom} rememberOptions={this.setCurrentoptions} currentOptions={this.state.currentOptions}/>}
       </div>
     );
   }

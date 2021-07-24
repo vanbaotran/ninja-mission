@@ -7,10 +7,10 @@ class OverlayWeapon extends Component {
   filterDataSwipeParent = () => {
     if (this.state.chooseFilter.length === 0) {
       this.props.filter();
-      this.props.remenberOptions([]);
+      this.props.rememberOptions([]);
     } else {
       this.props.filter(this.state.chooseFilter);
-      this.props.remenberOptions(this.state.chooseFilter);
+      this.props.rememberOptions(this.state.chooseFilter);
     }
   };
   toggleFilter = (contract) => {
