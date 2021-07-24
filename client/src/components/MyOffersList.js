@@ -1,24 +1,33 @@
 import React from 'react';
-import getOfferList from './service'
+import service from './service'
 class MyOffersList extends React.Component{
   state ={
     offerList:[]
   }
+  goToDetails = (postId) =>{
+    this.props.history.push(`/posts/${postId}`)
+  }
   componentDidMount(){
-    getOfferList(this.props.currentUser._id)
-    .then(offersFromDB=>{
-      this.setState({
-        offerList:offersFromDB
+    if(this.props.currentUser){
+      service.get(`/posts/recruiter/${this.props.currentUser._id}`)
+      .then(response=>{
+        console.log(response.data)
+        this.setState({
+          offerList:response.data
+        })
+        console.log(this.state.offerList)
       })
-      console.log(this.state.offerList)
-    })
-    .catch(err=>console.log(err))
+      .catch(err=>console.log(err))
+    }  
   }
   render(){
     return (
-      <div>
-    {this.state.offerList.map((offer)=>{
-      return <li key={offer._id}>{offer.offerName}</li>
+      <div className="list"> 
+      <h1>MY OFFERS </h1>
+     {this.state.offerList.map((offer)=>{
+      return <div onClick={()=>this.goToDetails(offer._id)} className="list-element" key={offer._id}>
+      <h2>{offer.offerName}</h2>
+      </div>
     })}
       </div>
     )

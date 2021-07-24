@@ -5,7 +5,7 @@ class Homepage extends React.Component{
     return (
       <div>
         <section className='landPage'>
-          <img src='/images/ninja-logo.png' alt='logo'/>
+          <img className='logo' src='/images/ninja-logo.png' alt='logo'/>
           <Link to='/login'><button className='btn login'>LOG IN</button></Link>
           <Link to='/signup'><button className='btn signup'>SIGN UP</button></Link>
         </section>
