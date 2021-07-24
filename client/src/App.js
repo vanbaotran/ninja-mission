@@ -16,7 +16,7 @@ import PostDetails from './components/details/PostDetails';
 import Logout from './components/Logout';
 import LevelPage from './components/LevelPage';
 import CandidateDetails from "./components/details/CandidateDetails"
-
+import SwipeCandidateProfile from './components/SwipeCandidateProfile'
 class App extends React.Component {
   state = {
     loggedInUser: null,
@@ -74,6 +74,7 @@ class App extends React.Component {
           <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/intest' render={()=><CandidateDetails currentUser={this.state.loggedInUser}/>} />
+          <Route path='/swipeCandidate/random' render={()=><SwipeCandidateProfile currentUser={this.state.loggedInUser}/>} />
         </Switch>
       </div> 
     );

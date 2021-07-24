@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
+const Application = require("../models/Application.model");
 const { isCandidate, isRecruiter, isLoggedIn } = require("./useful");
 const bcrypt = require("bcryptjs");
 
@@ -11,7 +12,8 @@ router.post("/signup", (req, res, next) => {
   }
   if (password.length < 8) {
     res.status(400).json({
-      message: "Please make your password at least 8 characters long for security purposes.",
+      message:
+        "Please make your password at least 8 characters long for security purposes.",
     });
     return;
   }
@@ -19,7 +21,9 @@ router.post("/signup", (req, res, next) => {
   User.findOne({ email })
     .then((foundUser) => {
       if (foundUser) {
-        res.status(400).json({ message: "Email already taken. Please enter another one." });
+        res
+          .status(400)
+          .json({ message: "Email already taken. Please enter another one." });
         return;
       }
       const salt = bcrypt.genSaltSync(10);
@@ -38,7 +42,9 @@ router.post("/signup", (req, res, next) => {
           res.status(200).json(aNewUser);
         })
         .catch((err) => {
-          res.status(400).json({ message: "Saving user to database went wrong" });
+          res
+            .status(400)
+            .json({ message: "Saving user to database went wrong" });
         });
     })
     .catch((err) => res.status(500).json({ message: "Email check went bad" }));
@@ -52,7 +58,9 @@ router.post("/login", (req, res, next) => {
       console.log(user);
       if (!user) {
         return next(
-          new Error("No user with that email. Please sign up if you are new to Ninja Mission")
+          new Error(
+            "No user with that email. Please sign up if you are new to Ninja Mission"
+          )
         );
       }
       if (bcrypt.compareSync(password, user.password) !== true) {
@@ -84,23 +92,30 @@ router.get("/loggedin", (req, res, next) => {
 router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
   let random, randomUser, countDoc, user;
   try {
-    await User.countDocuments(function (err, count) {
-      // Get a random entry
-      countDoc = count;
-      random = Math.floor(Math.random() * count);
-    });
-    user = await User.findOne({ _id: req.session.currentUser._id }).populate(
-      "currentApplicationId"
-    );
-    console.log(user);
-    randomUser = await User.findOne().skip(random);
+    await User.countDocuments({ profileType: "candidate" })
+      .then((count) => {
+        countDoc = count;
+        random = Math.floor(Math.random() * count);
+      })
+      .catch((err) => console.log(err));
+
+    user = await User.findOne({ _id: req.session.currentUser._id })
+    .populate("currentApplicationId")
+    //if recruiter doesnt have a job post, he cannot swipe
+    if (!user.currentApplicationId) {
+      return res.status(204).json();
+    }
+    randomUser = await User.findOne({ profileType: "candidate" }).skip(random);
+    console.log(randomUser);
     while (
       user.currentApplicationId.refusedCandidateId.includes(randomUser._id) ||
       randomUser.profileType === "recruiter"
-      ) {
+    ) {
       console.log("test");
       random = Math.floor(Math.random() * countDoc);
-      randomUser = await User.findOne().skip(random);
+      randomUser = await User.findOne({ profileType: "candidate" }).skip(
+        random
+      );
     }
     res.status(200).json(randomUser);
     return;
@@ -123,14 +138,15 @@ router.get("/:id", isLoggedIn, (req, res, next) => {
 //PATCH update user profile
 router.patch("/", isLoggedIn, (req, res, next) => {
   const id = req.session.currentUser._id;
+  // let newApplicationId;
   if (req.body.password) {
     res.status(403).json("Password cannot be changed by this way.");
     return;
   }
-  if (id) {
+  function updateUserInfo(id, body) {
     User.findByIdAndUpdate(
       id.toString(),
-      { ...req.body },
+      { ...body },
       { new: true, runValidators: true },
       function (err, updatedUser) {
         if (err) {
@@ -139,37 +155,63 @@ router.patch("/", isLoggedIn, (req, res, next) => {
         return res.status(200).json(updatedUser);
       }
     );
-  } else {
-    return res.status(400).json({ message: "Please log in" });
   }
+  //  console.log(req.body)
+  if (req.body.currentPostId) {
+    Application.findOne({ jobPostId: req.body.currentPostId })
+      .then((appliFromDB) => {
+        console.log(appliFromDB);
+        let currentApplicationId = appliFromDB._id;
+        if (id) {
+          updateUserInfo(id, {...req.body,currentApplicationId:appliFromDB._id});
+        } else {
+          return res.status(400).json({ message: "Please log in" });
+        }
+      })
+      .catch((err) => console.log(err));
+  } else {
+    if (id) {
+      updateUserInfo(id,req.body);
+    } else {
+      return res.status(400).json({ message: "Please log in" });
+    }
+  }
+  console.log("req.body ", req.body);
 });
 //CANDIDATE SWIPES LEFT TO REFUSE JOB POST
-router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next) => {
-  const id = req.session.currentUser._id;
-  if (id) {
-    User.findOne({ _id: id })
-      .then((theUser) => {
-        if (theUser.swipedOfferId.includes(req.params.jobPostId)) {
-          res.status(500).json({ message: "Offer already swiped" });
-          return;
-        }
-        theUser.swipedOfferId.push(req.params.jobPostId);
-        theUser
-          .save()
-          .then((updatedUser) => {
-            res.status(200).json({ updatedUser });
+router.patch(
+  "/:jobPostId/swipeLeft",
+  [isLoggedIn, isCandidate],
+  (req, res, next) => {
+    const id = req.session.currentUser._id;
+    if (id) {
+      User.findOne({ _id: id })
+        .then((theUser) => {
+          if (theUser.swipedOfferId.includes(req.params.jobPostId)) {
+            res.status(500).json({ message: "Offer already swiped" });
             return;
-          })
-          .catch((err) => res.status(500).json(err));
-      })
-      .catch((err) => res.status(500).json(err));
-  } else {
-    return res.status(400).json({ message: "Please log in" });
+          }
+          theUser.swipedOfferId.push(req.params.jobPostId);
+          theUser
+            .save()
+            .then((updatedUser) => {
+              res.status(200).json({ updatedUser });
+              return;
+            })
+            .catch((err) => res.status(500).json(err));
+        })
+        .catch((err) => res.status(500).json(err));
+    } else {
+      return res.status(400).json({ message: "Please log in" });
+    }
   }
-});
+);
 /* DELETE*/
-router.delete("/:id",isLoggedIn, (req, res, next) => {
-  if (req.session.currentUser && req.params.id !== req.session.currentUser._id) {
+router.delete("/:id", isLoggedIn, (req, res, next) => {
+  if (
+    req.session.currentUser &&
+    req.params.id !== req.session.currentUser._id
+  ) {
     return res.status(403).json("You cannot delete this user.");
   }
   User.findOneAndDelete({ _id: req.params.id })

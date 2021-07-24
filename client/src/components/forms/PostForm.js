@@ -86,39 +86,28 @@ export class PostForm extends Component {
             this.props.history.push("/");
           })
           .catch((err) => console.log(err));
-
-        if (this.props.match.params.id === "new") {
-          service
-            .post("/posts", { ...this.state })
-            .then((response) => {
-              console.log("in submi", response);
-              this.props.updateCurrentPost(response.data.newPost._id);
-              this.props.history.push("/");
-            })
-            .catch((err) => console.log(err));
-        } else {
-          service
-            .patch(`/posts/${this.props.match.params.id}`, { ...this.state })
-            .then((response) => {
-              this.props.history.push("/");
-            });
-        }
-        this.setState({
-          offerName: "",
-          companyLogo: "",
-          companyBio: "",
-          companyName: "",
-          description: "", /// verif 500 char
-          position: "",
-          contract: "", //  enum: ["Internship", "Freelance", "Permanent", "Temporary"],
-          experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
-          codeLanguage: [], // voir si enum et ou vérification bonne donnée
-          location: { city: [], country: [] },
-          remote: false,
-          funFact: "", //maxlength: 250,
-          website: "",
-        });
+      } else {
+        service
+          .patch(`/posts/${this.props.match.params.id}`, { ...this.state })
+          .then((response) => {
+            this.props.history.push("/");
+          });
       }
+      this.setState({
+        offerName: "",
+        companyLogo: "",
+        companyBio: "",
+        companyName: "",
+        description: "", /// verif 500 char
+        position: "",
+        contract: "", //  enum: ["Internship", "Freelance", "Permanent", "Temporary"],
+        experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
+        codeLanguage: [], // voir si enum et ou vérification bonne donnée
+        location: { city: [], country: [] },
+        remote: false,
+        funFact: "", //maxlength: 250,
+        website: "",
+      });
     }
   };
   componentDidMount = () => {

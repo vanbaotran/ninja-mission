@@ -13,7 +13,7 @@ const NavBar = () =>{
       <Link to='/logout'>Log Out </Link>
       <Link to='/levelspage'>MY LEVEL </Link>
        <Link to='/intest'> test </Link>
-
+      <Link to='/swipeCandidate/random'>SWIPE CANDIDATE </Link>
     </div>
   )
 }
