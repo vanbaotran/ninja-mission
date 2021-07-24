@@ -1,19 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
 body{
-  font-family: 'Playfair Display', serif;;
+  font-family: 'EB Garamond', serif;;
 }
 img {
   max-width: 100%;
 }
 .logo {
   height: 40vh;
+  text-align: center;
 }
 form{
   display: flex;
   flex-direction: column;
 }
 /*swip*/
-
+.btn {
+  margin: 5px;
+  width: 400px;
+  max-width: 100%;
+  height: 32px;
+  border-radius: 32px;
+  border-style: none;
+  font-family: EB Garamond;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 21px;
+  color: #FEFCFB;
+}
+.red {
+  background-color: #F95738;
+}
+.blue {
+  background-color: #0D3B66;
+}
 .text-blue {
   color : #0D3B66;
 }
@@ -22,9 +42,9 @@ form{
 }
 .list-element {
   border: 2px solid #0D3B66;
-  width: 400px;
+  width: 340px;
   padding: 20px;
-  margin: 5px;
+  margin: 10px auto;
   border-radius: 16px;
   background-color: white;
 }
