@@ -15,6 +15,7 @@ const NavBar = () =>{
        <Link to='/intest'> test </Link>
       <Link to='/swipeCandidate/random'>SWIPE CANDIDATE </Link>
       <Link to='/myoffers'>  My offers </Link>
+      <Link to='/mydashboard'>  My dashboard </Link>
     </div>
   )
 }

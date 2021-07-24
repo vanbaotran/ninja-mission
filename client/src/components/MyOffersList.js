@@ -7,11 +7,7 @@ class MyOffersList extends React.Component{
   goToDetails = (postId) =>{
     this.props.history.push(`/posts/${postId}`)
   }
-  chosenPost = (offerId) =>{
-    if(this.props.currentPostId===offerId){
-      return {backgroundColor:'#F7E194'}
-    }
-  }
+
   componentDidMount(){
     if(this.props.currentUser){
       service.get(`/posts/recruiter/${this.props.currentUser._id}`)
@@ -34,7 +30,7 @@ class MyOffersList extends React.Component{
       return (this.props.currentPostId===offer._id && <div onClick={()=>this.goToDetails(offer._id)} style={{backgroundColor:'#F7E194'}} className="list-element" key={offer._id}> 
          <h2>{offer.offerName}</h2>
         </div>) ||
-        (<div onClick={()=>this.goToDetails(offer._id)} style={{}} className="list-element" key={offer._id}>
+        (<div onClick={()=>this.goToDetails(offer._id)} style={{}} className="list element" key={offer._id}>
          <h2>{offer.offerName}</h2>
         </div>)
     })}

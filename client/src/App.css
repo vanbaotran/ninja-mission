@@ -40,14 +40,20 @@ form{
 .text-red {
   color: #F95738;
 }
-.list-element {
-  border: 2px solid #0D3B66;
+.list .element{
   width: 340px;
+}
+.element {
+  border: 2px solid #0D3B66;
   padding: 20px;
   margin: 10px auto;
   border-radius: 16px;
   background-color: white;
 }
-.list-element:hover {
-  background-color: #F7E194;
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+}
+.dashboard .element {
+  width: 150px;
 }
