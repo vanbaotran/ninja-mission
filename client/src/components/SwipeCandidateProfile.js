@@ -8,6 +8,7 @@ class SwipeCandidateProfile extends React.Component {
     currentOptions: [],
     candidate: false,
     errorMessage: "",
+    remember: [],
   };
   openFilter = (e) => {
     this.setState({ optionsIsOpen: true });
@@ -58,6 +59,32 @@ class SwipeCandidateProfile extends React.Component {
   detailPost = () => {
     this.props.history.push(`/users/${this.state.candidate._id}/fromswipe`);
   }
+  swipeCandidate = async () => {
+    try {
+    await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/refuse`, {id: this.state.candidate._id})
+    let copyRemember = [...this.state.remember, `R_${this.state.candidate._id}`];
+    this.setState({
+      remember: copyRemember
+    })
+    this.searchRandom();
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+   chooseCandidate = async () => {
+    try {
+    await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {id: this.state.candidate._id})
+    let copyRemember = [...this.state.remember, `A_${this.state.candidate._id}`];
+    this.setState({
+      remember: copyRemember
+    })
+    this.searchRandom();
+
+    } catch (error) {
+      console.log(error)
+    }
+  };
   componentDidMount = () => {
     if(this.props.match.params.id){
       service.get(`/users/${this.props.match.params.id}`)
@@ -123,6 +150,27 @@ class SwipeCandidateProfile extends React.Component {
               </div>
             )}
           </div>
+           <div className="block-btn-swipe">
+          <img
+            className="btn-swipe"
+            src="/images/icons/reverse.png"
+            alt="reverse ico"
+            onClick={this.comeBack}
+          />
+          <img
+            className="btn-swipe"
+            src="/images/icons/cancel.png"
+            alt="cancel ico"
+            onClick={this.swipeCandidate}
+          />
+          <img
+            className="btn-swipe"
+            src="/images/icons/heart.png"
+            alt="heart ico"
+            onClick={this.chooseCandidate}
+          />
+          <img className="btn-swipe" src="/images/icons/save.png" alt="save ico" />
+        </div>
         </div>
           <div className="block-btn-swipe">
           <img

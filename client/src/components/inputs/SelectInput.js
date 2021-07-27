@@ -22,7 +22,7 @@ class SelectInput extends Component {
         <select
           multiple={this.props.multiple ? true : false}
           name={this.props.name}
-          value={this.props.value}
+          value={this.props.multiple ? [...this.props.value] : this.props.value}
           onChange={(e) => {
             if (this.props.multiple) {
               this.changeMultiple(e);

@@ -95,6 +95,7 @@ postRoutes.get("/recruiter/:recruiterId", [isLoggedIn, isRecruiter], (req, res, 
 });
 //GET ONE POST Details by id
 postRoutes.get("/:id", isLoggedIn, (req, res, next) => {
+  console.log(req.params.id)
   Post.findById(req.params.id)
     .populate('applicationId')
     .then((ret) => {

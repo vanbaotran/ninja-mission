@@ -79,20 +79,23 @@ router.patch("/:applicationId/remove", [isLoggedIn, isCandidate], (req, res, nex
 // add candidate in acceptedCandidateId
 router.patch("/:applicationId/accept", [isLoggedIn, isRecruiter], (req, res, next) => {
   let id = req.body.id;
+  console.log(req.params.applicationId, req.body.id)
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.acceptedCandidateId.includes(id)) {
         res.status(400).json({ message: `Candidate ${id} was already accepted.` });
         return;
       }
-      if (AppfromDb.refusedCandidatedId.includes(id)) {
+      if (AppfromDb.refusedCandidateId.includes(id)) {
         res
           .status(400)
           .json({ message: `Candidate ${id} cannot be accepted because he/she was refused.` });
         return;
       }
       AppfromDb.acceptedCandidateId.push(id);
+      console.log(AppfromDb, "========")
       AppfromDb.save().then((updatedApp) => {
+      console.log(updatedApp)
         res.status(200).json({
           message: `Candidate ${id} was succesfully accepted in application ${req.params.applicationId}`,
           application: updatedApp,
