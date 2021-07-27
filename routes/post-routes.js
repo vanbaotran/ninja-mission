@@ -44,6 +44,8 @@ postRoutes.post("/", [isLoggedIn, isRecruiter], (req, res, next) => {
 });
 
 postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
+    // get currentUser
+    let user = await User.findOne({ _id: req.session.currentUser._id });
   // initiate utils let
   let random, randomPost, countDoc, post;
   // FILTER CONTRACT:
@@ -53,16 +55,14 @@ postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
   }
   try {
     ///set random and countDoc
-    await Post.countDocuments(filter)
+    await Post.countDocuments({...filter, _id:{$nin: user.swipedOfferId}})
       .then(count => {
         console.log(count)
         countDoc = count;
         random = Math.floor(Math.random() * count);
       });
-    // get currentUser
-    let user = await User.findOne({ _id: req.session.currentUser._id });
     //get random post with or not query params
-    randomPost = await Post.findOne(filter).populate("recruiterId").skip(random);
+    randomPost = await Post.findOne({...filter, _id:{$nin: user.swipedOfferId}}).populate("recruiterId").skip(random);
     // if no post find return message
     console.log(randomPost, filter)
     if (!randomPost) {
