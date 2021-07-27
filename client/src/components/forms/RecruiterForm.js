@@ -30,7 +30,7 @@ class RecruiterForm extends React.Component {
         scope: updatedUser?.scope || "",
         funFact: updatedUser?.funFact || ""
       });
-
+    this.props.updateUser(updatedUser)
     });
   };
   handleChange = (e) => {
@@ -48,7 +48,7 @@ class RecruiterForm extends React.Component {
       });
   };
   componentDidMount() {
-    if (!this.props.currentUserId) { this.props.history.push("/") } else {
+    if (!this.props.currentUser) { this.props.history.push("/login") } else {
       service.get(`/users/${this.props.currentUserId}`).then(response => {
         let { name, email, bio, companyName, companyLogo, companyWebsite, industry, scope, funFact } = response.data;
         this.setState({ name, email, bio, companyName, companyLogo, companyWebsite, industry, scope, funFact });
@@ -104,19 +104,19 @@ class RecruiterForm extends React.Component {
           />
            <TextInput
             label="City"
-            name="scope.city"
+            name="city"
             value={this.state.scope.city}
             change={this.handleChange}
           />  
           <TextInput
             label="Country"
-            name="scope.country"
+            name="country"
             value={this.state.scope.country}
             change={this.handleChange}
           />
            <TextInput
             label="Fun Fact"
-            name="scope.funFact"
+            name="funFact"
             value={this.state.funFact}
             change={this.handleChange}
           />
