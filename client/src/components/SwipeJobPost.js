@@ -13,7 +13,6 @@ class SwipeJobPost extends Component {
     errorMessage: "",
     remember: [],
   };
-
   openFilter = (e) => {
     this.setState({ optionsIsOpen: true });
   };
@@ -70,7 +69,7 @@ class SwipeJobPost extends Component {
     if (this.props.match.params.id) {
       service
         .get(`/posts/${this.props.match.params.id}`)
-        .then((resp) => {
+        .then(async (resp) => {
           this.setState({
             offer: resp.data,
             optionsIsOpen: false,
@@ -108,8 +107,29 @@ class SwipeJobPost extends Component {
       console.log(error)
     }
   };
-  chooseOffer = () => {
-    console.log("choose");
+  chooseOffer = async () => {
+   try {
+      let idOffer = this.state.offer._id;
+      let copyRemember = [...this.state.remember, `C_${idOffer}`]; // stock id for reverse
+      // update application with apply of candidate
+      await service.patch(`/applications/${this.state.offer.applicationId}/add`);
+      let newRandom = await this.newRandom();
+      if (newRandom) {
+        this.setState({
+          offer: newRandom,
+          optionsIsOpen: false,
+          remember: copyRemember,
+        });
+      } else {
+        this.setState({
+          offer: false,
+          optionsIsOpen: false,
+          errorMessage: "No more offer",
+        });
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
   render() {
     let compagnyLogo =
