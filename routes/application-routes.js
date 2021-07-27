@@ -17,6 +17,20 @@ router.get("/", [isLoggedIn, isCandidate], (req, res, next) => {
     );
 });
 
+// get array of jobpostsid that candidate has choose
+router.get("/haveCandidate", [isLoggedIn, isCandidate], (req, res, next) => {
+  let id = req.session.currentUser._id;
+  Application.find({ candidateId: id })
+    .then((AppsfromDb) => {
+      let arrCandidating = AppsfromDb ? AppsfromDb.map(el => el.jobPostId) : [];
+      res.status(200).json({arrCandidating: arrCandidating});
+      return;
+    })
+    .catch((err) =>
+      res.status(500).json({ message: "Something went wrong when finding arrCandidating." })
+    );
+});
+
 /* patch */
 // APPLY TO A JOB POST: add candidate in candidateId
 router.patch("/:applicationId/add", [isLoggedIn, isCandidate], (req, res, next) => {

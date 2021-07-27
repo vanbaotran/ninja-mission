@@ -71,8 +71,8 @@ class App extends React.Component {
           <Route path='/posts/:id/fromswipe' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} fromswipe={true} />} />
           <Route path='/posts/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId} />} />
           <Route path='/recruiterform' render={(props) => <RecruiterForm {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} />} />
-          <Route path='/swipeOffer/random' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser}  {...props}/>} />
-          <Route path='/swipeOffer/:id' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser}  {...props}/>} />
+          <Route path='/swipeOffer/random' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>} />
+          <Route path='/swipeOffer/:id' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>} />
           <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/intest' render={()=><CandidateDetails currentUser={this.state.loggedInUser}/>} />
