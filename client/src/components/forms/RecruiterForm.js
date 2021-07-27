@@ -121,7 +121,7 @@ class RecruiterForm extends React.Component {
             change={this.handleChange}
           />
 
-          <button>SAVE {}</button>
+          <button className='btn red'onClick={()=>this.props.history.push('/companyDetails')}>SAVE THE CHANGES</button>
         </form>
       </div>
     );
