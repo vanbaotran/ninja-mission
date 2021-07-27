@@ -37,14 +37,14 @@ class ProfilePage extends React.Component {
           <h1>{this.props.currentUser.name}, {this.getAge(this.props.currentUser.birthday)}</h1>
         </header>
         <main>
-          <Link to='/candidateDetails'>
+          <Link to='/personalProfile'>
           <div className='row'>
             <img src='/images/ninja-profile.png' alt='ninja-profile'/>
             <h3>My Profile</h3>
           </div>
           </Link>
   
-          <Link to='/myLevels'>
+          <Link to='/levelspage'>
           <div className='row'>
             <img src='/images/nunchaku.png' alt='my-level'/>
             <h3>My Level</h3>

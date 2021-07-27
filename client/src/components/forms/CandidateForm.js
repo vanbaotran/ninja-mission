@@ -25,19 +25,19 @@ class CandidateForm extends React.Component{
   componentDidUpdate(prevProps) {
     if(prevProps.currentUser !== this.props.currentUser){
       this.setState({
-        name:this.props.currentUser?.name,
-        email:this.props.currentUser?.email,
-        birthday:this.props.currentUser?.birthday,
-        bio:this.props.currentUser?.bio,
-        avatar:this.props.currentUser?.avatar,
-        title:this.props.currentUser?.title,
-        codeLanguage:this.props.currentUser?.codeLanguage,
-        funFact:this.props.currentUser?.funFact,
-        level:this.props.currentUser?.level,
+        name:this.props.currentUser.name,
+        email:this.props.currentUser.email,
+        birthday:this.props.currentUser.birthday,
+        bio:this.props.currentUser.bio,
+        avatar:this.props.currentUser.avatar,
+        title:this.props.currentUser.title,
+        codeLanguage:this.props.currentUser.codeLanguage,
+        funFact:this.props.currentUser.funFact,
+        level:this.props.currentUser.level,
         usefulLinks:{
-          linkedin: this.props.currentUser?.usefulLinks?.linkedin,
-          github: this.props.currentUser?.usefulLinks?.github,
-          portfolio: this.props.currentUser?.usefulLinks?.portfolio,
+          linkedin: this.props.currentUser.usefulLinks.linkedin,
+          github: this.props.currentUser.usefulLinks.github,
+          portfolio: this.props.currentUser.usefulLinks.portfolio,
         }
       })
     } 
@@ -50,6 +50,7 @@ class CandidateForm extends React.Component{
       console.log(response)
       this.props.updateUser(response)
       this.setState(response)
+      this.updateUser(response)
     })
     .catch(error => console.log(error))
   }
@@ -99,7 +100,7 @@ class CandidateForm extends React.Component{
             <SelectInput
             label="Exp Level"
             name="level"  
-            value={this.state.level}
+            value={this.state.experienceLevel}
             change={this.handleChange}
             options={LevelOptions}
             multiple={false}

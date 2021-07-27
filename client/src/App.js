@@ -65,7 +65,7 @@ class App extends React.Component {
           <Route exact path='/' component={Homepage}/>
           <Route path='/login'  render={(props)=><Login {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>
           <Route path='/signup' render={(props)=><Signup {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
-          <Route path='/editCandidateform' render={()=><CandidateForm currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
+          <Route path='/editCandidateform' render={(props)=><CandidateForm {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser} currentPostId={this.state.currentPostId}/>} />
           <Route path='/postform/:id' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
           <Route path='/posts/:id/fromswipe' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} fromswipe={true} />} />
