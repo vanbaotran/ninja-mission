@@ -95,6 +95,12 @@ class SwipeJobPost extends Component {
             </div>
           )}
         </div>
+        <div className="block-ico-swipe">
+          <img className="ico-swipe" src="/images/icons/reverse.png" alt="reverse ico"/>
+          <img className="ico-swipe" src="/images/icons/cancel.png" alt="cancel ico"/>
+          <img className="ico-swipe" src="/images/icons/heart.png" alt="heart ico"/>
+          <img className="ico-swipe" src="/images/icons/save.png" alt="save ico"/>
+        </div>
         {this.state.optionsIsOpen && <OverlayWeapon filter={this.searchRandom} rememberOptions={this.setCurrentoptions} currentOptions={this.state.currentOptions}/>}
       </div>
     );

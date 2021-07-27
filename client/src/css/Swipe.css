@@ -77,6 +77,11 @@ h1 {
 p {
   text-align: center;
 }
+/* .block-ico-swipe {
+  display: flex;
+  padding: 1em;
+  height: 20px;
+} */
 /* OVERLAY*/
 .overlay {
   width: 80vw;
