@@ -124,6 +124,27 @@ class SwipeCandidateProfile extends React.Component {
             )}
           </div>
         </div>
+          <div className="block-btn-swipe">
+          <img
+            className="btn-swipe"
+            src="/images/icons/reverse.png"
+            alt="reverse ico"
+            onClick={this.comeBack}
+          />
+          <img
+            className="btn-swipe"
+            src="/images/icons/cancel.png"
+            alt="cancel ico"
+            onClick={this.swipeCandidate}
+          />
+          <img
+            className="btn-swipe"
+            src="/images/icons/heart.png"
+            alt="heart ico"
+            onClick={this.chooseCandidate}
+          />
+          <img className="btn-swipe" src="/images/icons/save.png" alt="save ico" />
+        </div>
         {this.state.optionsIsOpen && (
           <OverlayExperience
             filter={this.searchRandom}
