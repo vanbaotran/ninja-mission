@@ -9,13 +9,15 @@ const NavBar = () =>{
       <Link to='/editCandidateform'>Edit my Candidate profile </Link>
       <Link to='/profilepage'>Candidate profile </Link>
       <Link to='/swipeOffer/random'>Swipe Offer </Link>
-      <Link to='/posts/60f593486a935c3cfee130d2'>postDetails </Link>
+      <Link to='/posts/:id'>postDetails </Link>
       <Link to='/logout'>Log Out </Link>
       <Link to='/levelspage'>MY LEVEL </Link>
        <Link to='/intest'> test </Link>
       <Link to='/swipeCandidate/random'>SWIPE CANDIDATE </Link>
       <Link to='/myoffers'>  My offers </Link>
       <Link to='/mydashboard'>  My dashboard </Link>
+        <Link to='/companyDetails'>  My COMPANY DETAILS </Link>
+         <Link to='/recruiterform'>  My COMPANY details EDIT </Link>
     </div>
   )
 }

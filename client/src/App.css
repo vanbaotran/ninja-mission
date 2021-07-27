@@ -3,6 +3,9 @@
 body{
   font-family: 'EB Garamond', serif;;
 }
+li {
+  list-style: none;
+}
 img {
   max-width: 100%;
 }
@@ -40,6 +43,9 @@ form{
 .text-red {
   color: #F95738;
 }
+.text-yellow {
+  color: #F6DA79;
+}
 .list .element{
   width: 340px;
 }
@@ -56,4 +62,74 @@ form{
 }
 .dashboard .element {
   width: 150px;
+}
+/*
+ ######   #######  ##     ## ########     ###    ##    ## ##    ##    ########  ######## ########    ###    #### ##        ######  
+##    ## ##     ## ###   ### ##     ##   ## ##   ###   ##  ##  ##     ##     ## ##          ##      ## ##    ##  ##       ##    ## 
+##       ##     ## #### #### ##     ##  ##   ##  ####  ##   ####      ##     ## ##          ##     ##   ##   ##  ##       ##       
+##       ##     ## ## ### ## ########  ##     ## ## ## ##    ##       ##     ## ######      ##    ##     ##  ##  ##        ######  
+##       ##     ## ##     ## ##        ######### ##  ####    ##       ##     ## ##          ##    #########  ##  ##             ## 
+##    ## ##     ## ##     ## ##        ##     ## ##   ###    ##       ##     ## ##          ##    ##     ##  ##  ##       ##    ## 
+ ######   #######  ##     ## ##        ##     ## ##    ##    ##       ########  ########    ##    ##     ## #### ########  ######  */
+
+ .company-details {
+   margin: 30px;
+ }
+.company-details .title {
+  text-align: left;
+  font-weight: 900;
+  width: 100px;
+ }
+ .company-details .content {
+   text-align: left;
+   width: 400px;
+ }
+.company-details .line {
+  display: flex;
+ }
+/*
+########     ###     ######  ##     ## ########   #######     ###    ########  ########     ########  ######## ########    ###    #### ##        ######     
+##     ##   ## ##   ##    ## ##     ## ##     ## ##     ##   ## ##   ##     ## ##     ##    ##     ## ##          ##      ## ##    ##  ##       ##    ##    
+##     ##  ##   ##  ##       ##     ## ##     ## ##     ##  ##   ##  ##     ## ##     ##    ##     ## ##          ##     ##   ##   ##  ##       ##          
+##     ## ##     ##  ######  ######### ########  ##     ## ##     ## ########  ##     ##    ##     ## ######      ##    ##     ##  ##  ##        ######     
+##     ## #########       ## ##     ## ##     ## ##     ## ######### ##   ##   ##     ##    ##     ## ##          ##    #########  ##  ##             ##    
+##     ## ##     ## ##    ## ##     ## ##     ## ##     ## ##     ## ##    ##  ##     ##    ##     ## ##          ##    ##     ##  ##  ##       ##    ##    
+########  ##     ##  ######  ##     ## ########   #######  ##     ## ##     ## ########     ########  ########    ##    ##     ## #### ########  ######*/
+.dashboard-details header{
+  display: flex;
+  align-items: center;
+}
+.dashboard-details button {
+  color: #0D3B66;
+  background-color: white;
+  border: 1px solid #0D3B66;
+  width: 100px;
+}
+.candidate-list {
+  display: inline-block;
+  margin:10px;
+  width: 96%;
+  padding-inline-start: 0px;
+}
+.candidate-list li {
+  padding: 10px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+}
+.candidate-list .inline-avatar {
+  border-radius: 50%;
+  height: 100px;
+ width: 100px;
+ max-width: 100%;
+}
+.candidate-list .inline-level{
+  width: 50px ;
+  height: 50px;
+}
+.icon-search {
+  width: 20px;
+  max-width: 100%;
 }

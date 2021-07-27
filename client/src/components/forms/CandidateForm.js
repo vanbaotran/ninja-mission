@@ -50,6 +50,7 @@ class CandidateForm extends React.Component{
       console.log(response)
       this.props.updateUser(response)
       this.setState(response)
+      this.updateUser(response)
     })
     .catch(error => console.log(error))
   }

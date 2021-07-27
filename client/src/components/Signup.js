@@ -21,19 +21,24 @@ class Signup extends React.Component{
     const {name, email, password, profileType} = this.state
     signup(name, email, password, profileType)
       .then(response => {
+        if(response.profileType==='recruiter'){
+          this.props.history.push('/recruiterform')
+        } else if (response.profileType==='candidate'){
+           this.props.history.push('/editCandidateform')
+        }
+        console.log(response)
         this.setState({ 
           name:'',
           email:'',
           password:'',
           profileType:''
         })
-        this.props.updateUser(response)
+        this.props.updateUser(response);
+       
       })
       .catch(error => console.log(error))
 
-    this.setState({
-     
-    })
+
   }
   render(){
     if (this.state.profileType===''){
