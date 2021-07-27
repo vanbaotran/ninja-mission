@@ -130,8 +130,8 @@ export class PostForm extends Component {
         )}
         <h2>
           {this.props.match.params.id === "new"
-            ? "Add new Offer"
-            : "Edit the Offer"}
+            ? "ADD A NEW OFFER"
+            : "EDIT THE OFFER"}
         </h2>
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <label>
