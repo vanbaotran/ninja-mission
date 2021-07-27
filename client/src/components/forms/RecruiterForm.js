@@ -4,19 +4,21 @@ import service, { uploadFile } from "../service";
 
 class RecruiterForm extends React.Component {
   state = {
-    name: this.props.currentUser ? this.props.currentUser.name : "",
-    email: this.props.currentUser ? this.props.currentUser.email : "",
-    bio: this.props.currentUser ? this.props.currentUser.bio : "",
-    companyName: this.props.currentUser ? this.props.currentUser.companyName : "",
-    companyLogo: this.props.currentUser ? this.props.currentUser.companyLogo : "",
-    companyWebsite: this.props.currentUser ? this.props.currentUser.companyWebsite : "",
-    industry: this.props.currentUser ? this.props.currentUser.industry : "",
+    name: this.props.currentUser?.name || "",
+    email: this.props.currentUser?.email || "",
+    bio: this.props.currentUser?.bio || "",
+    companyName: this.props.currentUser?.companyName || "",
+    companyLogo: this.props.currentUser?.companyLogo || "",
+    companyWebsite: this.props.currentUser?.companyWebsite || "",
+    industry: this.props.currentUser?.industry || "",
+    scope: this.props.currentUser?.scope || "",
+    funFact: this.props.currentUser?.funFact || ""
   };
   handleSubmit = (e) => {
     e.preventDefault();
     service.patch(`/users`, { ...this.state }).then((response) => {
       let updatedUser = response.data;
-      // console.log(updatedUser)
+      console.log(updatedUser)
       this.setState({
         name: updatedUser ? updatedUser.name : "",
         email: updatedUser ? updatedUser.email : "",
@@ -25,7 +27,10 @@ class RecruiterForm extends React.Component {
         companyLogo: updatedUser ? updatedUser.companyLogo : "",
         companyWebsite: updatedUser ? updatedUser.companyWebsite : "",
         industry: updatedUser ? updatedUser.industry : "",
+        scope: updatedUser?.scope || "",
+        funFact: updatedUser?.funFact || ""
       });
+
     });
   };
   handleChange = (e) => {
@@ -45,8 +50,8 @@ class RecruiterForm extends React.Component {
   componentDidMount() {
     if (!this.props.currentUserId) { this.props.history.push("/") } else {
       service.get(`/users/${this.props.currentUserId}`).then(response => {
-        let { name, email, bio, companyName, companyLogo, companyWebsite, industry } = response.data;
-        this.setState({ name, email, bio, companyName, companyLogo, companyWebsite, industry });
+        let { name, email, bio, companyName, companyLogo, companyWebsite, industry, scope, funFact } = response.data;
+        this.setState({ name, email, bio, companyName, companyLogo, companyWebsite, industry, scope, funFact });
       });  
     }
   }
@@ -97,6 +102,25 @@ class RecruiterForm extends React.Component {
             value={this.state.industry}
             change={this.handleChange}
           />
+           <TextInput
+            label="City"
+            name="scope.city"
+            value={this.state.scope.city}
+            change={this.handleChange}
+          />  
+          <TextInput
+            label="Country"
+            name="scope.country"
+            value={this.state.scope.country}
+            change={this.handleChange}
+          />
+           <TextInput
+            label="Fun Fact"
+            name="scope.funFact"
+            value={this.state.funFact}
+            change={this.handleChange}
+          />
+
           <button>SAVE {}</button>
         </form>
       </div>

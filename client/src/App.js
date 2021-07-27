@@ -17,7 +17,9 @@ import LevelPage from './components/LevelPage';
 import CandidateDetails from "./components/details/CandidateDetails"
 import SwipeCandidateProfile from './components/SwipeCandidateProfile'
 import MyOffersList from './components/MyOffersList'
-import MyDashBoard from './components/MyDashboard'
+import MyDashBoard from './components/MyDashboard';
+import DashboardDetails from './components/DashboardDetails';
+import CompanyDetails from './components/details/CompanyDetails';
 class App extends React.Component {
   state = {
     loggedInUser: null,
@@ -62,7 +64,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={Homepage}/>
           <Route path='/login'  render={()=><Login currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>
-          <Route path='/signup' render={()=><Signup currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
+          <Route path='/signup' render={(props)=><Signup {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/editCandidateform' render={()=><CandidateForm currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           {/* <Route path='/createpost' render={() => <PostForm {...this.props} updateCurrentPost={this.updateCurrentPost}/>}/> */}
           <Route path='/profilepage' render={()=><ProfilePage currentUser={this.state.loggedInUser} currentPostId={this.state.currentPostId}/>} />
@@ -81,7 +83,9 @@ class App extends React.Component {
           <Route path='/users/:id/fromdashboard' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"dashboard"}/>} />
           <Route path='/personalProfile' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} />} />
           <Route path='/myoffers' render={(props)=><MyOffersList {...props} currentPostId={this.state.currentPostId} currentUser={this.state.loggedInUser}/>} />
-          <Route path='/mydashboard' render={(props)=><MyDashBoard {...props} currentPostId={this.state.currentPostId} currentUser={this.state.loggedInUser}/>} />
+          <Route exact path='/mydashboard' render={(props)=><MyDashBoard {...props} currentPostId={this.state.currentPostId} currentUser={this.state.loggedInUser}/>} />
+          <Route path='/mydashboard/:id' render={(props)=><DashboardDetails currentUser={this.state.loggedInUser} {...props} />} />
+          <Route path='/companyDetails' render={(props)=><CompanyDetails currentUser={this.state.loggedInUser} {...props} />} />
         </Switch>
       </div> 
     );

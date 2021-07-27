@@ -1,6 +1,9 @@
 body {
   background-color: #FAF0CA;
 }
+img {
+  max-width: 100%;
+}
 .header-swipe {
   /* display: flex;
   align-items: center; */

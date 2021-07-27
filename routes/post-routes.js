@@ -92,6 +92,7 @@ postRoutes.get("/recruiter/:recruiterId", [isLoggedIn, isRecruiter], (req, res, 
 //GET ONE POST Details by id
 postRoutes.get("/:id", isLoggedIn, (req, res, next) => {
   Post.findById(req.params.id)
+    .populate('applicationId')
     .then((ret) => {
       if (!ret) {
         res.status(204).json(ret);
