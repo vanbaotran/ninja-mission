@@ -87,8 +87,9 @@ class SwipeJobPost extends Component {
   swipeOffer = async () => {
     try {
       let idOffer = this.state.offer._id;
+      let updatedUser = await service.patch(`/users/${idOffer}/swipeLeft`);
       let copyRemember = [...this.state.remember, `S_${idOffer}`]; // stock id for reverse
-      await service.patch(`/users/${idOffer}/swipeLeft`);
+      this.props.updateUser(updatedUser.data.updatedUser);
       let newRandom = await this.newRandom();
       if (newRandom) {
         this.setState({
@@ -104,13 +105,13 @@ class SwipeJobPost extends Component {
         });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
   chooseOffer = async () => {
-   try {
-      let idOffer = this.state.offer._id;
-      let copyRemember = [...this.state.remember, `C_${idOffer}`]; // stock id for reverse
+    try {
+      let idApp = this.state.offer.applicationId;
+      let copyRemember = [...this.state.remember, `C_${idApp}`]; // stock id for reverse
       // update application with apply of candidate
       await service.patch(`/applications/${this.state.offer.applicationId}/add`);
       let newRandom = await this.newRandom();
@@ -128,7 +129,41 @@ class SwipeJobPost extends Component {
         });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    }
+  };
+  comeBack = async () => {
+    try {
+      
+    if (this.state.remember.length < 1) {
+      return;
+    } else {
+      let copyRemember = [...this.state.remember];
+      let beforeVal = copyRemember.pop().split("_");
+      let action = beforeVal[0];
+      let oldId = beforeVal[1];
+      if (action === "S") {
+        // if last action is swipe update User to remove old choice
+        let copyCurrentUser = {...this.props.currentUser};
+        let copySwippedOffer = [...copyCurrentUser.swipedOfferId];
+        copySwippedOffer.splice(copySwippedOffer.indexOf(oldId), 1);
+        let updatedUser = await service.patch("/users", {swipedOfferId: copySwippedOffer});
+        console.log(updatedUser)
+        this.props.updateUser(updatedUser.data);
+        this.setState({
+          remember: copyRemember
+        })
+      }
+      if (action === "C") {
+        // if last action is apply update application to remove old choice
+        await service.patch(`/applications/${oldId}/remove`);
+        this.setState({
+          remember: copyRemember
+        })
+      }
+    }
+    } catch (error) {
+      console.log(error);
     }
   };
   render() {
@@ -170,7 +205,12 @@ class SwipeJobPost extends Component {
           )}
         </div>
         <div className="block-btn-swipe">
-          <img className="btn-swipe" src="/images/icons/reverse.png" alt="reverse ico" />
+          <img
+            className="btn-swipe"
+            src="/images/icons/reverse.png"
+            alt="reverse ico"
+            onClick={this.comeBack}
+          />
           <img
             className="btn-swipe"
             src="/images/icons/cancel.png"

@@ -16,6 +16,7 @@ router.get("/", [isLoggedIn, isCandidate], (req, res, next) => {
       res.status(500).json({ message: "Something went wrong when finding applications." })
     );
 });
+
 // get array of jobpostsid that candidate has choose
 router.get("/haveCandidate", [isLoggedIn, isCandidate], (req, res, next) => {
   let id = req.session.currentUser._id;
