@@ -9,7 +9,8 @@ import {Switch, Route} from 'react-router-dom';
 import CandidateForm from './components/forms/CandidateForm'
 import {loggedIn, editProfile} from './components/service';
 import ProfilePage from './components/ProfilePage'
-import NavBar from './components/NavBar';
+// import NavBar from './components/NavBar';
+// import BlueTop from "./components/backgrounds/blueTop";
 import SwipeJobPost from './components/SwipeJobPost';
 import PostDetails from './components/details/PostDetails';
 import Logout from './components/Logout';
@@ -25,6 +26,7 @@ class App extends React.Component {
     loggedInUser: null,
     currentPostId: null
   }
+
  fetchUser() {
     if (this.state.loggedInUser === null || this.state.loggedInUser === false){
       loggedIn()
@@ -60,7 +62,8 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
-      <NavBar/>
+      {/* <NavBar/> */}
+       
         <Switch>
           <Route exact path='/' component={Homepage}/>
           <Route path='/login'  render={(props)=><Login {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>

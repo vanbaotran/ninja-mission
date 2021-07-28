@@ -1,7 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
 body{
-  font-family: 'EB Garamond', serif;;
+  font-family: 'EB Garamond', serif;
+}
+.bg-bluetop {
+  position: absolute;
+  top: -50%;
+
+  background-color: #0D3B66;
+  clip-path: polygon(0 0, 50% 50%, 0 100%);
+  
+  z-index: -10;
+  width: 200%;
+  height: 100%;
+}
+a {
+  text-decoration: none;
+}
+h1 {
+  margin-block-start:0;
+    margin-block-end:0;
+}
+.sub-app {
+  min-height: 100vh;
 }
 li {
   list-style: none;
@@ -16,11 +37,43 @@ img {
 form{
   display: flex;
   flex-direction: column;
+  background-color: #F9F7F3;
+  border-radius: 16px;
+  padding: 2em;
+  max-width: 100%;
+  width: 75%;
+  margin: auto;
+}
+/******************/
+/***** landPage****/
+.landPage {
+  min-height: 100vh;
+  min-width: 100%;
+}
+.btns {
+  margin: auto;
+}
+.landPage .logo {
+   display: block;
+  margin: 30% auto;
+}
+
+/*******************/
+/* LOGIN */
+.block-login {
+  display: block;
+  margin-top: 30%;
+}
+.block-login img {
+  max-height: 25vh;
+  display: block;
+  margin: 2em auto;
 }
 /*swip*/
 .btn {
-  margin: 5px;
-  width: 400px;
+  display: block;
+  margin:  1vh auto;
+  width: 85vw;
   max-width: 100%;
   height: 32px;
   border-radius: 32px;
