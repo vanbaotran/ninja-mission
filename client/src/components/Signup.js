@@ -1,5 +1,6 @@
 import React from "react";
 import { signup } from "./service";
+import RedTop from "./backgrounds/RedTop";
 class Signup extends React.Component {
   state = {
     name: "",
@@ -65,31 +66,40 @@ class Signup extends React.Component {
       );
     } else {
       return (
-        <div>
+        <div className="signup-form">
+        <RedTop/>
           <form onSubmit={this.handleSubmit}>
-            <label>Name</label>
+          <div className="form-no-btn">
+
+          <h1 className='text-blue'>LET'S SIGN UP</h1>
+            <label>Name
             <input
               type="text"
               name="name"
               value={this.state.name}
               onChange={(e) => this.handleChange(e)}
             />
-            <label>Email</label>
+            </label>
+            <label>Email
             <input
               type="text"
               name="email"
               value={this.state.email}
               onChange={(e) => this.handleChange(e)}
             />
-            <label>Password</label>
+            </label>
+            <label>Password
             <input
               type="password"
               name="password"
               value={this.state.password}
               onChange={(e) => this.handleChange(e)}
             />
-            <button>DISCOVER THE NINJA WORLD</button>
+            </label>
+          </div>
+            <button className="btn blue">DISCOVER THE NINJA WORLD</button>
           </form>
+           <img className='logo-footer' src='/images/ninja-logo.png' alt='logo'/>
         </div>
       );
     }

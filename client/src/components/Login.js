@@ -24,6 +24,7 @@ class Login extends React.Component{
       <div className="block-login">
       <BlueTop/>
        <form onSubmit={this.handleSubmit}>
+       <div className="form-no-btn">
       <h1 className='text-blue'>WELCOME BACK!</h1>
             <label>Email
              <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
@@ -31,7 +32,7 @@ class Login extends React.Component{
             <label>Password
              <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
             </label>
-           
+           </div>
             <button className='btn red'>LOG IN</button>
           </form>
           <img className='logo-footer' src='/images/ninja-logo.png' alt='logo'/>
