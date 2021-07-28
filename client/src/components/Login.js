@@ -21,13 +21,15 @@ class Login extends React.Component{
   render(){
     return (
       <div>
+      <h1 className='text-blue'>WELCOME BACK!</h1>
        <form onSubmit={this.handleSubmit}>
             <label>Email</label>
             <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
             <label>Password</label>
             <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
-            <button>LOG IN</button>
+            <button className='btn red'>LOG IN</button>
           </form>
+          <img src='/images/ninja-logo.png' alt='logo'/>
       </div>
     )
   }
