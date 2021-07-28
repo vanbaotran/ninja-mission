@@ -1,5 +1,6 @@
 import React from 'react';
 import {login} from './service';
+import BlueTop from "./backgrounds/blueTop";
 
 class Login extends React.Component{
   state = {email:'', password:''}
@@ -21,6 +22,7 @@ class Login extends React.Component{
   render(){
     return (
       <div>
+      <BlueTop/>
        <form onSubmit={this.handleSubmit}>
             <label>Email</label>
             <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 

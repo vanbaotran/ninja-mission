@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret:"some secret goes here",
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
   // cookie: { Lax: true },
   store: MongoStore.create({ mongoUrl: 'mongodb://localhost/ninja-mission',
   autoRemove: 'interval',
