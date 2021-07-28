@@ -120,7 +120,6 @@ export class PostForm extends Component {
     }
   };
   render() {
-    // console.log(this.state)
     return (
       <div className="post-form-main">
         {this.state.errorMessage && (
@@ -133,7 +132,7 @@ export class PostForm extends Component {
             ? "ADD A NEW OFFER"
             : "EDIT THE OFFER"}
         </h2>
-        <form onSubmit={(e) => this.handleSubmit(e)}>
+        <form className="flex-column form-all-page" onSubmit={(e) => this.handleSubmit(e)}>
           <label>
             <img
               src={this.state.companyLogo || "/images/temple.png"}

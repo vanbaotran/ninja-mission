@@ -57,49 +57,47 @@ class Signup extends React.Component {
               </div>
             </div>
           </div>
-          <img
-            className="logo-footer"
-            src="/images/ninja-logo.png"
-            alt="logo"
-          />
+          <img className="logo-footer" src="/images/ninja-logo.png" alt="logo" />
         </div>
       );
     } else {
       return (
         <div className="signup-form">
-        <RedTop/>
+          <RedTop />
           <form onSubmit={this.handleSubmit}>
-          <div className="form-no-btn">
-
-          <h1 className='text-blue'>LET'S SIGN UP</h1>
-            <label>Name
-            <input
-              type="text"
-              name="name"
-              value={this.state.name}
-              onChange={(e) => this.handleChange(e)}
-            />
-            </label>
-            <label>Email
-            <input
-              type="text"
-              name="email"
-              value={this.state.email}
-              onChange={(e) => this.handleChange(e)}
-            />
-            </label>
-            <label>Password
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={(e) => this.handleChange(e)}
-            />
-            </label>
-          </div>
+            <div className="form-no-btn">
+              <h1 className="text-blue">LET'S SIGN UP</h1>
+              <label>
+                Name
+                <input
+                  type="text"
+                  name="name"
+                  value={this.state.name}
+                  onChange={(e) => this.handleChange(e)}
+                />
+              </label>
+              <label>
+                Email
+                <input
+                  type="text"
+                  name="email"
+                  value={this.state.email}
+                  onChange={(e) => this.handleChange(e)}
+                />
+              </label>
+              <label>
+                Password
+                <input
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={(e) => this.handleChange(e)}
+                />
+              </label>
+            </div>
             <button className="btn blue">DISCOVER THE NINJA WORLD</button>
           </form>
-           <img className='logo-footer' src='/images/ninja-logo.png' alt='logo'/>
+          <img className="logo-footer" src="/images/ninja-logo.png" alt="logo" />
         </div>
       );
     }

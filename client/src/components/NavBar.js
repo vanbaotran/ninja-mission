@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom'
 const NavBar = () =>{
   return (
     <div>
-      <Link to='/login'>Log in </Link>
-      <Link to='/signup'>Sign up </Link>
+      {/* <Link to='/login'>Log in </Link>
+      <Link to='/signup'>Sign up </Link> */}
       <Link to='/postform/new'>Create a Job post </Link>
       <Link to='/editCandidateform'>Edit my Candidate profile </Link>
       <Link to='/profilepage'>Candidate profile </Link>

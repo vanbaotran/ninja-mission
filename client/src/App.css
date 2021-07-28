@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+* {
+  box-sizing: border-box;
+}
 body{
   font-family: 'EB Garamond', serif;
   background-color: #FAF0CA;
+  margin:0;
 }
+
 img {
   max-width: 100%;
 }
@@ -52,16 +57,34 @@ li {
   margin: auto auto 2em auto;
   box-shadow: 0px 4px 4px;
 }
+.form-all-page{
+  display: flex;
+  padding: 0.5em 2em;
+  flex-direction: column;
+  background-color: transparent;
+  width: 100%;
+  margin: auto auto 2em auto;
+}
 label {
   margin: 0.5em;
   color: #0D3B66;
   font-weight: bold;
+  justify-content: space-between;
+}
+
+textarea, select {
+  vertical-align: top;
+  width: 50vw;  
+  float: right;
+  border-radius: 13px;
+  padding: 0.1em;
+  border: 0.5px solid #0D3B66;
 }
 input {
   border-radius: 13px;
   border: 0.5px solid #0D3B66;
   float: right;
-  width: 50vw;
+  width: 50vw;  
 }
 .logo-footer {
   max-height: 15vh;
@@ -415,6 +438,17 @@ background-color: rgb(196, 194, 194);
   height: 25vh;
   width: fit-content;
 }
-.signup-form {
-  margin-top: 20%;
+
+/*POSTFORM*/
+.post-form-main {
+  background-color: #E5E5E5;
+  height: 100%;
+}
+.post-form-main form {
+  margin-bottom: 0;
+}
+.post-form-main h2 {
+  margin: 0;
+  padding-top: 0.5em;
+  text-align: center;
 }
