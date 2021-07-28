@@ -25,13 +25,16 @@ class Login extends React.Component{
       <BlueTop/>
        <form onSubmit={this.handleSubmit}>
       <h1 className='text-blue'>WELCOME BACK!</h1>
-            <label>Email</label>
-            <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
-            <label>Password</label>
-            <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
+            <label>Email
+             <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
+            </label>
+            <label>Password
+             <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
+            </label>
+           
             <button className='btn red'>LOG IN</button>
           </form>
-          <img src='/images/ninja-logo.png' alt='logo'/>
+          <img className='logo-footer' src='/images/ninja-logo.png' alt='logo'/>
       </div>
     )
   }

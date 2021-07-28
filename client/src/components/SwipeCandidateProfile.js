@@ -1,6 +1,5 @@
 import React from "react";
 import service from "./service";
-import "../css/Swipe.css";
 import OverlayExperience from "./overlays/OverlayExperience";
 class SwipeCandidateProfile extends React.Component {
   state = {

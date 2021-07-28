@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import OverlayWeapon from "./overlays/OverlayWeapon";
-import "../css/Swipe.css";
 import service from "./service";
 import InfoIco from "./swipe/InfoIco";
 // import useSwipeable from 'react-swipeable';
