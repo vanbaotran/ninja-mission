@@ -21,6 +21,7 @@ class Login extends React.Component{
   render(){
     return (
       <div>
+
       <h1 className='text-blue'>WELCOME BACK!</h1>
        <form onSubmit={this.handleSubmit}>
             <label>Email</label>
