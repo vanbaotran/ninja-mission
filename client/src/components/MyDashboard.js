@@ -7,29 +7,14 @@ class MyDashBoard extends React.Component {
   goToDetails = (postId) => {
     this.props.history.push(`/mydashboard/${postId}`);
   };
-  getDate = (dateString) => {
+  getDate = (dateFromDB) => {
     let today = new Date();
-    let theDay = new Date(dateString);
+    let theDay = new Date(dateFromDB)
     let difference = today.getTime() - theDay.getTime();
     let differentInDays = Math.floor(difference / (1000 * 60 * 60 * 24));
     return differentInDays;
   };
-  // getApplicants = (jobPostId) => {
-  //   service
-  //     .get(`/posts/${jobPostId}`)
-  //     .then((response) => {
-  //       // let theList = []
-  //       console.log(response.data.applicationId.candidateId.length);
-  //       // let object = {applicants:response.data.applicationId.candidateId.length}
-  //       // let myArray = [...this.state.offerList]
-  //       // let index = myArray.findIndex(x=>x._id===jobPostId)
-  //       // let theObject = {...myArray[index],applicantsNumber:response.data.applicationId.candidateId.length}
-  //       // theList.push(theObject)
-  //       // console.log(theObject)
-  //       // this.setState({offerList:theList})
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  
   componentDidMount() {
     if (this.props.currentUser) {
       service
@@ -40,6 +25,8 @@ class MyDashBoard extends React.Component {
           });
         })
         .catch((err) => console.log(err));
+    } else {
+      this.props.history.push('/')
     }
   }
   render() {
@@ -48,6 +35,7 @@ class MyDashBoard extends React.Component {
         <h1>MY DASHBOARD </h1>
         <div className="dashboard">
           {this.state.offerList.map((offer) => {
+            let dateNumber = this.getDate(offer.createdAt)
             return (
               (this.props.currentPostId === offer._id && (
                 <div
@@ -58,10 +46,10 @@ class MyDashBoard extends React.Component {
                 >
                   <h2>{offer.offerName}</h2>
                   <p>
-                    {(this.getDate(offer.updatedAt) > 1 && "days ago") ||
-                      "1 day ago"}
+                    {dateNumber > 1 ? `${dateNumber} days ago` :
+                      "today"}
                   </p>
-                  {/* <p>{this.getApplicants(offer._id)} applicants</p> */}
+                  <p>{offer.applicationId.candidateId.length} applicants</p>
                 </div>
               )) || (
                 <div
@@ -71,10 +59,10 @@ class MyDashBoard extends React.Component {
                 >
                   <h2>{offer.offerName}</h2>
                   <p>
-                    {(this.getDate(offer.updatedAt) > 1 && "days ago") ||
-                      "1 day ago"}
+                    {dateNumber > 1 ? `${dateNumber} days ago` :
+                      "today"}
                   </p>
-                  {/* <p>{this.getApplicants(offer._id)} applicants</p> */}
+                  <p>{offer.applicationId.candidateId.length} applicants</p>
                 </div>
               )
             );

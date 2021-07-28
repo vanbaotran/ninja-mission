@@ -34,7 +34,7 @@ let userSchema = new Schema(
       enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
     },
     codeLanguage: [String], // voir si enum et ou vérification bonne donnée
-    scope: { city: { type: [String] }, country: { type: [String] } },
+    scope: { city: { type: String }, country: { type: String } },
     birthday:Date,
     bio: {
       type: String,
