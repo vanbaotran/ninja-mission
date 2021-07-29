@@ -33,51 +33,48 @@ class DashboardDetails extends React.Component {
         sortingLevel:true
       })
     } else {
+      this.getSinglePost();
        this.setState({ 
         sortingLevel:false
       })
     }
    
   }
-  // getSinglePost = async () => {
-  //   try {
-  //     let jobpost = await service.get(`/posts/${this.props.match.params.id}`)
-    
-  //     let candidatelist = await jobpost.data.applicationId.candidateId.map(async (id) => {
-  //         return await service.get(`/users/${id}`).data
-  //         });
-  //           console.log(candidatelist)
+  // getSinglePost = () => {
+  //   service
+  //     .get(`/posts/${this.props.match.params.id}`)
+  //     .then((response) => {
   //       this.setState({
-  //         jobPost: jobpost.data.offerName,
-  //         candidateList: candidatelist,
+  //         jobPost: response.data.offerName,
+  //         candidateIdList: response.data.applicationId.candidateId,
   //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
+  //       this.state.candidateIdList.map((id) => this.getCandidateData(id));
+  //     })
+  //     .catch((err) => console.log(err));
   // };
-  getSinglePost = () => {
-    service
-      .get(`/posts/${this.props.match.params.id}`)
-      .then((response) => {
-        this.setState({
-          jobPost: response.data.offerName,
-          candidateIdList: response.data.applicationId.candidateId,
-        });
-        this.state.candidateIdList.map((id) => this.getCandidateData(id));
-        console.log('thepost',response.data)
-      })
-      .catch((err) => console.log(err));
-  };
-  
-  getCandidateData = (candidateId) => {
-    service.get(`/users/${candidateId}`).then((response) => {
-      let updatedCandidateList = [...this.state.candidateList];
-      updatedCandidateList.push(response.data);
-      this.setState({
-        candidateList: updatedCandidateList,
-      });
-      console.log(this.state.candidateList)
+  // getCandidateData = (candidateId) => {
+  //   service.get(`/users/${candidateId}`).then((response) => {
+  //     let updatedCandidateList = [...this.state.candidateList];
+  //     updatedCandidateList.push(response.data);
+  //     this.setState({
+  //       candidateList: updatedCandidateList,
+  //     });
+  //   });
+  // };
+  getSinglePost = async () => {
+    try {
+    let jobpost = await service.get(`/posts/${this.props.match.params.id}`);
+    let candidatesData = await service.get(
+      `/applications/${jobpost.data.applicationId._id}/candidates`
+    );
+    this.setState({
+      jobPost: jobpost.data.offerName,
+      candidateList: candidatesData.data.candidateId,
     });
+      
+    } catch (error) {
+      console.log(error)
+    }
   };
   componentDidMount() {
     if (!this.props.currentUser) {

@@ -16,6 +16,19 @@ router.get("/", [isLoggedIn, isCandidate], (req, res, next) => {
       res.status(500).json({ message: "Something went wrong when finding applications." })
     );
 });
+// get applicationCandidate data by id of app
+router.get("/:id/candidates", [isLoggedIn, isRecruiter], (req, res, next) => {
+  
+  Application.findOne({ _id: req.params.id })
+    .populate("candidateId")
+    .then((AppsfromDb) => {
+      res.status(200).json(AppsfromDb);
+      return;
+    })
+    .catch((err) =>
+      res.status(500).json({ message: "Something went wrong when finding applications." })
+    );
+});
 
 // get array of jobpostsid that candidate has choose
 router.get("/haveCandidate", [isLoggedIn, isCandidate], (req, res, next) => {
