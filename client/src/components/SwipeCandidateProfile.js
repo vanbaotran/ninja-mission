@@ -12,17 +12,7 @@ class SwipeCandidateProfile extends React.Component {
   openFilter = (e) => {
     this.setState({ optionsIsOpen: true });
   };
-  // searchRandom = () => {
-  //   service
-  //     .get("/users/random")
-  //     .then((response) => {
-  //       console.log(response.data)
-  //       this.setState({
-  //         candidate: response.data,
-  //       });
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+
   searchRandom = (params = false) => {
     let url = "/users/random";
     if (params) {
