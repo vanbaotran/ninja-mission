@@ -30,27 +30,27 @@ class CandidateForm extends React.Component{
       level:'Please choose your level!'
     }
   }
-  // componentDidUpdate(prevProps) {
-  //   if(prevProps.currentUser !== this.props.currentUser){
-  //     this.setState({
-  //       name:this.props.currentUser.name,
-  //       email:this.props.currentUser.email,
-  //       birthday:this.props.currentUser.birthday,
-  //       bio:this.props.currentUser.bio,
-  //       avatar:this.props.currentUser.avatar,
-  //       cvUrl:this.props.currentUser.cvUrl,
-  //       title:this.props.currentUser.title,
-  //       codeLanguage:this.props.currentUser.codeLanguage,
-  //       funFact:this.props.currentUser.funFact,
-  //       level:this.props.currentUser.level,
-  //       usefulLinks:{
-  //         linkedin: this.props.currentUser?.usefulLinks?.linkedin || "",
-  //         github: this.props.currentUser?.usefulLinks?.github || "",
-  //         portfolio: this.props.currentUser?.usefulLinks?.portfolio|| "" ,
-  //       }
-  //     })
-  //   } 
-  // }
+  componentDidMount() {
+    
+      this.setState({
+        name:this.props.currentUser.name,
+        email:this.props.currentUser.email,
+        birthday:this.props.currentUser.birthday,
+        bio:this.props.currentUser.bio,
+        avatar:this.props.currentUser.avatar,
+        cvUrl:this.props.currentUser.cvUrl,
+        title:this.props.currentUser.title,
+        codeLanguage:this.props.currentUser.codeLanguage,
+        funFact:this.props.currentUser.funFact,
+        level:this.props.currentUser.level,
+        usefulLinks:{
+          linkedin: this.props.currentUser?.usefulLinks?.linkedin || "",
+          github: this.props.currentUser?.usefulLinks?.github || "",
+          portfolio: this.props.currentUser?.usefulLinks?.portfolio|| "" ,
+        }
+      })
+    
+  }
   validateEmail = (inputText) => {
     var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     if(inputText.match(mailformat))
@@ -129,10 +129,10 @@ class CandidateForm extends React.Component{
             <input type='text' name='bio' value={this.state.bio} onChange={(e)=>this.handleChange(e)} /> 
             </label>
             <label>Avatar
-            <input type='file' name='avatar'  onChange={(e)=>this.handleChangeFile(e)} />
+            <input type='file' name='avatar'  onChange={(e)=> this.handleChangeFile(e)} />
             </label>
             <label>CV
-            <input type='file' name='cvUrl'  onChange={(e)=>this.handleChangeFile(e)} />
+            <input type='file' name='cvUrl'  onChange={(e)=> this.handleChangeFile(e)} />
             </label>
             <SelectInput
             label="Exp Level"
