@@ -47,7 +47,7 @@ app.use(session({
   secret:"some secret goes here",
   resave: false,
   saveUninitialized: false,
-  cookie: {maxAge: 60*24*14*60, expires: new Date(Date.now() + (60*24*14*60))},
+  cookie: {maxAge: 3600000*24*7*2},
   // cookie: { Lax: true },
   store: MongoStore.create({ mongoUrl: 'mongodb://localhost/ninja-mission',
   mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
