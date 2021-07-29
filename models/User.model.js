@@ -28,7 +28,9 @@ let userSchema = new Schema(
       default: "https://via.placeholder.com/150", // trouver une image par default
     },
     applicationId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Application" }],
-    cvUrl: [String],
+    cvUrl: {type: String,
+      default: "noCV"
+      },
     level: {
       type: String,
       enum: ["Warrior", "Ninja", "Samurai", "Sensei"],

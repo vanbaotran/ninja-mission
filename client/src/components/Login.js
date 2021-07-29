@@ -1,6 +1,6 @@
 import React from 'react';
 import {login} from './service';
-import BlueTop from "./backgrounds/blueTop";
+import BlueTop from "./backgrounds/BlueTop";
 
 class Login extends React.Component{
   state = {email:'', password:''}

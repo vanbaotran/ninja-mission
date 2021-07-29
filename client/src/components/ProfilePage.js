@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { getPostData} from './service'
+import { getPostData} from './service';
+import BlueTop from "./backgrounds/BlueTop";
 class ProfilePage extends React.Component {
   state = {
     currentPost:{}
@@ -28,13 +29,14 @@ class ProfilePage extends React.Component {
     if(this.props.currentUser.profileType==='candidate'){
       return(
         <div className="profile candidate">
+        <BlueTop/>
         <nav>
           <Link to='/settings'><img src='/images/icons/settings.png' alt='settings'/></Link>
           <Link to='/offers'><img src='/images/icons/offer.png' alt='settings'/></Link>
         </nav>
         <header>
           <img src={this.props.currentUser.avatar} alt='avatar'/>
-          <h1>{this.props.currentUser.name}, {this.getAge(this.props.currentUser.birthday)}</h1>
+          <h1>{this.props.currentUser.name} {this.props.currentUser.birthday && ','} {this.getAge(this.props.currentUser.birthday)}</h1>
         </header>
         <main>
           <Link to='/personalProfile'>
@@ -70,6 +72,7 @@ class ProfilePage extends React.Component {
   } else {
       return (
         <div>
+           <BlueTop/>
           <nav>
             <Link to='/settings'><img src='/images/icons/settings.png' alt='settings'/></Link>
             <Link to='/offers'><img src='/images/icons/offer.png' alt='settings'/></Link>
