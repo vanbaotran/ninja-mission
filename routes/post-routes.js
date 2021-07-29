@@ -112,7 +112,7 @@ postRoutes.patch("/:id", [isLoggedIn, isRecruiter], (req, res, next) => {
   Post.findById(req.params.id)
     .then((postFromDB) => {
       if (postFromDB.recruiterId.toString() !== req.session.currentUser._id) {
-        res.status(403).json({ message: "You are not allowed to edit this post 2222" });
+        res.status(403).json({ message: "You are not allowed to edit this post" });
         return;
       }
       Post.updateOne({ _id: req.params.id }, { ...req.body })

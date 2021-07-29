@@ -9,7 +9,6 @@ const NavBar = () =>{
       <Link to='/editCandidateform'>Edit my Candidate profile </Link>
       <Link to='/profilepage'>Candidate profile </Link>
       <Link to='/swipeOffer/random'>Swipe Offer </Link>
-      <Link to='/posts/:id'>postDetails </Link>
       <Link to='/logout'>Log Out </Link>
       <Link to='/levelspage'>MY LEVEL </Link>
        <Link to='/intest'> test </Link>

@@ -26,9 +26,7 @@ class DashboardDetails extends React.Component {
       Samurai: 3,
       Sensei: 4
     }
-    let originalList = [...this.state.candidateList]
     let sortedList = [...this.state.candidateList].sort((a,b)=> ranking[`${b.level}`] - ranking[`${a.level}`])
-    console.log('THE old LIST', 'NEW LIST',sortedList )
     if (this.state.sortingLevel===false){
        this.setState({ 
         candidateList:sortedList,
@@ -36,12 +34,27 @@ class DashboardDetails extends React.Component {
       })
     } else {
        this.setState({ 
-        candidateList:originalList,
         sortingLevel:false
       })
     }
    
   }
+  // getSinglePost = async () => {
+  //   try {
+  //     let jobpost = await service.get(`/posts/${this.props.match.params.id}`)
+    
+  //     let candidatelist = await jobpost.data.applicationId.candidateId.map(async (id) => {
+  //         return await service.get(`/users/${id}`).data
+  //         });
+  //           console.log(candidatelist)
+  //       this.setState({
+  //         jobPost: jobpost.data.offerName,
+  //         candidateList: candidatelist,
+  //       });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   getSinglePost = () => {
     service
       .get(`/posts/${this.props.match.params.id}`)
@@ -51,9 +64,11 @@ class DashboardDetails extends React.Component {
           candidateIdList: response.data.applicationId.candidateId,
         });
         this.state.candidateIdList.map((id) => this.getCandidateData(id));
+        console.log('thepost',response.data)
       })
       .catch((err) => console.log(err));
   };
+  
   getCandidateData = (candidateId) => {
     service.get(`/users/${candidateId}`).then((response) => {
       let updatedCandidateList = [...this.state.candidateList];
@@ -61,6 +76,7 @@ class DashboardDetails extends React.Component {
       this.setState({
         candidateList: updatedCandidateList,
       });
+      console.log(this.state.candidateList)
     });
   };
   componentDidMount() {

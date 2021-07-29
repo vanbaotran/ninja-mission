@@ -97,6 +97,13 @@ router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
     filter = { level: { $in: req.query.filterLevel.split("_") } };
   }
   try {
+    user = await User.findOne({ _id: req.session.currentUser._id })
+    .populate("currentApplicationId")
+    console.log(user)
+    if (!user.currentApplicationId) {
+      return res.status(204).json();
+    }
+    filter = {...filter, _id: { $nin:[...user.currentApplicationId.refusedCandidateId,...user.currentApplicationId.acceptedCandidateId]}};
     await User.countDocuments({ profileType: "candidate", ...filter })
       .then((count) => {
         countDoc = count;
@@ -104,25 +111,11 @@ router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
       })
       .catch((err) => console.log(err));
 
-    user = await User.findOne({ _id: req.session.currentUser._id })
-    .populate("currentApplicationId")
     //if recruiter doesnt have a job post, he cannot swipe
-    if (!user.currentApplicationId) {
-      return res.status(204).json();
-    }
     randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(random);
     if (!randomUser){
       return res.status(204).json()
      }
-    while (
-      user.currentApplicationId.refusedCandidateId.includes(randomUser._id) ||  user.currentApplicationId.acceptedCandidateId.includes(randomUser._id) ||
-      randomUser.profileType === "recruiter"
-    ) {
-      random = Math.floor(Math.random() * countDoc);
-      randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(
-        random
-      );
-    }
     res.status(200).json(randomUser);
     return;
   } catch (error) {
