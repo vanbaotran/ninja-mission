@@ -80,7 +80,7 @@ router.get("/loggedin", (req, res, next) => {
       res.status(200).json(userFromDb);
       return;
     })
-    .catch(err => res.status(500).json(error););
+    .catch(err => res.status(500).json(error));
   }
   res.status(403).json({ message: "Unauthorized" });
 });
