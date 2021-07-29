@@ -12,6 +12,11 @@ class Login extends React.Component{
       this.setState({ email: "", password: "" });
       this.props.updateUser(response)
       console.log(this.props.currentUser)
+      if (response.profileType==="recruiter") {
+        this.props.history.push('/swipeCandidate/random')
+      } else {
+        this.props.history.push('/swipeOffer/random')
+      }
     })
     .catch(err=>console.log(err))
   }

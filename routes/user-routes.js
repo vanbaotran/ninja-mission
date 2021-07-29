@@ -115,10 +115,9 @@ router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
       return res.status(204).json()
      }
     while (
-      user.currentApplicationId.refusedCandidateId.includes(randomUser._id) ||
+      user.currentApplicationId.refusedCandidateId.includes(randomUser._id) ||  user.currentApplicationId.acceptedCandidateId.includes(randomUser._id) ||
       randomUser.profileType === "recruiter"
     ) {
-      console.log("test");
       random = Math.floor(Math.random() * countDoc);
       randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(
         random

@@ -35,9 +35,9 @@ class CandidateForm extends React.Component{
         funFact:this.props.currentUser.funFact,
         level:this.props.currentUser.level,
         usefulLinks:{
-          linkedin: this.props.currentUser.usefulLinks.linkedin,
-          github: this.props.currentUser.usefulLinks.github,
-          portfolio: this.props.currentUser.usefulLinks.portfolio,
+          linkedin: this.props.currentUser?.usefulLinks?.linkedin || "",
+          github: this.props.currentUser?.usefulLinks?.github || "",
+          portfolio: this.props.currentUser?.usefulLinks?.portfolio|| "" ,
         }
       })
     } 
@@ -50,7 +50,7 @@ class CandidateForm extends React.Component{
       console.log(response)
       this.props.updateUser(response)
       this.setState(response)
-      this.updateUser(response)
+      this.props.updateUser(response)
     })
     .catch(error => console.log(error))
   }

@@ -101,7 +101,7 @@ class ProfilePage extends React.Component {
             </Link>
     
             <Link to='/myCurrentPost'>
-              <div className='row'>
+              <div className='flex-row' onClick={()=>this.props.history.push(`/posts/${this.state.currentPost._id}`)} >
                 <img src='/images/my-current-post.png' alt='current-post'/>
                 <h3>My Current Post</h3>
                 <p>{this.state.currentPost.offerName}</p>
