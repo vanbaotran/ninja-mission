@@ -73,16 +73,21 @@ router.post("/logout", isLoggedIn, (req, res, next) => {
   return;
 });
 router.get("/loggedin", (req, res, next) => {
-  // req.isAuthenticated() is defined by passport
   if (req.session.currentUser) {
-    User.findOne({ _id: req.sessions.currentUser._id }).then((userFromDb) => {
+    User.findOne({ _id: req.session.currentUser._id }).then((userFromDb) => {
       userFromDb.password = undefined;
       res.status(200).json(userFromDb);
       return;
     })
-    .catch(err => res.status(500).json(error));
-  }
+    .catch(err => {
+      res.status(500).json(err);
+      return;
+      });
+  } else {
+
   res.status(403).json({ message: "Unauthorized" });
+  return;
+  }
 });
 
 /* GET */
