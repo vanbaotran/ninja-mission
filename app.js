@@ -45,12 +45,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ADD SESSION SETTINGS HERE:
 app.use(session({
   secret:"some secret goes here",
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {maxAge: 60*24*14*60},
   // cookie: { Lax: true },
   store: MongoStore.create({ mongoUrl: 'mongodb://localhost/ninja-mission',
-  autoRemove: 'interval',
-  autoRemoveInterval: 60*24*14 // In minutes. Default)
+  mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+  // autoRemove: 'interval',
+  // autoRemoveInterval: 60*24*14 // In minutes. Default)
  })
 }));
 

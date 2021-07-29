@@ -21,6 +21,7 @@ import MyOffersList from './components/MyOffersList'
 import MyDashBoard from './components/MyDashboard';
 import DashboardDetails from './components/DashboardDetails';
 import CompanyDetails from './components/details/CompanyDetails';
+
 class App extends React.Component {
   state = {
     loggedInUser: null,
@@ -46,7 +47,7 @@ class App extends React.Component {
   }
   componentDidUpdate(prevProps){
     // console.log(this.state.currentUser)
-    if(prevProps.currentUser !== this.props.currentUser && this.props.currentUser!==null){
+    if(prevProps.currentUser !== this.props.currentUser && (this.props.currentUser!==null)){
       editProfile({currentPostId:this.state.currentPostId})
       .then(response=>{
         this.setState({currentPostId:this.state.currentPostId})
@@ -62,7 +63,7 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
-      {/* <NavBar/> */}
+     
        
         <Switch>
           <Route exact path='/' component={Homepage}/>
