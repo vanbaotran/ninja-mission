@@ -2,6 +2,7 @@ import React from 'react'
 import {uploadFile,editProfile} from '../service';
 import BlueTop from '../backgrounds/BlueTop';
 import SelectInput from "../inputs/SelectInput";
+import service from '../service'
 const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
 const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
 
@@ -30,6 +31,15 @@ class CandidateForm extends React.Component{
       level:'Please choose your level!'
     }
   }
+  componentDidMount() {
+     if (!this.props.currentUser) { this.props.history.push("/login") } else {
+      service.get(`/users/${this.props.currentUserId}`).then(response => {
+
+        this.setState({...response.data});
+      });  
+    }
+  }
+
   // componentDidUpdate(prevProps) {
   //   if(prevProps.currentUser !== this.props.currentUser){
   //     this.setState({
@@ -119,9 +129,9 @@ class CandidateForm extends React.Component{
             <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
              <p className='text-red'>{ !this.state.email && this.state.errorMessage} { this.validateEmail(this.state.email) && this.state.errorMessage.valid}</p>
             </label>
-            {/* <label>Password
+            <label>Password
             <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
-            </label> */}
+            </label>
             <label>Birthday 
             <input type='date' name='birthday' value={this.state.birthday} onChange={(e)=>this.handleChange(e)}/>
             </label>
