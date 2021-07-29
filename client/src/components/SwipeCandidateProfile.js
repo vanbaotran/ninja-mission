@@ -105,6 +105,7 @@ class SwipeCandidateProfile extends React.Component {
             <img
               className="ico-swipe ico-profile"
               src="/images/icons/profile.png"
+              onClick={()=>{this.props.history.push('/profilepage')}}
               alt="ico"
             />
             <img

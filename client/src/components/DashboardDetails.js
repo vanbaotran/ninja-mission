@@ -7,6 +7,7 @@ class DashboardDetails extends React.Component {
     candidateIdList: [],
     candidateList: [],
     query: "",
+    sortingLevel:false
   };
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,14 +19,29 @@ class DashboardDetails extends React.Component {
     //search by codeLanguage in this.state.candidateList
     event.preventDefault();
   };
-  // sortByDate = () =>{
-  //   console.log('STATE',this.state.candidateList)
-  //   let sortedList = [...this.state.candidateList].sort((a,b)=> a.applicationId.createdAt - b.applicationId.createdAt)
-  //   console.log('THE LIST',sortedList)
-  //   this.setState({ 
-  //     candidateList:sortedList
-  //   })
-  // }
+  sortByLevel = () =>{
+    let ranking = { 
+      Warrior: 1,
+      Ninja: 2,
+      Samurai: 3,
+      Sensei: 4
+    }
+    let originalList = [...this.state.candidateList]
+    let sortedList = [...this.state.candidateList].sort((a,b)=> ranking[`${b.level}`] - ranking[`${a.level}`])
+    console.log('THE old LIST', 'NEW LIST',sortedList )
+    if (this.state.sortingLevel===false){
+       this.setState({ 
+        candidateList:sortedList,
+        sortingLevel:true
+      })
+    } else {
+       this.setState({ 
+        candidateList:originalList,
+        sortingLevel:false
+      })
+    }
+   
+  }
   getSinglePost = () => {
     service
       .get(`/posts/${this.props.match.params.id}`)
@@ -79,24 +95,22 @@ class DashboardDetails extends React.Component {
         <div className="sort">
           <h4 className="text-red">Sort by</h4>
           <img src="/images/icons/sort.png" alt="sort" />
-          <button onClick={()=>this.sortByDate()} className="btn sort">date</button>
+          <button  className="btn sort">date</button>
           <button className="btn sort">accuracy</button>
-          <button className="btn sort">exp level</button>
+          <button onClick={()=>this.sortByLevel()} className="btn sort">exp level</button>
         </div>
         <form onSubmit={this.handleSubmit} className="search">
-          <label>Code Languages</label>
+          <label>Code Languages </label>
           <input
             onChange={this.handleChange}
             name="query"
             value={this.state.query}
           />
-          <button>
             <img
               className="icon-search"
               src="/images/icons/search.png"
               alt="search"
             />
-          </button>
         </form>
         <ul className="candidate-list">
           {candidateArray.map((el) => {

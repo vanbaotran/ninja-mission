@@ -41,7 +41,7 @@ class CompanyDetails extends React.Component{
             </div>
              <div className='line'>
               <p className='title'>Scope: </p>
-              <p className='content'>{this.state.currentUser.scope.city}, {this.state.currentUser.scope.country} </p> 
+              <p className='content'>{this.state.currentUser.scope?.city || ""}, {this.state.currentUser.scope?.country || ""} </p> 
             </div>
             <div className='line'>
               <p className='title'>Fun Fact: </p>
