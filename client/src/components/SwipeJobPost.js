@@ -181,7 +181,7 @@ class SwipeJobPost extends Component {
     return (
       <div className="swipe">
         <div className="header-swipe">
-          <img className="ico-swipe ico-profile" src="/images/icons/profile.png" alt="ico" />
+          <img className="ico-swipe ico-profile" onClick={()=>this.props.history.push('/profilepage')}src="/images/icons/profile.png" alt="ico" />
           <img
             className="ico-swipe ico-filter"
             src="/images/icons/filter.png"

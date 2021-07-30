@@ -52,8 +52,7 @@ class RecruiterForm extends React.Component {
   componentDidMount() {
     if (!this.props.currentUser) { this.props.history.push("/login") } else {
       service.get(`/users/${this.props.currentUser._id}`).then(response => {
-        let { name, email, bio, companyName, companyLogo, companyWebsite, industry, scope, funFact } = response.data;
-        this.setState({ name, email, bio, companyName, companyLogo, companyWebsite, industry, scope, funFact });
+        this.setState({...response.data });
       });  
     }
   }

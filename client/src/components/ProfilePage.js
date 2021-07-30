@@ -14,6 +14,8 @@ class ProfilePage extends React.Component {
     let m = today.getMonth() - birthDate.getMonth();
     if (m<0 || (m===0 && today.getDate() - birthDate.getDate())){
       age--;
+    } else {
+      age =''
     }
     return age
   }
@@ -21,7 +23,6 @@ class ProfilePage extends React.Component {
     getPostData(this.props.currentUser.currentPostId)
     .then(response=>{
       this.setState({currentPost:response})
-      console.log('CURRENT POST',this.state.currentPost, 'RESPONSE',response)
     })
     .catch(err=>console.log(err))
   }
@@ -33,9 +34,9 @@ class ProfilePage extends React.Component {
         <BlueTop/>
         <RedBottom/>
          <div className='top-line flex-row'>
-          <Link to='/settings'><img src='/images/icons/settings.png' alt='settings'/></Link>
+           <img src='' alt=''/>
           <h1 className='text-yellow'>My Profile</h1>
-          <Link to='/offers'><img src='/images/icons/offer.png' alt='settings'/></Link>
+          <Link to='/swipeOffer/random'><img src='/images/icons/offer.png' alt='settings'/></Link>
         </div>
         <header>
           <img src={this.props.currentUser.avatar} alt='avatar'/>
@@ -47,7 +48,9 @@ class ProfilePage extends React.Component {
           <div className='image'>
             <img src='/images/ninja-profile.png' alt='ninja-profile'/>
           </div>
-            <h3>My Profile</h3>
+          <div className='title'>
+           <p>My Profile</p>
+           </div>
           </div>
           </Link>
   
@@ -56,7 +59,9 @@ class ProfilePage extends React.Component {
           <div className='image'>
             <img src='/images/nunchaku.png' alt='my-level'/>
           </div>
-            <h3>My Level</h3>
+          <div className='title'>
+            <p>My Level</p>
+          </div>
             </div>
           </Link>
   
@@ -65,16 +70,20 @@ class ProfilePage extends React.Component {
           <div className='image'>
             <img src='/images/paper-roll.png' alt='applications'/>
           </div>
-            <h3>My Applications</h3>
+          <div className='title'>
+            <p>My Applications</p>
+          </div>
             </div>
           </Link>
   
           <Link to='/myBadges'>
             <div className='row border-red'>
-            <div className='image'>
+            <div className='image my-badges'>
               <img src='/images/my-badges.png' alt='badges'/>
             </div>
-              <h3>My Badges</h3>
+            <div className='title'>
+              <p>My Badges</p>
+            </div>
             </div>
           </Link>
         </main>
@@ -82,11 +91,11 @@ class ProfilePage extends React.Component {
       )
   } else {
       return (
-        <div className='profile-page'>
+        <div className='profile-page recruiter'>
           <BlueTop/>
           <RedBottom/>
            <div className='top-line flex-row'>
-          <Link to='/settings'><img src='/images/icons/people.png' alt='settings'/></Link>
+          <Link to='/swipeCandidate/random'><img src='/images/icons/people.png' alt='settings'/></Link>
           <h1 className='text-yellow'>My Profile</h1>
            <img src='' alt=''/>
         </div>
@@ -100,7 +109,9 @@ class ProfilePage extends React.Component {
               <div className='image'>
                 <img src='/images/temple.png' alt='my-company'/>
               </div>
-              <h3>My Company</h3>
+              <div className='title'>
+              <p>My Company</p>
+              </div>
             </div>
             </Link>
     
@@ -109,7 +120,9 @@ class ProfilePage extends React.Component {
             <div className='image'>
               <img src='/images/my-offers.png' alt='my-offers'/>
             </div>
-              <h3>My Offers</h3>
+            <div className='title'>
+              <p>My Offers</p>
+            </div>
               </div>
             </Link>
     
@@ -118,21 +131,24 @@ class ProfilePage extends React.Component {
             <div className='image'>
               <img src='/images/my-dashboard.png' alt='my-dashboard'/>
             </div>
-              <h3>My Dashboard</h3>
+                <div className='title'>
+              <p>My Dashboard</p>
+              </div>
               </div>
             </Link>
     
-            <Link to='/myCurrentPost'>
+      
               <div className='row border-red' onClick={()=>this.props.history.push(`/posts/${this.state.currentPost._id}`)} >
                 <div className='image'>
                 <img src='/images/my-current-post.png' alt='current-post'/>
                 </div>
-                <div className='flex-column'>
-                  <h3>My Current Post</h3>
-                  <p>{this.state.currentPost.offerName}</p>
+                   <div className='title'>
+                    <div className='flex-column'>
+                      <p>My Current Post</p>
+                      <span className='small-text'>{this.state.currentPost.offerName}</span>
+                    </div>
                 </div>
               </div>
-            </Link>
           </main>
         </div>
       )

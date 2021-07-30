@@ -52,13 +52,12 @@ let userSchema = new Schema(
       github: String,
       portfolio: String,
     },
-    /* voir avec tran quel badge et type number ou string
-    badge: {
+    badges: {
       motivation: Number,
-      experience: Number,
-      ...
-    }
-    */
+      skills: Number,
+      humour: Number,
+      culture: Number,
+    },
     companyName: String,
     companyLogo: String,
     companyWebsite: String,

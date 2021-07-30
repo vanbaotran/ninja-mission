@@ -170,7 +170,7 @@ class DashboardDetails extends React.Component {
                     />
                   )}
                   <p>{el.name}</p>
-                  <p>{el.codeLanguage}</p>
+                  {/* <p>{el.codeLanguage}</p> */}
                   <img
                     className="inline-level"
                     src={`/images/${el?.level?.toLowerCase()}.png`}

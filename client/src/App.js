@@ -21,6 +21,8 @@ import MyOffersList from './components/MyOffersList'
 import MyDashBoard from './components/MyDashboard';
 import DashboardDetails from './components/DashboardDetails';
 import CompanyDetails from './components/details/CompanyDetails';
+import MyBadges from './components/MyBadges';
+import OverlayOptions from './components/overlays/OverlayOptions'
 
 class App extends React.Component {
   state = {
@@ -89,6 +91,8 @@ class App extends React.Component {
           <Route exact path='/mydashboard' render={(props)=><MyDashBoard {...props} currentPostId={this.state.currentPostId} currentUser={this.state.loggedInUser}/>} />
           <Route path='/mydashboard/:id' render={(props)=><DashboardDetails currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/companyDetails' render={(props)=><CompanyDetails currentUser={this.state.loggedInUser} {...props} />} />
+           <Route path='/myBadges' render={(props)=><MyBadges currentUser={this.state.loggedInUser} {...props} />} />
+            <Route path='/options' render={(props)=><OverlayOptions currentUser={this.state.loggedInUser} {...props} />} />
         </Switch>
       </div> 
     );

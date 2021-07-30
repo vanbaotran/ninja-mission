@@ -17,6 +17,8 @@ const NavBar = () =>{
       <Link to='/mydashboard'>  My dashboard </Link>
         <Link to='/companyDetails'>  My COMPANY DETAILS </Link>
          <Link to='/recruiterform'>  My COMPANY details EDIT </Link>
+      <Link to='/myBadges'>  MY BADGES </Link>
+        <Link to='/options'> OverlayOptions </Link>
     </div>
   )
 }
