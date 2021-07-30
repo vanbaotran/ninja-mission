@@ -69,7 +69,7 @@ export class PostForm extends Component {
       this.setState({
         errorMessage: "Contract, level and code languages are required!",
       });
-      setTimeout(() => this.setState({ errorMessage: false }), 3000);
+      setTimeout(() => this.setState({ errorMessage: false }), 2000);
     } else {
       if (this.props.match.params.id === "new") {
         service
@@ -121,17 +121,17 @@ export class PostForm extends Component {
   };
   render() {
     return (
-      <div className="post-form-main">
+      <div className="post-form-main bg-ligth-grey flex-column">
         {this.state.errorMessage && (
-          <div className="text-red">
+          <div className="text-red error-over blue">
             <h1>{this.state.errorMessage}</h1>
           </div>
         )}
-        <h2>
+        <h1>
           {this.props.match.params.id === "new"
             ? "ADD A NEW OFFER"
             : "EDIT THE OFFER"}
-        </h2>
+        </h1>
         <form className="flex-column form-all-page" onSubmit={(e) => this.handleSubmit(e)}>
           <label>
             <img
@@ -225,7 +225,7 @@ export class PostForm extends Component {
             value={this.state.website}
             change={this.handleChange}
           />
-          <button>
+          <button className="btn blue">
             {this.props.match.params.id === "new"
               ? "Add new post"
               : "Edit the post"}

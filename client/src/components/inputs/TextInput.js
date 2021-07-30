@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class TextInput extends Component {
   render() {
     return (
-      <label className={this.props.className + " flex-row"}>
+      <label className={this.props.className ?  this.props.className : ""}>
         {this.props.label}
         {this.props.area ? (
           <textarea
