@@ -35,22 +35,6 @@ class CandidateDetails extends Component {
       }
     }
   }
-  handleEdit = (e) => {
-    // this.props.history.push(`/postForm/${this.props.match.params.id}`);
-  };
-  //update state.currentPostId if chosen
-  updateCurrentPost = () => {
-    // this.props.updateCurrentPost(this.props.match.params.id);
-    // editProfile({currentPostId:this.props.match.params.id})
-    // .then(response=>{
-    //   console.log('CHANGING POST ID', response)
-    //   this.props.updateUser(response)
-    // })
-    // .catch(err=>console.log(err))
-  };
-  back = () => {
-    // this.props.history.push(`/swipeOffer/${this.props.match.params.id}`);
-  };
   render() {
     return (
       <div>
@@ -73,7 +57,6 @@ class CandidateDetails extends Component {
               alt="level ico"
             />
           </div>
-          {/* {this.props.fromswipe  || <button onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>} */}
         </div>
         <div className="body-candidate-details">
           <div className="detail-level">
@@ -85,14 +68,6 @@ class CandidateDetails extends Component {
                   : "none"}
               </p>
             </div>
-            {/* <img
-              src={`/images/${
-                this.state.level
-                  ? this.state.experienceLevel.toLowerCase()
-                  : "ninja.png"
-              }.png`}
-              alt="logo level"
-            /> */}
           </div>
           <div>
             <h4>BIO</h4>

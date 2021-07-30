@@ -5,8 +5,7 @@ import SelectInput from "../inputs/SelectInput";
 import service from '../service'
 const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
 const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
-const RegLinkedin = /^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/gim;
-const RegGithub = /^https:\/\/github\.com\/.*$/gim;
+
 // import axios from 'axios';
 
 class CandidateForm extends React.Component{
@@ -109,9 +108,6 @@ class CandidateForm extends React.Component{
             <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
              <p className='text-red'>{ !this.state.email && this.state.errorMessage} { this.validateEmail(this.state.email) && this.state.errorMessage.valid}</p>
             </label>
-            {/* <label>Password
-            <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
-            </label> */}
             <label>Birthday 
             <input type='date' name='birthday' value={this.state.birthday} onChange={(e)=>this.handleChange(e)}/>
             </label>
@@ -150,11 +146,9 @@ class CandidateForm extends React.Component{
             <label>LinkedIn
             <input type='text' name='linkedin' value={this.state.usefulLinks.linkedin} onChange={(e)=>this.handleChangeUsefulLink(e)} />
             </label>
-            {this.state.usefulLinks.linkedin.length === 0 || RegLinkedin.test(this.state.usefulLinks.linkedin) || <p className="text-red"> Linkedin link is not valid</p>}
             <label>Github
             <input type='text' name='github' value={this.state.usefulLinks.github} onChange={(e)=>this.handleChangeUsefulLink(e)} />
             </label>
-             {this.state.usefulLinks.github.length === 0 || RegGithub.test(this.state.usefulLinks.github) || <p className="text-red"> Github link is not valid</p>}
             <label>Porfolio
             <input type='text' name='portfolio' value={this.state.usefulLinks.portfolio} onChange={(e)=>this.handleChangeUsefulLink(e)} />
             </label>
