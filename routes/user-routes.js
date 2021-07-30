@@ -235,4 +235,8 @@ router.delete("/:id", isLoggedIn, (req, res, next) => {
     })
     .catch((err) => res.status(500).json({ message: "Deleting went bad" }));
 });
+// //give badges to a candidate 
+// router.patch('/:id', [isLoggedIn, isRecruiter],(req,res,next)=>{
+  
+// })
 module.exports = router;

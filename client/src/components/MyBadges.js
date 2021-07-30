@@ -49,7 +49,7 @@ class MyBadges extends React.Component{
        <BlueTop/>
           <div className='top-line flex-row'> 
             <img onClick={()=>{this.props.history.push('/profilepage')}} src='/images/icons/back.png' alt='icon back'/>
-            <h1 className='text-yellow'>My Badges </h1>
+            <h1 className='text-yellow'>Give Badges </h1>
             <img src='' alt=''/>
           </div>
       <div className='my-badges'>
