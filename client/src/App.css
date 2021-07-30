@@ -225,7 +225,6 @@ input[type='file'] {
   color: #0D3B66;
   background-color: white;
   border: 1px solid #0D3B66;
-  width: 100px;
 }
 .candidate-list {
   display: inline-block;
@@ -252,10 +251,7 @@ input[type='file'] {
   width: 50px ;
   height: 50px;
 }
-.icon-search {
-  width: 20px;
-  max-width: 100%;
-}
+
 h4 {
   text-align: center;
 }
@@ -263,10 +259,38 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  position: relative;
+}
+.icon-search {
+  width: 15px;
+  max-width: 100%;
+  position: absolute;
+  right: 4vw;
+  top:1.5vh;
 }
 .search input {
   width: 60vw;
 }
+.top-line {
+  align-items: center;
+  justify-content: space-between;
+}
+.top-line h1 {
+  text-align: center;
+}
+.blue-bg {
+  background-color: #0D3B66;
+}
+.sort {
+  margin-left: 5px;
+  margin-right: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+.sort h4 {
+  width: 30vw;
+}
+
 /*
  ######  ##      ## #### ########  ########    ########     ###     ######   ######## 
 ##    ## ##  ##  ##  ##  ##     ## ##          ##     ##   ## ##   ##    ##  ##       

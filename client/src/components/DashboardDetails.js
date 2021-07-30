@@ -1,13 +1,15 @@
 import React from "react";
 import service from "./service";
 
+
 class DashboardDetails extends React.Component {
   state = {
     jobPost: "",
-    candidateIdList: [],
     candidateList: [],
     query: "",
-    sortingLevel:false
+    jobCodeLanguages:[],
+    sortingLevel:false,
+    sortingAccuracy:false,
   };
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,50 +28,55 @@ class DashboardDetails extends React.Component {
       Samurai: 3,
       Sensei: 4
     }
+    //sort levels by using value of each level in decreasing order
     let sortedList = [...this.state.candidateList].sort((a,b)=> ranking[`${b.level}`] - ranking[`${a.level}`])
     if (this.state.sortingLevel===false){
        this.setState({ 
         candidateList:sortedList,
-        sortingLevel:true
+        sortingLevel:true,
+        sortingAccuracy:false,
       })
+      //if the button is not active then retrieve the page again to have original order
     } else {
       this.getSinglePost();
        this.setState({ 
-        sortingLevel:false
+        sortingLevel:false,
       })
     }
-   
   }
-  // getSinglePost = () => {
-  //   service
-  //     .get(`/posts/${this.props.match.params.id}`)
-  //     .then((response) => {
-  //       this.setState({
-  //         jobPost: response.data.offerName,
-  //         candidateIdList: response.data.applicationId.candidateId,
-  //       });
-  //       this.state.candidateIdList.map((id) => this.getCandidateData(id));
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-  // getCandidateData = (candidateId) => {
-  //   service.get(`/users/${candidateId}`).then((response) => {
-  //     let updatedCandidateList = [...this.state.candidateList];
-  //     updatedCandidateList.push(response.data);
-  //     this.setState({
-  //       candidateList: updatedCandidateList,
-  //     });
-  //   });
-  // };
+  sortByAccuracy = () => {
+    //sort by number of keywords matched in CodeLanguage 
+    //codeLanguage=['JS','Python',...]
+    let jobCodeLanguages = [...this.state.jobCodeLanguages]
+    function matchCount(candidateCodeLanguagesArray){
+      let matchedArray = jobCodeLanguages.filter(el=> candidateCodeLanguagesArray.includes(el))
+      return matchedArray.length
+    }
+    let theList = [...this.state.candidateList]
+    let sortedList = theList.sort((a,b)=> matchCount(b.codeLanguage)-matchCount(a.codeLanguage))
+    if (this.state.sortingAccuracy===false){
+      this.setState({
+        sortingAccuracy:true,
+        sortingLevel:false,
+        candidateList:sortedList,
+      }) 
+    } else {
+      this.getSinglePost();
+      this.setState({ 
+        sortingAccuracy:false,
+      })
+    }
+  }
   getSinglePost = async () => {
     try {
-    let jobpost = await service.get(`/posts/${this.props.match.params.id}`);
+    let jobPost = await service.get(`/posts/${this.props.match.params.id}`);
     let candidatesData = await service.get(
-      `/applications/${jobpost.data.applicationId._id}/candidates`
+      `/applications/${jobPost.data.applicationId._id}/candidates`
     );
     this.setState({
-      jobPost: jobpost.data.offerName,
+      jobPost: jobPost.data.offerName,
       candidateList: candidatesData.data.candidateId,
+      jobCodeLanguages:jobPost.data.codeLanguage
     });
       
     } catch (error) {
@@ -93,9 +100,22 @@ class DashboardDetails extends React.Component {
     } else {
       candidateArray = this.state.candidateList
     }
+    //CSS pushed button
+    let divStyle1,divStyle2;
+    let buttonOn = {backgroundColor:"#F6DA79", boxShadow: "0px 2px 2px"}
+    if(this.state.sortingAccuracy) {
+      divStyle1 = buttonOn;
+      divStyle2 = {}
+    } else if (this.state.sortingLevel) {
+      divStyle2 = buttonOn;
+      divStyle1 = {};
+    } else {
+      divStyle1 = {};
+      divStyle2 = {}
+    }
     return (
       <div className="dashboard-details">
-        <header>
+        <div className='top-line flex-row blue-bg'>
           <img
             onClick={() => {
               this.props.history.push("/mydashboard");
@@ -104,16 +124,18 @@ class DashboardDetails extends React.Component {
             alt="back"
           />
           <h1 className="text-yellow">{this.state.jobPost}</h1>
-        </header>
-        <div className="sort">
+          <img src='' alt=''/>
+        </div>
+        <div className="sort flex-row">
           <h4 className="text-red">Sort by</h4>
           <img src="/images/icons/sort.png" alt="sort" />
-          <button  className="btn sort">date</button>
-          <button className="btn sort">accuracy</button>
-          <button onClick={()=>this.sortByLevel()} className="btn sort">exp level</button>
+          {/* <button className="btn sort">date</button> */}
+          <button onClick={()=>this.sortByAccuracy()}className="btn sort" style={divStyle1}>accuracy</button>
+          <button onClick={()=>this.sortByLevel()} style={divStyle2} className="btn sort">exp level</button>
         </div>
         <form onSubmit={this.handleSubmit} className="search">
           <label>Code Languages </label>
+          <div className='input-search flex-row'>
           <input
             onChange={this.handleChange}
             name="query"
@@ -124,6 +146,7 @@ class DashboardDetails extends React.Component {
               src="/images/icons/search.png"
               alt="search"
             />
+            </div>
         </form>
         <ul className="candidate-list">
           {candidateArray.map((el) => {
