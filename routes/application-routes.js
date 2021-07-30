@@ -22,6 +22,9 @@ router.get("/:id/candidates", [isLoggedIn, isRecruiter], (req, res, next) => {
   Application.findOne({ _id: req.params.id })
     .populate("candidateId")
     .then((AppsfromDb) => {
+      AppsfromDb.array.forEach(element => {
+        element.password = undefined;
+      });
       res.status(200).json(AppsfromDb);
       return;
     })
