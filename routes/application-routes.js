@@ -18,7 +18,6 @@ router.get("/", [isLoggedIn, isCandidate], (req, res, next) => {
 });
 // get applicationCandidate data by id of app
 router.get("/:id/candidates", [isLoggedIn, isRecruiter], (req, res, next) => {
-  
   Application.findOne({ _id: req.params.id })
     .populate("candidateId")
     .then((AppsfromDb) => {
