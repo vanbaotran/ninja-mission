@@ -1,5 +1,6 @@
 import React from "react";
 import service from "./service";
+import BlueTop from './backgrounds/BlueTop'
 class MyDashBoard extends React.Component {
   state = {
     offerList: [],
@@ -32,7 +33,12 @@ class MyDashBoard extends React.Component {
   render() {
     return (
       <div>
-        <h1>MY DASHBOARD </h1>
+        <BlueTop/>
+        <div className='top-line flex-row'> 
+          <img onClick={()=>{this.props.history.push('/profilepage')}} src='/images/icons/back.png' alt='icon back'/>
+          <h1 className='text-yellow'>My Dashboard </h1>
+          <img src='' alt=''/>
+        </div>
         <div className="dashboard">
           {this.state.offerList.map((offer) => {
             let dateNumber = this.getDate(offer.createdAt)
