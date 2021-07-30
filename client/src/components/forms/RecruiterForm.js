@@ -1,6 +1,7 @@
 import React from "react";
 import TextInput from "../inputs/TextInput";
 import service, { uploadFile } from "../service";
+import BlueTop from "../backgrounds/BlueTop";
 
 class RecruiterForm extends React.Component {
   state = {
@@ -31,6 +32,7 @@ class RecruiterForm extends React.Component {
         funFact: updatedUser?.funFact || ""
       });
     this.props.updateUser(updatedUser)
+    this.props.history.push('/companyDetails')
     });
   };
   handleChange = (e) => {
@@ -49,7 +51,7 @@ class RecruiterForm extends React.Component {
   };
   componentDidMount() {
     if (!this.props.currentUser) { this.props.history.push("/login") } else {
-      service.get(`/users/${this.props.currentUserId}`).then(response => {
+      service.get(`/users/${this.props.currentUser._id}`).then(response => {
         let { name, email, bio, companyName, companyLogo, companyWebsite, industry, scope, funFact } = response.data;
         this.setState({ name, email, bio, companyName, companyLogo, companyWebsite, industry, scope, funFact });
       });  
@@ -58,7 +60,10 @@ class RecruiterForm extends React.Component {
   render() {
     return (
       <div className="form">
+      <BlueTop/>
         <form onSubmit={this.handleSubmit}>
+        <div className="form-no-btn">
+        <h1 className="text-blue">Edit Your Company Profile</h1>
           <label>
             <img src={this.state.companyLogo || "/images/temple.png"} alt="logo" />
             <input
@@ -82,7 +87,7 @@ class RecruiterForm extends React.Component {
             change={this.handleChange}
           />
           <TextInput
-            label="Company Website"
+            label="Website"
             name="companyWebsite"
             value={this.state.companyWebsite}
             change={this.handleChange}
@@ -102,7 +107,7 @@ class RecruiterForm extends React.Component {
             value={this.state.industry}
             change={this.handleChange}
           />
-           <TextInput
+           {/* <TextInput
             label="City"
             name="city"
             value={this.state.scope.city}
@@ -113,15 +118,15 @@ class RecruiterForm extends React.Component {
             name="country"
             value={this.state.scope.country}
             change={this.handleChange}
-          />
+          /> */}
            <TextInput
             label="Fun Fact"
             name="funFact"
             value={this.state.funFact}
             change={this.handleChange}
           />
-
-          <button className='btn red'onClick={()=>this.props.history.push('/companyDetails')}>SAVE THE CHANGES</button>
+</div>
+          <button className='btn red'>SAVE THE CHANGES</button>
         </form>
       </div>
     );
