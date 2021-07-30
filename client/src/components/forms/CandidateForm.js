@@ -5,7 +5,8 @@ import SelectInput from "../inputs/SelectInput";
 import service from '../service'
 const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
 const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
-
+const RegLinkedin = /^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/gim;
+const RegGithub = /^https:\/\/github\.com\/.*$/gim;
 // import axios from 'axios';
 
 class CandidateForm extends React.Component{
@@ -39,28 +40,6 @@ class CandidateForm extends React.Component{
       });  
     }
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if(prevProps.currentUser !== this.props.currentUser){
-  //     this.setState({
-  //       name:this.props.currentUser.name,
-  //       email:this.props.currentUser.email,
-  //       birthday:this.props.currentUser.birthday,
-  //       bio:this.props.currentUser.bio,
-  //       avatar:this.props.currentUser.avatar,
-  //       cvUrl:this.props.currentUser.cvUrl,
-  //       title:this.props.currentUser.title,
-  //       codeLanguage:this.props.currentUser.codeLanguage,
-  //       funFact:this.props.currentUser.funFact,
-  //       level:this.props.currentUser.level,
-  //       usefulLinks:{
-  //         linkedin: this.props.currentUser?.usefulLinks?.linkedin || "",
-  //         github: this.props.currentUser?.usefulLinks?.github || "",
-  //         portfolio: this.props.currentUser?.usefulLinks?.portfolio|| "" ,
-  //       }
-  //     })
-  //   } 
-  // }
   validateEmail = (inputText) => {
     var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     if(inputText.match(mailformat))
@@ -78,6 +57,7 @@ class CandidateForm extends React.Component{
       console.log(response)
       this.setState(response)
       this.props.updateUser(response)
+      this.props.history.push("/personalProfile")
     })
     .catch(error => console.log(error))
   }
@@ -170,9 +150,11 @@ class CandidateForm extends React.Component{
             <label>LinkedIn
             <input type='text' name='linkedin' value={this.state.usefulLinks.linkedin} onChange={(e)=>this.handleChangeUsefulLink(e)} />
             </label>
+            {this.state.usefulLinks.linkedin.length === 0 || RegLinkedin.test(this.state.usefulLinks.linkedin) || <p className="text-red"> Linkedin link is not valid</p>}
             <label>Github
             <input type='text' name='github' value={this.state.usefulLinks.github} onChange={(e)=>this.handleChangeUsefulLink(e)} />
             </label>
+             {this.state.usefulLinks.github.length === 0 || RegGithub.test(this.state.usefulLinks.github) || <p className="text-red"> Github link is not valid</p>}
             <label>Porfolio
             <input type='text' name='portfolio' value={this.state.usefulLinks.portfolio} onChange={(e)=>this.handleChangeUsefulLink(e)} />
             </label>
