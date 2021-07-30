@@ -127,6 +127,7 @@ router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
     if (!randomUser) {
       return res.status(204).json();
     }
+    randomUser.password = undefined;
     res.status(200).json(randomUser);
     return;
   } catch (error) {
@@ -140,6 +141,7 @@ router.get("/:id", isLoggedIn, (req, res, next) => {
       if (!ret) {
         res.status(204).json(ret);
       } else {
+        ret.password = undefined;
         res.status(200).json(ret);
       }
     })
@@ -203,6 +205,7 @@ router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next
         theUser
           .save()
           .then((updatedUser) => {
+            updatedUser.password = undefined;
             res.status(200).json({ updatedUser });
             return;
           })

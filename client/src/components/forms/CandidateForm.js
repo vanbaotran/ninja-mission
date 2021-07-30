@@ -33,7 +33,7 @@ class CandidateForm extends React.Component{
   }
   componentDidMount() {
      if (!this.props.currentUser) { this.props.history.push("/login") } else {
-      service.get(`/users/${this.props.currentUserId}`).then(response => {
+      service.get(`/users/${this.props.currentUser._id}`).then(response => {
 
         this.setState({...response.data});
       });  
@@ -129,9 +129,9 @@ class CandidateForm extends React.Component{
             <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
              <p className='text-red'>{ !this.state.email && this.state.errorMessage} { this.validateEmail(this.state.email) && this.state.errorMessage.valid}</p>
             </label>
-            <label>Password
+            {/* <label>Password
             <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
-            </label>
+            </label> */}
             <label>Birthday 
             <input type='date' name='birthday' value={this.state.birthday} onChange={(e)=>this.handleChange(e)}/>
             </label>
