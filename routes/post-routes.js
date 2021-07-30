@@ -88,6 +88,7 @@ postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
 });
 //GET POST BY RECRUITER ID
 postRoutes.get("/recruiter/:recruiterId", [isLoggedIn, isRecruiter], (req, res, next) => {
+  console.log(req.params.recruiterId)
   Post.find({ recruiterId: req.params.recruiterId })
     .populate("applicationId")
     .then((ret) => res.status(200).json(ret))

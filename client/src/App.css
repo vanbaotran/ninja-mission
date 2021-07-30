@@ -509,6 +509,14 @@ background-color: rgb(196, 194, 194);
 .profile-page .row h3{
   margin-right: 10vh;
 }
+.profile-page .top-line img{
+  width: 8vw;
+}
+.profile-page header img {
+  display: block;
+  margin:auto;
+  width: 30vw;
+}
 
 /**********************************************
 ########   #######   ######  ########    ########  #######  ########  ##     ## 
@@ -544,11 +552,11 @@ background-color: rgb(196, 194, 194);
 ##     ##    ##       ##       ##        ##   ##  ##       ##       
 ##     ##    ##       ##       ##         ## ##   ##       ##       
 ##     ##    ##       ######## ########    ###    ######## ######## */
-.my-level .image {
+.my-level .image, .profile-page .image {
   width: 20vw;
   display: flex;
 }
-.my-level header img {
+.my-level header img{
   display: block;
   margin: 20px auto;
   width: 30vw;
@@ -561,7 +569,6 @@ background-color: rgb(196, 194, 194);
 }
 .my-level .row {
   align-items: center;
-
 }
 .my-level h3 {
   text-align: center;

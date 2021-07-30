@@ -129,7 +129,6 @@ class DashboardDetails extends React.Component {
         <div className="sort flex-row">
           <h4 className="text-red">Sort by</h4>
           <img src="/images/icons/sort.png" alt="sort" />
-          {/* <button className="btn sort">date</button> */}
           <button onClick={()=>this.sortByAccuracy()}className="btn sort" style={divStyle1}>accuracy</button>
           <button onClick={()=>this.sortByLevel()} style={divStyle2} className="btn sort">exp level</button>
         </div>
