@@ -2,6 +2,7 @@ import React from 'react'
 import {uploadFile,editProfile} from '../service';
 import BlueTop from '../backgrounds/BlueTop';
 import SelectInput from "../inputs/SelectInput";
+import service from '../service'
 const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
 const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
 
@@ -31,26 +32,35 @@ class CandidateForm extends React.Component{
     }
   }
   componentDidMount() {
-    
-      this.setState({
-        name:this.props.currentUser.name,
-        email:this.props.currentUser.email,
-        birthday:this.props.currentUser.birthday,
-        bio:this.props.currentUser.bio,
-        avatar:this.props.currentUser.avatar,
-        cvUrl:this.props.currentUser.cvUrl,
-        title:this.props.currentUser.title,
-        codeLanguage:this.props.currentUser.codeLanguage,
-        funFact:this.props.currentUser.funFact,
-        level:this.props.currentUser.level,
-        usefulLinks:{
-          linkedin: this.props.currentUser?.usefulLinks?.linkedin || "",
-          github: this.props.currentUser?.usefulLinks?.github || "",
-          portfolio: this.props.currentUser?.usefulLinks?.portfolio|| "" ,
-        }
-      })
-    
+     if (!this.props.currentUser) { this.props.history.push("/login") } else {
+      service.get(`/users/${this.props.currentUserId}`).then(response => {
+
+        this.setState({...response.data});
+      });  
+    }
   }
+
+  // componentDidUpdate(prevProps) {
+  //   if(prevProps.currentUser !== this.props.currentUser){
+  //     this.setState({
+  //       name:this.props.currentUser.name,
+  //       email:this.props.currentUser.email,
+  //       birthday:this.props.currentUser.birthday,
+  //       bio:this.props.currentUser.bio,
+  //       avatar:this.props.currentUser.avatar,
+  //       cvUrl:this.props.currentUser.cvUrl,
+  //       title:this.props.currentUser.title,
+  //       codeLanguage:this.props.currentUser.codeLanguage,
+  //       funFact:this.props.currentUser.funFact,
+  //       level:this.props.currentUser.level,
+  //       usefulLinks:{
+  //         linkedin: this.props.currentUser?.usefulLinks?.linkedin || "",
+  //         github: this.props.currentUser?.usefulLinks?.github || "",
+  //         portfolio: this.props.currentUser?.usefulLinks?.portfolio|| "" ,
+  //       }
+  //     })
+  //   } 
+  // }
   validateEmail = (inputText) => {
     var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     if(inputText.match(mailformat))
@@ -119,9 +129,9 @@ class CandidateForm extends React.Component{
             <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
              <p className='text-red'>{ !this.state.email && this.state.errorMessage} { this.validateEmail(this.state.email) && this.state.errorMessage.valid}</p>
             </label>
-            {/* <label>Password
+            <label>Password
             <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
-            </label> */}
+            </label>
             <label>Birthday 
             <input type='date' name='birthday' value={this.state.birthday} onChange={(e)=>this.handleChange(e)}/>
             </label>

@@ -51,8 +51,6 @@ app.use(session({
   // cookie: { Lax: true },
   store: MongoStore.create({ mongoUrl: 'mongodb://localhost/ninja-mission',
   mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
-  autoRemove: 'interval',
-  autoRemoveInterval: 60*24*14 // In minutes. Default)
  })
 }));
 
