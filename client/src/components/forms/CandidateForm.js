@@ -98,6 +98,18 @@ class CandidateForm extends React.Component{
       })
   }
   render(){
+    function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
     return(
       <div className='form'>
       <BlueTop/>
@@ -113,7 +125,7 @@ class CandidateForm extends React.Component{
              <p className='text-red'>{ !this.state.email && this.state.errorMessage} { this.validateEmail(this.state.email) && this.state.errorMessage.valid}</p>
             </label>
             <label>Birthday 
-            <input type='date' name='birthday' value={this.state.birthday} onChange={(e)=>this.handleChange(e)}/>
+            <input type='date' name='birthday' value={formatDate(this.state.birthday)} onChange={(e)=>this.handleChange(e)}/>
             </label>
             <TextInput
             label="Bio"
