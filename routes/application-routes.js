@@ -16,6 +16,7 @@ router.get("/", [isLoggedIn, isCandidate], (req, res, next) => {
       res.status(500).json({ message: "Something went wrong when finding applications." })
     );
 });
+
 // get applicationCandidate data by id of app
 router.get("/:id/candidates", [isLoggedIn, isRecruiter], (req, res, next) => {
   Application.findOne({ _id: req.params.id })
@@ -108,9 +109,7 @@ router.patch("/:applicationId/accept", [isLoggedIn, isRecruiter], (req, res, nex
         return;
       }
       AppfromDb.acceptedCandidateId.push(id);
-      console.log(AppfromDb, "========")
       AppfromDb.save().then((updatedApp) => {
-      console.log(updatedApp)
         res.status(200).json({
           message: `Candidate ${id} was succesfully accepted in application ${req.params.applicationId}`,
           application: updatedApp,
@@ -194,6 +193,17 @@ router.patch("/:applicationId/undoRefuse", [isLoggedIn, isRecruiter], (req, res,
     })
     .catch((err) =>
       res.status(500).json({ message: "Removing candidate from refused applications went wrong" })
+    );
+});
+// get application by id
+router.get("/:applicationId", [isLoggedIn, isRecruiter], (req, res, next) => {
+  Application.findOne({ _id: req.params.applicationId })
+    .then((AppsfromDb) => {
+      res.status(200).json(AppsfromDb);
+      return;
+    })
+    .catch((err) =>
+      res.status(500).json({ message: "Something went wrong when finding applications." })
     );
 });
 module.exports = router;

@@ -421,6 +421,7 @@ top: 85vh;
 left: 50%;
 transform: translateX(-50%);
 }
+
 .btn-swipe {
   max-width: 50px;
 }
@@ -655,7 +656,7 @@ background-color: rgb(196, 194, 194);
 .head-post-details h1 {
   text-align: left;
 }
-.head-post-details img, .head-avatar-candidate img {
+.head-post-details img, .head-avatar-candidate img :not(.btn-swipe){
   width: 80%;
   max-width: 300px;
   margin: 1em auto;
@@ -673,6 +674,17 @@ background-color: rgb(196, 194, 194);
   justify-content: space-around;
   padding: 0.3em;
   margin: auto;
+}
+.block-btn-swipe-detail {
+  width: 300px;
+margin: auto;
+justify-content: space-between;
+transform: translateY(-60px);
+}
+.block-btn-swipe-detail > h2{
+  text-align: center;
+  font-size: 2em;
+  margin: 0;
 }
 .detail, .links-candidate {
   width: 80%;

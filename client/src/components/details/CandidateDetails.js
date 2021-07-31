@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 class CandidateDetails extends Component {
   state = {
     from: false,
+    apply: false,
   };
   componentDidMount() {
     if (!this.props.currentUser) {
@@ -13,11 +14,23 @@ class CandidateDetails extends Component {
       if (this.props.from) {
         service
           .get(`/users/${this.props.match.params.id}`)
-          .then((response) => {
-            console.log(response);
+          .then(async (response) => {
+            let apply;
+            let application = await service.get(
+              `applications/${this.props.currentUser.currentApplicationId}`
+            );
+            console.log(application);
+            if (application.data.acceptedCandidateId.includes(this.props.match.params.id)) {
+              apply = "ACCEPTED";
+            } else if (application.data.refusedCandidateId.includes(this.props.match.params.id)) {
+              apply = "REFUSED";
+            } else {
+              apply = false;
+            }
             this.setState({
               ...response.data,
               from: this.props.from || false,
+              apply: apply,
             });
           })
           .catch((err) => console.log(err));
@@ -25,7 +38,6 @@ class CandidateDetails extends Component {
         service
           .get(`/users/${this.props.currentUser._id}`)
           .then((response) => {
-            console.log(response);
             this.setState({
               ...response.data,
               from: this.props.fromswipe || false,
@@ -47,16 +59,52 @@ class CandidateDetails extends Component {
     }
     return age;
   };
+  swipeCandidate = async () => {
+    try {
+      await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/refuse`, {
+        id: this.state._id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  chooseCandidate = async () => {
+    try {
+      await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {
+        id: this.state._id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
-    let age = this.props.currentUser
-      ? this.getAge(this.props.currentUser.birthday.toString())
-      : false;
+    let age = this.state.birthday ? this.getAge(this.state.birthday.toString()) : false;
 
     return (
       <div className="bg-ligth-grey details">
         <div className="head-candidate-details">
           <div className="head-avatar-candidate flex-column">
             <img src={this.state.avatar ? this.state.avatar : "/images/ninja.png"} alt="avatar" />
+            {this.props.currentUser && this.props.currentUser.profileType === "recruiter" && (
+              <div className="block-btn-swipe-detail flex-row">
+                {(this.state.apply && <h2 className="text-red">{this.state.apply}</h2>) || (
+                  <>
+                    <img
+                      className="btn-swipe"
+                      src="/images/icons/cancel.png"
+                      alt="cancel ico"
+                      onClick={this.swipeCandidate}
+                    />
+                    <img
+                      className="btn-swipe"
+                      src="/images/icons/heart.png"
+                      alt="heart ico"
+                      onClick={this.chooseCandidate}
+                    />
+                  </>
+                )}
+              </div>
+            )}
             <h4>{this.state.title}</h4>
           </div>
           <div className="head-name-candidate flex-row">
@@ -88,23 +136,23 @@ class CandidateDetails extends Component {
               <p>{this.state.funFact}</p>
             </div>
           )}
-            <div className="links-candidate flex-row ">
-          {this.state.usefulLinks && (
-            <>
-              <a href={this.state.usefulLinks.linkedin} rel="noreferrer" target="_blank">
-                <img src={"/images/icons/linkedin.png"} alt="ico linkedin" />
-              </a>
-              <a href={this.state.usefulLinks.github} rel="noreferrer" target="_blank">
-                <img src={"/images/icons/github.png"} alt="ico github" />
-              </a>
+          <div className="links-candidate flex-row ">
+            {this.state.usefulLinks && (
+              <>
+                <a href={this.state.usefulLinks.linkedin} rel="noreferrer" target="_blank">
+                  <img src={"/images/icons/linkedin.png"} alt="ico linkedin" />
+                </a>
+                <a href={this.state.usefulLinks.github} rel="noreferrer" target="_blank">
+                  <img src={"/images/icons/github.png"} alt="ico github" />
+                </a>
               </>
-          )}
-              {this.state.cvUrl && 
+            )}
+            {this.state.cvUrl && (
               <a href={this.state.cvUrl} rel="noreferrer" target="_blank">
                 <img src={"/images/icons/cv.png"} alt="ico cv" />
               </a>
-              }
-            </div>
+            )}
+          </div>
         </div>
         {(this.props.from === "swipe" && (
           <Link to={`/swipeCandidate/${this.props.match.params.id}`}>
@@ -112,9 +160,9 @@ class CandidateDetails extends Component {
           </Link>
         )) ||
           (this.props.from === "dashboard" && (
-            <Link to={`/dashboard`}>
-              <button className="btn red">GO BACK</button>
-            </Link>
+            <button onClick={() => this.props.history.goBack()} className="btn red">
+              GO BACK
+            </button>
           )) || (
             <Link to="/editCandidateform">
               <button className="btn red">Edit my info</button>
