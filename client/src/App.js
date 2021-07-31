@@ -66,10 +66,8 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
-     
-       
         <Switch>
-          <Route exact path='/homepage' component={Homepage}/>
+          <Route exact path='/' component={Homepage}/>
           <Route path='/login'  render={(props)=><Login {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>
           <Route path='/signup' render={(props)=><Signup {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/editCandidateform' render={(props)=><CandidateForm {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
