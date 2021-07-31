@@ -121,9 +121,6 @@ class CandidateForm extends React.Component{
             rows={10}
             cols={20}
           />
-            {/* <label>Bio
-            <input type='text' name='bio' value={this.state.bio} onChange={(e)=>this.handleChange(e)} /> 
-            </label> */}
             <label>Avatar
             <input type='file' name='avatar'  onChange={(e)=> this.handleChangeFile(e)} />
             </label>
@@ -150,9 +147,18 @@ class CandidateForm extends React.Component{
             options={LanguageOptions}
             multiple={true}
           />
-            <label>Fun fact
+           <TextInput
+            label="Fun Fact"
+            name="funfact"
+            value={this.state.funFact}
+            change={this.handleChange}
+            area={true}
+            rows={5}
+            cols={20}
+          />
+            {/* <label>Fun fact
             <input type='text' name='funFact' value={this.state.funFact} onChange={(e)=>this.handleChange(e)} />
-            </label>
+            </label> */}
             <label>LinkedIn
             <input type='text' name='linkedin' value={this.state.usefulLinks.linkedin} onChange={(e)=>this.handleChangeUsefulLink(e)} />
             </label>
