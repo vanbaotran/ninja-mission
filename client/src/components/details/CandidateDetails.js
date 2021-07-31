@@ -37,7 +37,7 @@ class CandidateDetails extends Component {
   }
   render() {
     return (
-      <div className="bg-ligth-grey candidate-details">
+      <div className="bg-ligth-grey details">
         <div className="head-candidate-details">
           <div className="head-avatar-candidate">
             <img
@@ -64,7 +64,7 @@ class CandidateDetails extends Component {
               <h4>CODE LANGUAGES</h4>
               <p>
                 {this.state.codeLanguage
-                  ? this.state.codeLanguage.join(",")
+                  ? this.state.codeLanguage.join(", ")
                   : "none"}
               </p>
             </div>

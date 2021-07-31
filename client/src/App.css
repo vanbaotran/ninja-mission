@@ -643,14 +643,60 @@ background-color: rgb(196, 194, 194);
 ##    ## ##     ## ##   ### ##     ##  ##  ##     ## ##     ##    ##    ##          ##     ## ##          ##    ##     ##  ##  ##       ##    ## 
  ######  ##     ## ##    ## ########  #### ########  ##     ##    ##    ########    ########  ########    ##    ##     ## #### ########  ######  
 */
-.candidate-details {
-  min-height: 100vh;
+.details {
+  min-height: 100%;
 }
 .head-candidate-details {
   min-height: 50vh;
 }
 .head-avatar-candidate img {
  height: 30vh;
+}
+/*
+########   #######   ######  ########    ########  ######## ########    ###    #### ##        ######  
+##     ## ##     ## ##    ##    ##       ##     ## ##          ##      ## ##    ##  ##       ##    ## 
+##     ## ##     ## ##          ##       ##     ## ##          ##     ##   ##   ##  ##       ##       
+########  ##     ##  ######     ##       ##     ## ######      ##    ##     ##  ##  ##        ######  
+##        ##     ##       ##    ##       ##     ## ##          ##    #########  ##  ##             ## 
+##        ##     ## ##    ##    ##       ##     ## ##          ##    ##     ##  ##  ##       ##    ## 
+##         #######   ######     ##       ########  ########    ##    ##     ## #### ########  ###### 
+*/
+.head-post-details {
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  margin: auto;
+}
+.head-post-details h1 {
+  text-align: left;
+}
+.head-post-details img {
+  width: 80%;
+  max-width: 300px;
+  margin: auto;
+}
+.detail {
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+  justify-content: space-between;
+}
+
+.detail img {
+  max-height: 100px;
+}
+.detail h4, .detail p {
+  text-align: left;
+}
+.who {
+  text-align: center;
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+}
+.who a{
+  text-decoration: none;
+  color: black;
 }
 /*
 ##     ## ##    ##    ########     ###    ########   ######   ########  ######  
