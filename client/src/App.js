@@ -69,7 +69,7 @@ class App extends React.Component {
      
        
         <Switch>
-          <Route exact path='/' component={Homepage}/>
+          <Route exact path='/homepage' component={Homepage}/>
           <Route path='/login'  render={(props)=><Login {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>
           <Route path='/signup' render={(props)=><Signup {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/editCandidateform' render={(props)=><CandidateForm {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
