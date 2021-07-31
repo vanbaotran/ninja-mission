@@ -37,14 +37,14 @@ class CandidateDetails extends Component {
   }
   render() {
     return (
-      <div>
-        <div className="head-candidate-detail">
+      <div className="bg-ligth-grey candidate-details">
+        <div className="head-candidate-details">
           <div className="head-avatar-candidate">
             <img
               src={this.state.avatar ? this.state.avatar : "/images/ninja.png"}
               alt="avatar"
             />
-            <p>location</p>
+            <h1>{this.state.title}</h1>
           </div>
           <div className="head-name-candidate">
             <h1>{this.state.name}</h1>
