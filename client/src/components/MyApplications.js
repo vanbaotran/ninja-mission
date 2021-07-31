@@ -1,5 +1,7 @@
 import React from 'react';
-import service from './service'
+import service from './service';
+import BlueTop from './backgrounds/BlueTop';
+import RedBottom from './backgrounds/RedBottom'
 class MyApplications extends React.Component{
   state ={
     applicationList:[]
@@ -23,7 +25,13 @@ class MyApplications extends React.Component{
   render(){
     return (
       <div className="list"> 
-      <h1>My Applications</h1>
+      <BlueTop/>
+      <RedBottom/>
+        <div className='top-line flex-row'> 
+          <img onClick={()=>this.props.history.goBack()} src='/images/icons/back.png' alt='settings'/>
+          <h1 className='text-yellow'>My Applications</h1>
+          <img src='' alt=''/>
+        </div>
       <div>
      {this.state.applicationList.map((offer)=>{
       return (this.props.currentPostId===offer._id && <div onClick={()=>this.goToDetails(offer._id)} style={{backgroundColor:'#F7E194'}} className="list element" key={offer._id}> 

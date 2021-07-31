@@ -24,7 +24,7 @@ import CompanyDetails from './components/details/CompanyDetails';
 import MyBadges from './components/MyBadges';
 import OverlayOptions from './components/overlays/OverlayOptions';
 import MyApplications from './components/MyApplications'
-
+import OverlayUpdated from './components/overlays/OverlayUpdated'
 class App extends React.Component {
   state = {
     loggedInUser: null,
@@ -90,9 +90,10 @@ class App extends React.Component {
           <Route exact path='/mydashboard' render={(props)=><MyDashBoard {...props} currentPostId={this.state.currentPostId} currentUser={this.state.loggedInUser}/>} />
           <Route path='/mydashboard/:id' render={(props)=><DashboardDetails currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/companyDetails' render={(props)=><CompanyDetails currentUser={this.state.loggedInUser} {...props} />} />
-           <Route path='/myBadges' render={(props)=><MyBadges currentUser={this.state.loggedInUser} {...props} />} />
-            <Route path='/options' render={(props)=><OverlayOptions currentUser={this.state.loggedInUser} {...props} />} />
-             <Route path='/myapplications' render={(props)=><MyApplications currentUser={this.state.loggedInUser} {...props} />} />
+          <Route path='/myBadges' render={(props)=><MyBadges currentUser={this.state.loggedInUser} {...props} />} />
+          <Route path='/options' render={(props)=><OverlayOptions currentUser={this.state.loggedInUser} {...props} />} />
+          <Route path='/myapplications' render={(props)=><MyApplications currentUser={this.state.loggedInUser} {...props} />} />
+          <Route path='/overlayupdated' render={(props)=><OverlayUpdated {...props} />} />
         </Switch>
       </div> 
     );
