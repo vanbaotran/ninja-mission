@@ -10,7 +10,7 @@ const MongoStore = require('connect-mongo');
 const cors = require('cors')
 
 mongoose
-  .connect('mongodb://localhost/ninja-mission', {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+  .connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -39,7 +39,6 @@ app.use(require('node-sass-middleware')({
       
 
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
 
 
 // ADD SESSION SETTINGS HERE:
@@ -49,7 +48,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {maxAge: 3600000*24*7*2},
   // cookie: { Lax: true },
-  store: MongoStore.create({ mongoUrl: 'mongodb://localhost/ninja-mission',
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI,
   mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
  })
 }));
@@ -69,4 +68,12 @@ app.use('/posts', postRouter);
 const applicationRouter = require('./routes/application-routes');
 app.use('/applications',applicationRouter)
 
+// Serve static files from client/build folder
+app.use(express.static('client/build'));
+// For any other routes: serve client/build/index.html SPA
+app.use((req, res, next) => {
+  res.sendFile(`${__dirname}/client/build/index.html`, err => {
+    if (err) next(err)
+  })
+});
 module.exports = app;
