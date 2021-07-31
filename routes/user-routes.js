@@ -39,7 +39,7 @@ router.post("/signup", (req, res, next) => {
           res.status(200).json(aNewUser);
         })
         .catch((err) => {
-          res.status(400).json({ message: "Saving user to database went wrong" });
+          res.status(400).json({ message: "Saving user to database went wrong" , err});
         });
     })
     .catch((err) => res.status(500).json({ message: "Email check went bad" }));
