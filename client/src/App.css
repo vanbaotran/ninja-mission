@@ -96,7 +96,9 @@ input, select, textarea {
   max-width: 60%;
   padding: 0.3em;
 }
-
+a {
+  text-decoration: none;
+}
 
 input[type='file'] {
   border: none;
@@ -179,6 +181,9 @@ input[type='file'] {
 .blue {
   background-color: #0D3B66;
 }
+.yellow {
+  background-color: #F4D35E;
+}
 .text-blue {
   color : #0D3B66;
 }
@@ -198,7 +203,7 @@ input[type='file'] {
   border-radius: 16px;
   background-color: white;
 }
-.dashboard {
+.dashboard, .my-badges {
   display: flex;
   flex-wrap: wrap;
 }
@@ -272,7 +277,11 @@ input[type='file'] {
   width: 50px ;
   height: 50px;
 }
-
+.dashboard-details .top-line {
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+}
 h4 {
   text-align: center;
 }
@@ -291,10 +300,12 @@ h4 {
 }
 .search input {
   width: 60vw;
+  max-width: 100%;
 }
 .top-line {
   align-items: center;
   justify-content: space-between;
+  margin: 20px;
 }
 .top-line h1 {
   text-align: center;
@@ -311,7 +322,19 @@ h4 {
 .sort h4 {
   width: 30vw;
 }
-
+/*
+##     ## ##    ##    ########     ###     ######  ##     ## ########   #######     ###    ########  ########  
+###   ###  ##  ##     ##     ##   ## ##   ##    ## ##     ## ##     ## ##     ##   ## ##   ##     ## ##     ## 
+#### ####   ####      ##     ##  ##   ##  ##       ##     ## ##     ## ##     ##  ##   ##  ##     ## ##     ## 
+## ### ##    ##       ##     ## ##     ##  ######  ######### ########  ##     ## ##     ## ########  ##     ## 
+##     ##    ##       ##     ## #########       ## ##     ## ##     ## ##     ## ######### ##   ##   ##     ## 
+##     ##    ##       ##     ## ##     ## ##    ## ##     ## ##     ## ##     ## ##     ## ##    ##  ##     ## 
+##     ##    ##       ########  ##     ##  ######  ##     ## ########   #######  ##     ## ##     ## ########  */
+.dashboard p {
+  text-align: right;
+  margin: 0;
+  color: #0D3B66;
+}
 /*
  ######  ##      ## #### ########  ########    ########     ###     ######   ######## 
 ##    ## ##  ##  ##  ##  ##     ## ##          ##     ##   ## ##   ##    ##  ##       
@@ -409,7 +432,7 @@ transform: translateX(-50%);
   border-radius: 13px ;
   background-color: whitesmoke;
   position: absolute;
-  border: 2px solid #0D3B66;
+  /* border: 2px solid #0D3B66; */
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
@@ -504,21 +527,53 @@ background-color: rgb(196, 194, 194);
   justify-content: space-around;
   background-color: white;
   margin: 10px;
-  height: 14vh;
+  height: 13vh;
   border-radius: 16px;
+}
+.profile-page h1 {
+  margin: 10px;
 }
 .profile-page .row h3{
   margin-right: 10vh;
+  margin-block-start: 0;
+  margin-block-end: 0;
 }
 .profile-page .top-line img{
-  width: 8vw;
+  width: 20px;
 }
 .profile-page header img {
   display: block;
   margin:auto;
-  width: 30vw;
+  width: 25vw;
 }
-
+.my-badges img{
+  height: 10vh;
+}
+.recruiter .image img {
+  width: 15vw;
+}
+.title {
+  width: 60vw;
+  position: relative;
+}
+.title p {
+  margin-block-start: 0;
+  margin-block-end: 0; 
+  text-align: left;
+  font-size: 1.5em;
+  color: #000;
+  font-weight: 400;
+  position: absolute;               /* 2 */
+  top: 50%;                         /* 3 */
+  transform: translateY(-50%) 
+}
+.small-text {
+  font-size: 1em; 
+  position: absolute;  
+  color: #0D3B66;  
+  left:0;
+  bottom: 10%;
+}
 /**********************************************
 ########   #######   ######  ########    ########  #######  ########  ##     ## 
 ##     ## ##     ## ##    ##    ##       ##       ##     ## ##     ## ###   ### 
@@ -558,7 +613,7 @@ background-color: rgb(196, 194, 194);
   margin: 0; height: 100%;
 }
 .my-level .image, .profile-page .image {
-  width: 20vw;
+  width: 18vw;
   display: flex;
 }
 .my-level header img{
@@ -597,3 +652,101 @@ background-color: rgb(196, 194, 194);
 .head-avatar-candidate img {
  height: 30vh;
 }
+/*
+##     ## ##    ##    ########     ###    ########   ######   ########  ######  
+###   ###  ##  ##     ##     ##   ## ##   ##     ## ##    ##  ##       ##    ## 
+#### ####   ####      ##     ##  ##   ##  ##     ## ##        ##       ##       
+## ### ##    ##       ########  ##     ## ##     ## ##   #### ######    ######  
+##     ##    ##       ##     ## ######### ##     ## ##    ##  ##             ## 
+##     ##    ##       ##     ## ##     ## ##     ## ##    ##  ##       ##    ## 
+##     ##    ##       ########  ##     ## ########   ######   ########  ######  */
+.my-badges .element {
+  width: 30vw;
+  border:none;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+.my-badges .element img {
+  max-width: 100%;
+  display: block;
+  margin: auto;
+}
+.rating {
+  color: #F95738;
+  font-size: 1.5em;
+  text-align: center;
+}
+section {
+  margin: 10px auto;
+}
+ /*
+ #######  ########  ######## ####  #######  ##    ##  ######  
+##     ## ##     ##    ##     ##  ##     ## ###   ## ##    ## 
+##     ## ##     ##    ##     ##  ##     ## ####  ## ##       
+##     ## ########     ##     ##  ##     ## ## ## ##  ######  
+##     ## ##           ##     ##  ##     ## ##  ####       ## 
+##     ## ##           ##     ##  ##     ## ##   ### ##    ## 
+ #######  ##           ##    ####  #######  ##    ##  ######  */
+.overlay .options {
+  border:none;
+}
+.options .btn {
+  max-width: 80%;
+}
+.txt-center {
+  text-align: center; }
+
+.hide {
+  display: none; }
+
+.clear {
+  float: none;
+  clear: both; }
+#rating-line p {
+  margin-block-start: 0;
+  margin-block-end: 0; }
+
+.rating {
+  display: flex;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: center;
+  position: relative;
+  align-items: center;
+  margin-left: 5px; }
+
+.rating input {
+  max-height: 100%; }
+
+.rating > label {
+  float: right;
+  display: inline;
+  padding: 0;
+  margin-right: 0;
+  position: relative;
+  width: 1.1em;
+  cursor: pointer;
+  color: #000; }
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+  color: transparent; }
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+  content: "\2605";
+  position: absolute;
+  left: 0;
+  color: #FFD700; }
+
+.review input {
+  width: 70%; }
+
+.review .details {
+  height: 4em; }
+
+#rating-line {
+  display: flex;
+  margin-bottom: 0; }

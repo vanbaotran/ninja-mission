@@ -1,6 +1,7 @@
 import React from "react";
 import service from "./service";
-import BlueTop from './backgrounds/BlueTop'
+import BlueTop from './backgrounds/BlueTop';
+// import BlueBottom from './backgrounds/BlueBottom'
 class MyDashBoard extends React.Component {
   state = {
     offerList: [],
@@ -34,6 +35,7 @@ class MyDashBoard extends React.Component {
     return (
       <div>
         <BlueTop/>
+        {/* <BlueBottom/> */}
         <div className='top-line flex-row'> 
           <img onClick={()=>{this.props.history.push('/profilepage')}} src='/images/icons/back.png' alt='icon back'/>
           <h1 className='text-yellow'>My Dashboard </h1>
