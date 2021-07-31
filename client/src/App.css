@@ -666,11 +666,12 @@ background-color: rgb(196, 194, 194);
   height: 100px;
  width: 100px;
  max-width: 100%;
- padding: 1em;
+ padding: 0.3em;
 }
 .head-name-candidate {
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  padding: 0.3em;
   margin: auto;
 }
 .detail, .links-candidate {
