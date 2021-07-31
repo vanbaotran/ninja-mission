@@ -1,43 +1,829 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+body{
+  font-family: 'EB Garamond', serif;
+  background-color: #FAF0CA;
+
+}
+img {
+  max-width: 100%;
+}
+.bg-redtop,.bg-bluetop {
+  position: absolute;
+  top: 0%;
+  clip-path: polygon(0 0, 100% 0, 0 50%);
+  z-index: -10;
+  width: 100%;
+  height: 100%;
+}
+.bg-redbottom,.bg-bluebottom {
+  position: absolute;
+  bottom: 0%;
+  clip-path: polygon(100% 100%, 100% 50%, 0 100%);
+  z-index: -10;
+  width: 100%;
+  height: 100%;
+}
+.bg-bluetop, .bg-bluebottom {
+  background-color: #0D3B66;
+}
+.bg-redtop, .bg-redbottom {
+  background-color: #F95738;
+}
+.bg-ligth-grey {
+  background-color: #F9F7F3;
+}
+.border-blue {
+  border: 3px solid #0D3B66;
+}
+.border-yellow {
+  border: 3px solid #F4D35E;
+}
+.border-orange {
+  border: 3px solid #EE964B;
+}
+.border-red {
+  border: 3px solid #F95738;
+}
+h1 {
+  text-align: center;
+  margin: 0.5em;
+}
+p {
+  text-align: center;
+}
+a {
+  text-decoration: none;
+}
+.sub-app {
+  min-height: 100vh;
+}
+li {
+  list-style: none;
+}
+.logo {
+  height: 40vh;
+  text-align: center;
+}
+.form-no-btn{
+  display: flex;
+  flex-direction: column;
+  background-color: #F9F7F3;
+  border-radius: 16px;
+  padding: 2em;
+  max-width: 100%;
+  width: 75%;
+  margin: 2em auto 2em auto;
+  box-shadow: 0px 2px 2px;
+}
+.form-no-btn p {
+  text-align: right;
+  margin:0;
+}
+.form-no-btn h1, .post-form-main h1 {
+  margin-top: 0;
+}
+label {
+  margin: 0.5em;
+  color: #0D3B66;
+  font-weight: bold;
+}
+input, select, textarea {
+  border-radius: 13px;
+  border: 0.5px solid #0D3B66;
+  float: right;
+  width: 50vw;
+  max-width: 60%;
+  padding: 0.3em;
+}
+a {
+  text-decoration: none;
+}
+
+input[type='file'] {
+  border: none;
+}
+.logo-footer {
+  max-height: 15vh;
+  display: block;
+  margin: 2em auto;
+}
+.flex-row {
+  display: flex;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+##          ###    ##    ## ########  ########     ###     ######   ######## 
+##         ## ##   ###   ## ##     ## ##     ##   ## ##   ##    ##  ##       
+##        ##   ##  ####  ## ##     ## ##     ##  ##   ##  ##        ##       
+##       ##     ## ## ## ## ##     ## ########  ##     ## ##   #### ######   
+##       ######### ##  #### ##     ## ##        ######### ##    ##  ##       
+##       ##     ## ##   ### ##     ## ##        ##     ## ##    ##  ##       
+######## ##     ## ##    ## ########  ##        ##     ##  ######   ########*/
+.sub-landPage {
+  background-color: white;
+  border-radius: 16px;
+  margin: auto 1em;
+  height: 60vh;
+  display: flex;
+  align-items:center;
+}
+.landPage {
+  min-height: 100vh;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column  ;
+  justify-content: space-between;
+}
+.btns {
+  margin: auto;
+}
+.landPage .logo {
+  display: block;
+  margin: auto;
+}
+
+/*
+##        #######   ######   #### ##    ## 
+##       ##     ## ##    ##   ##  ###   ## 
+##       ##     ## ##         ##  ####  ## 
+##       ##     ## ##   ####  ##  ## ## ## 
+##       ##     ## ##    ##   ##  ##  #### 
+##       ##     ## ##    ##   ##  ##   ### 
+########  #######   ######   #### ##    ##*/
+.block-login {
+  display: block;
+  margin-top: 30%;
+}
+
+/*swip*/
+.btn {
+  display: block;
+  margin:  1vh auto;
+  width: 85vw;
+  max-width: 550px;;
+  height: 32px;
+  border-radius: 32px;
+  border-style: none;
+  font-family: EB Garamond;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 21px;
+  color: #FEFCFB;
+}
+.red {
+  background-color: #F95738;
+}
+.blue {
+  background-color: #0D3B66;
+}
+.yellow {
+  background-color: #F4D35E;
+}
+.white {
+  background-color:white;
+}
+.text-blue {
+  color : #0D3B66;
+}
+.text-red {
+  color: #F95738;
+}
+.text-yellow {
+  color: #F6DA79;
+}
+.list .element{
+  width: 340px;
+}
+.element {
+  border: 2px solid #0D3B66;
+  padding: 20px;
+  margin: 10px auto;
+  border-radius: 16px;
+  background-color: white;
+}
+.dashboard, .my-badges {
+  display: flex;
+  flex-wrap: wrap;
+}
+.dashboard .element {
+  width: 150px;
+}
+
+/*
+ ######   #######  ##     ## ########     ###    ##    ## ##    ##    ########  ######## ########    ###    #### ##        ######  
+##    ## ##     ## ###   ### ##     ##   ## ##   ###   ##  ##  ##     ##     ## ##          ##      ## ##    ##  ##       ##    ## 
+##       ##     ## #### #### ##     ##  ##   ##  ####  ##   ####      ##     ## ##          ##     ##   ##   ##  ##       ##       
+##       ##     ## ## ### ## ########  ##     ## ## ## ##    ##       ##     ## ######      ##    ##     ##  ##  ##        ######  
+##       ##     ## ##     ## ##        ######### ##  ####    ##       ##     ## ##          ##    #########  ##  ##             ## 
+##    ## ##     ## ##     ## ##        ##     ## ##   ###    ##       ##     ## ##          ##    ##     ##  ##  ##       ##    ## 
+ ######   #######  ##     ## ##        ##     ## ##    ##    ##       ########  ########    ##    ##     ## #### ########  ######  */
+
+ .company-details {
+   margin: 30px;
+ }
+.company-details .title {
+  text-align: left;
+  font-weight: 900;
+  width: 100px;
+ }
+ .company-details .content {
+   text-align: left;
+   width: 400px;
+ }
+.company-details .line {
+  display: flex;
+ }
+/*
+########     ###     ######  ##     ## ########   #######     ###    ########  ########     ########  ######## ########    ###    #### ##        ######     
+##     ##   ## ##   ##    ## ##     ## ##     ## ##     ##   ## ##   ##     ## ##     ##    ##     ## ##          ##      ## ##    ##  ##       ##    ##    
+##     ##  ##   ##  ##       ##     ## ##     ## ##     ##  ##   ##  ##     ## ##     ##    ##     ## ##          ##     ##   ##   ##  ##       ##          
+##     ## ##     ##  ######  ######### ########  ##     ## ##     ## ########  ##     ##    ##     ## ######      ##    ##     ##  ##  ##        ######     
+##     ## #########       ## ##     ## ##     ## ##     ## ######### ##   ##   ##     ##    ##     ## ##          ##    #########  ##  ##             ##    
+##     ## ##     ## ##    ## ##     ## ##     ## ##     ## ##     ## ##    ##  ##     ##    ##     ## ##          ##    ##     ##  ##  ##       ##    ##    
+########  ##     ##  ######  ##     ## ########   #######  ##     ## ##     ## ########     ########  ########    ##    ##     ## #### ########  ######*/
+.dashboard-details header{
+  display: flex;
+  align-items: center;
+}
+.dashboard-details button {
+  color: #0D3B66;
+  background-color: white;
+  border: 1px solid #0D3B66;
+}
+.candidate-list {
+  display: inline-block;
+  margin:10px;
+  width: 96%;
+  padding-inline-start: 0px;
+}
+.candidate-list li {
+  padding: 10px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  margin: 5px;
+}
+.candidate-list .inline-avatar {
+  border-radius: 50%;
+  height: 100px;
+ width: 100px;
+ max-width: 100%;
+}
+.candidate-list .inline-level{
+  width: 50px ;
+  height: 50px;
+}
+.dashboard-details .top-line {
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+h4 {
+  text-align: center;
+}
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+}
+.icon-search {
+  width: 15px;
+  max-width: 100%;
+  position: absolute;
+  right: 4vw;
+  top:1.5vh;
+}
+.search input {
+  width: 60vw;
+  max-width: 100%;
+}
+.top-line {
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px;
+}
+.top-line h1 {
+  text-align: center;
+}
+.blue-bg {
+  background-color: #0D3B66;
+}
+.sort {
+  margin-left: 5px;
+  margin-right: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+.sort h4 {
+  width: 30vw;
+}
+/*
+##     ## ##    ##    ########     ###     ######  ##     ## ########   #######     ###    ########  ########  
+###   ###  ##  ##     ##     ##   ## ##   ##    ## ##     ## ##     ## ##     ##   ## ##   ##     ## ##     ## 
+#### ####   ####      ##     ##  ##   ##  ##       ##     ## ##     ## ##     ##  ##   ##  ##     ## ##     ## 
+## ### ##    ##       ##     ## ##     ##  ######  ######### ########  ##     ## ##     ## ########  ##     ## 
+##     ##    ##       ##     ## #########       ## ##     ## ##     ## ##     ## ######### ##   ##   ##     ## 
+##     ##    ##       ##     ## ##     ## ##    ## ##     ## ##     ## ##     ## ##     ## ##    ##  ##     ## 
+##     ##    ##       ########  ##     ##  ######  ##     ## ########   #######  ##     ## ##     ## ########  */
+.dashboard p {
+  text-align: right;
+  margin: 0;
+  color: #0D3B66;
+}
+/*
+ ######  ##      ## #### ########  ########    ########     ###     ######   ######## 
+##    ## ##  ##  ##  ##  ##     ## ##          ##     ##   ## ##   ##    ##  ##       
+##       ##  ##  ##  ##  ##     ## ##          ##     ##  ##   ##  ##        ##       
+ ######  ##  ##  ##  ##  ########  ######      ########  ##     ## ##   #### ######   
+      ## ##  ##  ##  ##  ##        ##          ##        ######### ##    ##  ##       
+##    ## ##  ##  ##  ##  ##        ##          ##        ##     ## ##    ##  ##       
+ ######   ###  ###  #### ##        ########    ##        ##     ##  ######   ######## */
+
+ .header-swipe {
+  /* display: flex;
+  align-items: center; */
+  /* background-color: #FAF0CA; */
+  justify-content: space-around;
+  position: absolute;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 15vh;
+}
+.logo-header-swipe {
+  height: 20vh;
+  position: absolute;
+  top:0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.ico-swipe {
+  height: 5vh;
+  position: absolute;
+  top:50%;
+  transform: translateY(-50%);
+}
+.ico-profile {
+  left: 5%;
+}
+.ico-filter {
+  left: 20%;
+}
+.ico-chat {
+  left: 80%;
+}
+.swipe {
+  display: flex;
+  flex-direction: column;
+}
+.body-swipe {
+  position: absolute;
+  display: flex;
+  margin:  0 auto;
+  top: 16vh;
+  max-height: 70vh;
+  min-width: 100%;
+}
+.block-to-swipe {
+  background-color: white;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border: 2px solid #0D3B66;
+  border-radius: 16px;
+
+}
+.body-swipe img {
+  height: 100px;
+}
+.info-block img{
+height: 12vh;
+margin: auto;
+}
+.company-logo {
+  min-height: 20vh;
+}
+.block-infoico {
+  display: flex;
+  justify-content: space-around;
+}
+
+.block-btn-swipe {
+  display: flex;
+position: absolute;
+top: 85vh;
+left: 50%;
+transform: translateX(-50%);
+}
+
+.btn-swipe {
+  max-width: 50px;
+}
+
+/* OVERLAY*/
+.overlay {
+  width: 80vw;
+  padding: 0.5em;
+  border-radius: 13px ;
+  background-color: whitesmoke;
+  position: absolute;
+  /* border: 2px solid #0D3B66; */
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+}
+.weapon-block, .level-block {
+  display: flex;
+  margin: 0.2em;
+ 
+}
+.weapon, .level {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(196, 194, 194);
+  border-radius: 16px;
+  padding: 1em;
+  max-width: 20vw;
+  font-size: 0.7em;
+  margin: auto;  
+}
+.weapon-block, .level-block img {
+  width: 50px;
+  height: 50px;
+  margin: auto;
+}
+.bg-grey{
+background-color: rgb(196, 194, 194);
+}
+/*
+######  ##      ## #### ########  ########     ######     ###    ##    ## ########  #### ########     ###    ######## ######## 
+##    ## ##  ##  ##  ##  ##     ## ##          ##    ##   ## ##   ###   ## ##     ##  ##  ##     ##   ## ##      ##    ##       
+##       ##  ##  ##  ##  ##     ## ##          ##        ##   ##  ####  ## ##     ##  ##  ##     ##  ##   ##     ##    ##       
+ ######  ##  ##  ##  ##  ########  ######      ##       ##     ## ## ## ## ##     ##  ##  ##     ## ##     ##    ##    ######   
+      ## ##  ##  ##  ##  ##        ##          ##       ######### ##  #### ##     ##  ##  ##     ## #########    ##    ##       
+##    ## ##  ##  ##  ##  ##        ##          ##    ## ##     ## ##   ### ##     ##  ##  ##     ## ##     ##    ##    ##       
+ ######   ###  ###  #### ##        ########     ######  ##     ## ##    ## ########  #### ########  ##     ##    ##    ######## */
+
+.swipeCandidate .block-footer {
+  display: flex;
+  
+} 
+.swipeCandidate .image-level {
+  border: 3px solid #0D3B66;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  padding: 0.5em;
+}
+.swipeCandidate .image-level img {
+  margin: auto;
+  height: 90%;
+}
+/*
+ ######  ####  ######   ##    ##    ##     ## ########  
+##    ##  ##  ##    ##  ###   ##    ##     ## ##     ## 
+##        ##  ##        ####  ##    ##     ## ##     ## 
+ ######   ##  ##   #### ## ## ##    ##     ## ########  
+      ##  ##  ##    ##  ##  ####    ##     ## ##        
+##    ##  ##  ##    ##  ##   ###    ##     ## ##        
+ ######  ####  ######   ##    ##     #######  ##    */
+.signup {
+  display: block;
+  margin:  20% auto;
+}
+.sub-signup {
+  background-color: white;
+  border-radius: 16px;
+  margin: auto 1em;
+  height: 60vh;
+  align-items:center;
+  justify-content: center;
+}
+.sub-signup img {
+  height: 25vh;
+  width: fit-content;
+}
+.signup-form {
+  margin-top: 20%;
+}
+/*
+########  ########   #######  ######## #### ##       ########    ########     ###     ######   ######## 
+##     ## ##     ## ##     ## ##        ##  ##       ##          ##     ##   ## ##   ##    ##  ##       
+##     ## ##     ## ##     ## ##        ##  ##       ##          ##     ##  ##   ##  ##        ##       
+########  ########  ##     ## ######    ##  ##       ######      ########  ##     ## ##   #### ######   
+##        ##   ##   ##     ## ##        ##  ##       ##          ##        ######### ##    ##  ##       
+##        ##    ##  ##     ## ##        ##  ##       ##          ##        ##     ## ##    ##  ##       
+##        ##     ##  #######  ##       #### ######## ########    ##        ##     ##  ######   ######## 
+*/
+.row {
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  margin: 10px;
+  height: 13vh;
+  border-radius: 16px;
+}
+.profile-page h1 {
+  margin: 10px;
+}
+.profile-page .row h3{
+  margin-right: 10vh;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+.profile-page .top-line img{
+  width: 20px;
+}
+.profile-page header img {
+  display: block;
+  margin:auto;
+  width: 25vw;
+}
+.my-badges img{
+  height: 10vh;
+}
+.recruiter .image img {
+  width: 15vw;
+}
+.title {
+  width: 60vw;
+  position: relative;
+}
+.title p {
+  margin-block-start: 0;
+  margin-block-end: 0; 
+  text-align: left;
+  font-size: 1.5em;
+  color: #000;
+  font-weight: 400;
+  position: absolute;               /* 2 */
+  top: 50%;                         /* 3 */
+  transform: translateY(-50%) 
+}
+.small-text {
+  font-size: 1em; 
+  position: absolute;  
+  color: #0D3B66;  
+  left:0;
+  bottom: 10%;
+}
+/**********************************************
+########   #######   ######  ########    ########  #######  ########  ##     ## 
+##     ## ##     ## ##    ##    ##       ##       ##     ## ##     ## ###   ### 
+##     ## ##     ## ##          ##       ##       ##     ## ##     ## #### #### 
+########  ##     ##  ######     ##       ######   ##     ## ########  ## ### ## 
+##        ##     ##       ##    ##       ##       ##     ## ##   ##   ##     ## 
+##        ##     ## ##    ##    ##       ##       ##     ## ##    ##  ##     ## 
+##         #######   ######     ##       ##        #######  ##     ## ##     ##
+*****************************************/
+.post-form-main form button{
+    margin-bottom: 1em;
+}
+.post-form-main form{
+  margin: auto;
+  width: 80%;
+  max-width: 500px;
+}
+.error-over {
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 80%;
+  max-width: 500px;
+  padding: 2em;
+}
+/*
+##     ## ##    ##    ##       ######## ##     ## ######## ##       
+###   ###  ##  ##     ##       ##       ##     ## ##       ##       
+#### ####   ####      ##       ##       ##     ## ##       ##       
+## ### ##    ##       ##       ######   ##     ## ######   ##       
+##     ##    ##       ##       ##        ##   ##  ##       ##       
+##     ##    ##       ##       ##         ## ##   ##       ##       
+##     ##    ##       ######## ########    ###    ######## ######## */
+.row-level {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px;
+  height: 13vh;
+  border-radius: 16px;
+}
+.my-level {
+  overflow: hidden;
+  margin: 0; height: 100%;
+}
+.my-level .image, .profile-page .image {
+  width: 18vw;
+  display: flex;
+}
+.my-level header img{
+  display: block;
+  margin: 20px auto;
+  width: 30vw;
+  border: 4px solid #F6DA79;
+  border-radius: 20px;
+  padding: 5px;
+}
+.image img {
+  margin: auto;
+}
+.my-level .row {
+  align-items: center;
+}
+.my-level h3 {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/*
+   ########  ######## ########    ###    #### ##        ######  
+   ##     ## ##          ##      ## ##    ##  ##       ##    ## 
+   ##     ## ##          ##     ##   ##   ##  ##       ##       
+   ##     ## ######      ##    ##     ##  ##  ##        ######  
+   ##     ## ##          ##    #########  ##  ##             ## 
+   ##     ## ##          ##    ##     ##  ##  ##       ##    ## 
+   ########  ########    ##    ##     ## #### ########  ######  
+*/
+.details {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+}
+.head-post-details, .head-candidate-details {
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  margin: auto;
+}
+.head-post-details h1 {
+  text-align: left;
+}
+.head-post-details img, .head-avatar-candidate img :not(.btn-swipe){
+  width: 80%;
+  max-width: 300px;
+  margin: 1em auto;
+}
+.head-name-candidate img{
+ max-width: 70%;
+ display: block;
+ margin: auto;
+}
+.head-name-candidate .circle {
+  border: 4px solid #0D3B66;
+  border-radius: 50%;
+  height: 100px;
+ width: 100px;
+ padding: 0.3em;
+}
+.head-name-candidate {
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-around;
+  padding: 0.3em;
+  margin: auto;
+}
+.block-btn-swipe-detail {
+  width: 300px;
+margin: auto;
+justify-content: space-between;
+transform: translateY(-60px);
+}
+.block-btn-swipe-detail > h2{
+  text-align: center;
+  font-size: 2em;
+  margin: 0;
+}
+.detail, .links-candidate {
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+}
+.detail {
+  justify-content: space-between;
+}
+.links-candidate {
+  justify-content: space-around;
+
 }
 
-.App-link {
-  color: #61dafb;
+.detail img {
+  max-height: 100px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.detail h4, .detail p {
+  text-align: left;
 }
+.who {
+  text-align: center;
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+}
+.who a{
+  text-decoration: none;
+  color: black;
+}
+/*
+##     ## ##    ##    ########     ###    ########   ######   ########  ######  
+###   ###  ##  ##     ##     ##   ## ##   ##     ## ##    ##  ##       ##    ## 
+#### ####   ####      ##     ##  ##   ##  ##     ## ##        ##       ##       
+## ### ##    ##       ########  ##     ## ##     ## ##   #### ######    ######  
+##     ##    ##       ##     ## ######### ##     ## ##    ##  ##             ## 
+##     ##    ##       ##     ## ##     ## ##     ## ##    ##  ##       ##    ## 
+##     ##    ##       ########  ##     ## ########   ######   ########  ######  */
+.my-badges .element {
+  width: 30vw;
+  border:none;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+.my-badges .element img {
+  max-width: 100%;
+  display: block;
+  margin: auto;
+}
+.rating {
+  color: #F95738;
+  font-size: 1.5em;
+  text-align: center;
+}
+section {
+  margin: 10px auto;
+}
+ /*
+ #######  ########  ######## ####  #######  ##    ##  ######  
+##     ## ##     ##    ##     ##  ##     ## ###   ## ##    ## 
+##     ## ##     ##    ##     ##  ##     ## ####  ## ##       
+##     ## ########     ##     ##  ##     ## ## ## ##  ######  
+##     ## ##           ##     ##  ##     ## ##  ####       ## 
+##     ## ##           ##     ##  ##     ## ##   ### ##    ## 
+ #######  ##           ##    ####  #######  ##    ##  ######  */
+.overlay .options {
+  border:none;
+}
+.options .btn {
+  max-width: 80%;
+}
+.txt-center {
+  text-align: center; }
 
-form{
+.hide {
+  display: none; }
+
+.clear {
+  float: none;
+  clear: both; }
+#rating-line p {
+  margin-block-start: 0;
+  margin-block-end: 0; }
+
+.rating {
   display: flex;
-  flex-direction: column;
-}
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: center;
+  position: relative;
+  align-items: center;
+  margin-left: 5px; }
+
+.rating input {
+  max-height: 100%; }
+
+.rating > label {
+  float: right;
+  display: inline;
+  padding: 0;
+  margin-right: 0;
+  position: relative;
+  width: 1.1em;
+  cursor: pointer;
+  color: #000; }
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+  color: transparent; }
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+  content: "\2605";
+  position: absolute;
+  left: 0;
+  color: #FFD700; }
+
+.review input {
+  width: 70%; }
+
+.review .details {
+  height: 4em; }
+
+#rating-line {
+  display: flex;
+  margin-bottom: 0; }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { dataPostToStatePost } from "../service";
+import { dataPostToStatePost, editProfile } from "../service";
 
 class PostDetails extends Component {
   state = {
@@ -16,6 +16,7 @@ class PostDetails extends Component {
     remote: false,
     funFact: "",
     website: "",
+    from: false,
   };
   componentDidMount() {
     if (!this.props.currentUser) {
@@ -23,8 +24,10 @@ class PostDetails extends Component {
     } else {
       dataPostToStatePost(this.props.match.params.id)
         .then(data => {
+
           this.setState({
             ...data,
+            from: this.props.from || false
           });
       }).catch(err => console.log(err))
       
@@ -33,59 +36,77 @@ class PostDetails extends Component {
   handleEdit = (e) => {
     this.props.history.push(`/postForm/${this.props.match.params.id}`);
   };
+  //update state.currentPostId if chosen
+  updateCurrentPost = () =>{
+    this.props.updateCurrentPost(this.props.match.params.id);
+    editProfile({currentPostId:this.props.match.params.id})
+    .then(response=>{
+      console.log('CHANGING POST ID', response)
+      this.props.updateUser(response)
+    })
+    .catch(err=>console.log(err))
+  }
+  back = () => {
+    if (this.props.from ==='swipe') {
+      this.props.history.push(`/swipeOffer/${this.props.match.params.id}`);
+    } else {
+      this.props.history.goBack()
+    }
+  }
   render() {
     return (
-      <div>
-        <div className="head-post-detail">
+      <div className=" details flex--column">
+        <div className="head-post-details flex-column bg-ligth-grey">
           <img
             src={this.state.companyLogo ? this.state.companyLogo : "/images/temple.png"}
             alt="logo comp"
           />
           <h1>{this.state.offerName}</h1>
-          <button>CHOOSE TO BE CURRENT POST</button>
+          { this.props.currentUser.profileType==='recruiter' && (this.props.from || <button className="btn blue" onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>)}
         </div>
-        <div className="body-post-details">
-          <div className="detail-level">
+        <div className="body-post-details flex-column">
+          <div className="detail flex-row">
             <div>
               <h4>Sensority Level</h4>
               <p>{this.state.experienceLevel}</p>
             </div>
             <img src={`/images/${this.state.experienceLevel.toLowerCase()}.png`} alt="logo level" />
           </div>
-          <div>
+          <div className="detail">
             <h4>Employement Type</h4>
             <p>{this.state.contract}</p>
           </div>
-          <div>
+          <div className="detail">
             <h4>Job Function</h4>
             <p>{this.state.position}</p>
           </div>
           {this.state.codeLanguage.length > 0 && (
-            <div>
+            <div className="detail">
               <h4>Code Languages</h4>
               <p>{this.state.codeLanguage.join(", ")}</p>
             </div>
           )}
-          <div className="who-is">
+          <div className="who">
             <h2>WHO ARE WE</h2>
             <p>{this.state.companyBio}</p>
           </div>
-          <div className="who-want">
+          <div className="who">
             <h2>WHO DO WE NEED</h2>
             <p>{this.state.description}</p>
           </div>
           {this.state.funFact && (
-            <div className="fun-fact">
+            <div className="who">
               <h2>FUN FACT</h2>
               <p>{this.state.funFact}</p>
             </div>
           )}
-          <div className="link-company">
+          <div className="who">
+            <h2>WEBSITE</h2>
             <a href={this.state.website} rel="noreferrer" target="_blank">
               {this.state.website}
             </a>
           </div>
-          <button onClick={this.handleEdit}>EDIT THIS POST</button>
+          {(this.props.currentUser.profileType==='recruiter' && ((this.props.from && <button className="btn red" onClick={this.back}>GO BACK</button>) || <button className="btn red" onClick={this.handleEdit}>EDIT THIS POST</button>) )||  <button className="btn red" onClick={this.back}>GO BACK</button>}
         </div>
       </div>
     );

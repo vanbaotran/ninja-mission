@@ -1,68 +1,87 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {getUserData} from './service'
+import { getPostData} from './service';
+import BlueTop from "./backgrounds/BlueTop";
+import RedBottom from './backgrounds/RedBottom'
 class ProfilePage extends React.Component {
   state = {
-    currentUser: this.props.currentUser ? this.props.currentUser : "",
+    currentPost:{}
   }
   getAge = (dateString) =>{
     let today = new Date();
     let birthDate = new Date(dateString);
     let age = today.getFullYear() - birthDate.getFullYear();
     let m = today.getMonth() - birthDate.getMonth();
-    if (m<0 || (m===0 && today.getDate() - birthDate.getDate())){
+    if (m<0 || (m===0 && (today.getDate() - birthDate.getDate())<0)){
       age--;
     }
     return age
   }
-  componentDidUpdate(prevProps){
-    if(prevProps.currentUser !== this.props.currentUser){
-      getUserData(this.props.currentUser._id)
-      .then(response=>{
-        this.setState({...response})
-        console.log(response)
-      })
-      .catch(err=>console.log(err))
-    }
+  componentDidMount(){
+    getPostData(this.props.currentUser.currentPostId)
+    .then(response=>{
+      this.setState({currentPost:response})
+    })
+    .catch(err=>console.log(err))
   }
+
   render(){
-    if(this.state.currentUser.profileType==='candidate'){
+    if(this.props.currentUser.profileType==='candidate'){
       return(
-        <div className="profile candidate">
-        <nav>
-          <Link to='/settings'><img src='/images/icons/settings.png' alt='settings'/></Link>
-          <Link to='/offers'><img src='/images/icons/offer.png' alt='settings'/></Link>
-        </nav>
+        <div className='profile-page'>
+        <BlueTop/>
+        <RedBottom/>
+         <div className='top-line flex-row'>
+           <img src='' alt=''/>
+          <h1 className='text-yellow'>My Profile</h1>
+          <Link to='/swipeOffer/random'><img src='/images/icons/offer.png' alt='settings'/></Link>
+        </div>
         <header>
-          <img src={this.state.currentUser.avatar} alt='avatar'/>
-          <h1>{this.state.currentUser.name}, {this.getAge(this.state.currentUser.birthday)}</h1>
+          <img src={this.props.currentUser.avatar} alt='avatar'/>
+          <h1>{this.props.currentUser.name} {this.props.currentUser.birthday && `, ${this.getAge(this.props.currentUser.birthday)}`}</h1>
         </header>
         <main>
-          <Link to='/candidateDetails'>
-          <div className='row'>
+          <Link to='/personalProfile'>
+          <div className='row border-blue'>
+          <div className='image'>
             <img src='/images/ninja-profile.png' alt='ninja-profile'/>
-            <h3>My Profile</h3>
+          </div>
+          <div className='title'>
+           <p>My Profile</p>
+           </div>
           </div>
           </Link>
   
-          <Link to='/myLevels'>
-          <div className='row'>
+          <Link to='/levelspage'>
+          <div className='row border-yellow'>
+          <div className='image'>
             <img src='/images/nunchaku.png' alt='my-level'/>
-            <h3>My Level</h3>
+          </div>
+          <div className='title'>
+            <p>My Level</p>
+          </div>
             </div>
           </Link>
   
-          <Link to='/'>
-          <div className='row'>
+          <Link to='/myapplications'>
+          <div className='row border-orange'>
+          <div className='image'>
             <img src='/images/paper-roll.png' alt='applications'/>
-            <h3>My Applications</h3>
+          </div>
+          <div className='title'>
+            <p>My Applications</p>
+          </div>
             </div>
           </Link>
   
           <Link to='/myBadges'>
-            <div className='row'>
+            <div className='row border-red'>
+            <div className='image my-badges'>
               <img src='/images/my-badges.png' alt='badges'/>
-              <h3>My Badges</h3>
+            </div>
+            <div className='title'>
+              <p>My Badges</p>
+            </div>
             </div>
           </Link>
         </main>
@@ -70,44 +89,64 @@ class ProfilePage extends React.Component {
       )
   } else {
       return (
-        <div>
-          <nav>
-            <Link to='/settings'><img src='/images/icons/settings.png' alt='settings'/></Link>
-            <Link to='/offers'><img src='/images/icons/offer.png' alt='settings'/></Link>
-          </nav>
+        <div className='profile-page recruiter'>
+          <BlueTop/>
+          <RedBottom/>
+           <div className='top-line flex-row'>
+          <Link to='/swipeCandidate/random'><img src='/images/icons/people.png' alt='settings'/></Link>
+          <h1 className='text-yellow'>My Profile</h1>
+           <img src='' alt=''/>
+        </div>
           <header>
-            <img src={this.state.currentUser.companyLogo} alt='avatar'/>
-            <h1>{this.state.currentUser.name}</h1>
+            <img src={this.props.currentUser.companyLogo || "/images/temple.png"} alt='avatar'/>
+            <h1>{this.props.currentUser.name}</h1>
           </header>
           <main>
-            <Link to='/candidateDetails'>
-            <div className='row'>
-              <img src='/images/temple.png' alt='my-company'/>
-              <h3>My Company</h3>
+            <Link to='/companyDetails'>
+            <div className='row border-blue'>
+              <div className='image'>
+                <img src='/images/temple.png' alt='my-company'/>
+              </div>
+              <div className='title'>
+              <p>My Company</p>
+              </div>
             </div>
             </Link>
     
-            <Link to='/myLevels'>
-            <div className='row'>
+            <Link to='/myOffers'>
+            <div className='row border-yellow'>
+            <div className='image'>
               <img src='/images/my-offers.png' alt='my-offers'/>
-              <h3>My Offers</h3>
+            </div>
+            <div className='title'>
+              <p>My Offers</p>
+            </div>
               </div>
             </Link>
     
-            <Link to='/'>
-            <div className='row'>
+            <Link to='/myDashboard'>
+            <div className='row border-orange'>
+            <div className='image'>
               <img src='/images/my-dashboard.png' alt='my-dashboard'/>
-              <h3>My Dashboard</h3>
+            </div>
+                <div className='title'>
+              <p>My Dashboard</p>
+              </div>
               </div>
             </Link>
     
-            <Link to='/myBadges'>
-              <div className='row'>
+      
+              <div className='row border-red' onClick={()=>this.props.history.push(`/posts/${this.state.currentPost._id}`)} >
+                <div className='image'>
                 <img src='/images/my-current-post.png' alt='current-post'/>
-                <h3>My Current Post</h3>
-                <p>{this.props.currentUser.currentApplicationId.jobPostId}</p>
+                </div>
+                   <div className='title'>
+                    <div className='flex-column'>
+                      <p>My Current Post</p>
+                      <span className='small-text'>{this.state.currentPost.offerName}</span>
+                    </div>
+                </div>
               </div>
-            </Link>
           </main>
         </div>
       )

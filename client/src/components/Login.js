@@ -1,5 +1,6 @@
 import React from 'react';
 import {login} from './service';
+import BlueTop from "./backgrounds/BlueTop";
 
 class Login extends React.Component{
   state = {email:'', password:''}
@@ -11,6 +12,11 @@ class Login extends React.Component{
       this.setState({ email: "", password: "" });
       this.props.updateUser(response)
       console.log(this.props.currentUser)
+      if (response.profileType==="recruiter") {
+        this.props.history.push('/swipeCandidate/random')
+      } else {
+        this.props.history.push('/swipeOffer/random')
+      }
     })
     .catch(err=>console.log(err))
   }
@@ -20,14 +26,21 @@ class Login extends React.Component{
   }
   render(){
     return (
-      <div>
+      <div className="block-login">
+      <BlueTop/>
        <form onSubmit={this.handleSubmit}>
-            <label>Email</label>
-            <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
-            <label>Password</label>
-            <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
-            <button>LOG IN</button>
+       <div className="form-no-btn">
+      <h1 className='text-blue'>WELCOME BACK!</h1>
+            <label>Email
+             <input type='text' name='email' value={this.state.email} onChange={(e)=>this.handleChange(e)} /> 
+            </label>
+            <label>Password
+             <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
+            </label>
+           </div>
+            <button className='btn red'>LOG IN</button>
           </form>
+          <img className='logo-footer' src='/images/ninja-logo.png' alt='logo'/>
       </div>
     )
   }

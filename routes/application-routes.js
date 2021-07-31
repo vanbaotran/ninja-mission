@@ -17,6 +17,37 @@ router.get("/", [isLoggedIn, isCandidate], (req, res, next) => {
     );
 });
 
+// get applicationCandidate data by id of app
+router.get("/:id/candidates", [isLoggedIn, isRecruiter], (req, res, next) => {
+  Application.findOne({ _id: req.params.id })
+    .populate("candidateId")
+    .then((AppsfromDb) => {
+      AppsfromDb.candidateId.forEach(element => {
+        element.password = undefined;
+      });
+      res.status(200).json(AppsfromDb);
+      return;
+    })
+    .catch((err) =>
+      res.status(500).json({ message: "Something went wrong when finding applications." })
+    );
+});
+
+// get array of jobpostsid that candidate has choose
+router.get("/byCandidateId", [isLoggedIn, isCandidate], (req, res, next) => {
+  let id = req.session.currentUser._id;
+  Application.find({ candidateId: id })
+    .populate('jobPostId')
+    .then((AppsfromDb) => {
+      let arrCandidating = AppsfromDb ? AppsfromDb.map(el => el.jobPostId) : [];
+      res.status(200).json({arrCandidating: arrCandidating});
+      return;
+    })
+    .catch((err) =>
+      res.status(500).json({ message: "Something went wrong when finding arrCandidating." })
+    );
+});
+
 /* patch */
 // APPLY TO A JOB POST: add candidate in candidateId
 router.patch("/:applicationId/add", [isLoggedIn, isCandidate], (req, res, next) => {
@@ -65,13 +96,14 @@ router.patch("/:applicationId/remove", [isLoggedIn, isCandidate], (req, res, nex
 // add candidate in acceptedCandidateId
 router.patch("/:applicationId/accept", [isLoggedIn, isRecruiter], (req, res, next) => {
   let id = req.body.id;
+  console.log(req.params.applicationId, req.body.id)
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.acceptedCandidateId.includes(id)) {
         res.status(400).json({ message: `Candidate ${id} was already accepted.` });
         return;
       }
-      if (AppfromDb.refusedCandidatedId.includes(id)) {
+      if (AppfromDb.refusedCandidateId.includes(id)) {
         res
           .status(400)
           .json({ message: `Candidate ${id} cannot be accepted because he/she was refused.` });
@@ -162,6 +194,17 @@ router.patch("/:applicationId/undoRefuse", [isLoggedIn, isRecruiter], (req, res,
     })
     .catch((err) =>
       res.status(500).json({ message: "Removing candidate from refused applications went wrong" })
+    );
+});
+// get application by id
+router.get("/:applicationId", [isLoggedIn, isRecruiter], (req, res, next) => {
+  Application.findOne({ _id: req.params.applicationId })
+    .then((AppsfromDb) => {
+      res.status(200).json(AppsfromDb);
+      return;
+    })
+    .catch((err) =>
+      res.status(500).json({ message: "Something went wrong when finding applications." })
     );
 });
 module.exports = router;

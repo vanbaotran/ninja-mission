@@ -2,8 +2,18 @@ import React, { Component } from "react";
 import service, { uploadFile } from "../service";
 import SelectInput from "../inputs/SelectInput";
 import TextInput from "../inputs/TextInput";
-import { dataPostToStatePost } from "../service";
-const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
+import { dataPostToStatePost, editProfile } from "../service";
+const LanguageOptions = [
+  "PHP",
+  "JS",
+  "Python",
+  "Ruby",
+  "HTML",
+  "CSS",
+  "C++",
+  "C",
+  "Rust",
+];
 const ContractOptions = ["Internship", "Freelance", "Permanent", "Temporary"];
 const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
 export class PostForm extends Component {
@@ -21,6 +31,8 @@ export class PostForm extends Component {
     remote: false,
     funFact: "", //maxlength: 250,
     website: "",
+
+    errorMessage: false,
   };
 
   handleChange = (e) => {
@@ -52,50 +64,80 @@ export class PostForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.props.match.params.id === "new") {
-      service
-        .post("/posts", { ...this.state })
-        .then((response) => {
-          this.props.history.push("/");
-        })
-        .catch((err) => console.log(err));
+    const { contract, experienceLevel, codeLanguage } = this.state;
+    if (!contract || !experienceLevel || codeLanguage.length === 0) {
+      this.setState({
+        errorMessage: "Contract, level and code languages are required!",
+      });
+      setTimeout(() => this.setState({ errorMessage: false }), 2000);
     } else {
-      service.patch(`/posts/${this.props.match.params.id}`, { ...this.state }).then((response) => {
-        this.props.history.push("/");
+      if (this.props.match.params.id === "new") {
+        service
+          .post("/posts", { ...this.state })
+          .then((response) => {
+            // console.log("in submi", response)
+            this.props.updateCurrentPost(response.data.newPost._id);
+            editProfile({ currentPostId: response.data.newPost._id }).then(
+              (response) => {
+                console.log("CHANGING POST ID", response);
+                this.props.updateUser(response);
+              }
+            );
+            this.props.history.push(`/posts/${response.data.newPost._id}`);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        service
+          .patch(`/posts/${this.props.match.params.id}`, { ...this.state })
+          .then((response) => {
+            this.props.history.push(`/posts/${this.props.match.params.id}`);
+          });
+      }
+      this.setState({
+        offerName: "",
+        companyLogo: "",
+        companyBio: "",
+        companyName: "",
+        description: "", /// verif 500 char
+        position: "",
+        contract: "", //  enum: ["Internship", "Freelance", "Permanent", "Temporary"],
+        experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
+        codeLanguage: [], // voir si enum et ou vérification bonne donnée
+        location: { city: [], country: [] },
+        remote: false,
+        funFact: "", //maxlength: 250,
+        website: "",
       });
     }
-    this.setState({
-      offerName: "",
-      companyLogo: "",
-      companyBio: "",
-      companyName: "",
-      description: "", /// verif 500 char
-      position: "",
-      contract: "", //  enum: ["Internship", "Freelance", "Permanent", "Temporary"],
-      experienceLevel: "", // enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
-      codeLanguage: [], // voir si enum et ou vérification bonne donnée
-      location: { city: [], country: [] },
-      remote: false,
-      funFact: "", //maxlength: 250,
-      website: "",
-    });
   };
-  componentDidMount() {
+  componentDidMount = () => {
     if (!(this.props.match.params.id === "new")) {
-      dataPostToStatePost(this.props.match.params.id).then((data) => {
-        this.setState({ ...data });
-      })
-        .catch(err => console.log(err));
+      dataPostToStatePost(this.props.match.params.id)
+        .then((data) => {
+          this.setState({ ...data });
+        })
+        .catch((err) => console.log(err));
     }
-  }
+  };
   render() {
-    console.log(this.state)
     return (
-      <div className="post-form-main">
-        <h2>{this.props.match.params.id === "new" ? "Add new Offer" : "Edit the Offer"}</h2>
-        <form onSubmit={(e) => this.handleSubmit(e)}>
+      <div className="post-form-main bg-ligth-grey flex-column">
+        {this.state.errorMessage && (
+          <div className="overlay text-red error-over border-blue">
+            <h3>{this.state.errorMessage}</h3>
+          </div>
+        )}
+        <h1>
+          {this.props.match.params.id === "new"
+            ? "ADD A NEW OFFER"
+            : "EDIT THE OFFER"}
+        </h1>
+        <form className="flex-column form-all-page" onSubmit={(e) => this.handleSubmit(e)}>
           <label>
-            <img src={this.state.companyLogo || "/images/temple.png"} alt="logo" />
+            <img
+              src={this.state.companyLogo || "/images/temple.png"}
+              alt="logo"
+            />
             <input
               type="file"
               name="companyLogo"
@@ -183,7 +225,11 @@ export class PostForm extends Component {
             value={this.state.website}
             change={this.handleChange}
           />
-          <button>{this.props.match.params.id === "new" ? "Add new post" : "Edit the post"}</button>
+          <button className="btn blue">
+            {this.props.match.params.id === "new"
+              ? "Add new post"
+              : "Edit the post"}
+          </button>
         </form>
       </div>
     );

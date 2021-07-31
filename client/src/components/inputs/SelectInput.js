@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 class SelectInput extends Component {
-  change = (e) => {
+  changeMultiple = (e) => {
     console.log(e);
     let arrMultiple = [];
     for (const key in e.target.options) {
@@ -22,10 +22,10 @@ class SelectInput extends Component {
         <select
           multiple={this.props.multiple ? true : false}
           name={this.props.name}
-          value={this.props.value}
+          value={this.props.multiple ? [...this.props.value] : this.props.value}
           onChange={(e) => {
             if (this.props.multiple) {
-              this.change(e);
+              this.changeMultiple(e);
             } else {
               this.props.change(e);
             }

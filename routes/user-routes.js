@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
+const Application = require("../models/Application.model");
 const { isCandidate, isRecruiter, isLoggedIn } = require("./useful");
 const bcrypt = require("bcryptjs");
 
@@ -72,36 +73,61 @@ router.post("/logout", isLoggedIn, (req, res, next) => {
   return;
 });
 router.get("/loggedin", (req, res, next) => {
-  // req.isAuthenticated() is defined by passport
   if (req.session.currentUser) {
-    res.status(200).json(req.session.currentUser);
-    return;
-  }
+    User.findOne({ _id: req.session.currentUser._id }).then((userFromDb) => {
+      userFromDb.password = undefined;
+      res.status(200).json(userFromDb);
+      return;
+    })
+    .catch(err => {
+      res.status(500).json(err);
+      return;
+      });
+  } else {
+
   res.status(403).json({ message: "Unauthorized" });
+  return;
+  }
 });
 
 /* GET */
 router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
   let random, randomUser, countDoc, user;
+  // FILTER EXP LEVEL:
+  let filter = {};
+  if (req.query?.filterLevel) {
+    filter = { level: { $in: req.query.filterLevel.split("_") } };
+  }
   try {
-    await User.countDocuments(function (err, count) {
-      // Get a random entry
-      countDoc = count;
-      random = Math.floor(Math.random() * count);
-    });
     user = await User.findOne({ _id: req.session.currentUser._id }).populate(
       "currentApplicationId"
     );
     console.log(user);
-    randomUser = await User.findOne().skip(random);
-    while (
-      user.currentApplicationId.refusedCandidateId.includes(randomUser._id) ||
-      randomUser.profileType === "recruiter"
-      ) {
-      console.log("test");
-      random = Math.floor(Math.random() * countDoc);
-      randomUser = await User.findOne().skip(random);
+    if (!user.currentApplicationId) {
+      return res.status(204).json();
     }
+    filter = {
+      ...filter,
+      _id: {
+        $nin: [
+          ...user.currentApplicationId.refusedCandidateId,
+          ...user.currentApplicationId.acceptedCandidateId,
+        ],
+      },
+    };
+    await User.countDocuments({ profileType: "candidate", ...filter })
+      .then((count) => {
+        countDoc = count;
+        random = Math.floor(Math.random() * count);
+      })
+      .catch((err) => console.log(err));
+
+    //if recruiter doesnt have a job post, he cannot swipe
+    randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(random);
+    if (!randomUser) {
+      return res.status(204).json();
+    }
+    randomUser.password = undefined;
     res.status(200).json(randomUser);
     return;
   } catch (error) {
@@ -111,11 +137,11 @@ router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
 // GET USER DETAILS
 router.get("/:id", isLoggedIn, (req, res, next) => {
   User.findById(req.params.id)
-    .populate('currentApplicationId')
     .then((ret) => {
       if (!ret) {
         res.status(204).json(ret);
       } else {
+        ret.password = undefined;
         res.status(200).json(ret);
       }
     })
@@ -124,25 +150,48 @@ router.get("/:id", isLoggedIn, (req, res, next) => {
 //PATCH update user profile
 router.patch("/", isLoggedIn, (req, res, next) => {
   const id = req.session.currentUser._id;
+  console.log(id)
+  // let newApplicationId;
   if (req.body.password) {
     res.status(403).json("Password cannot be changed by this way.");
     return;
   }
-  if (id) {
+  function updateUserInfo(id, body) {
     User.findByIdAndUpdate(
       id.toString(),
-      { ...req.body },
+      { ...body },
       { new: true, runValidators: true },
       function (err, updatedUser) {
+        console.log("=============",updatedUser, "==================", err)
+        updatedUser.password = undefined;
         if (err) {
           return res.status(422).json(err);
         }
         return res.status(200).json(updatedUser);
       }
     );
-  } else {
-    return res.status(400).json({ message: "Please log in" });
   }
+  //  console.log(req.body)
+  if (req.body.currentPostId) {
+    Application.findOne({ jobPostId: req.body.currentPostId })
+      .then((appliFromDB) => {
+        console.log(id);
+        let currentApplicationId = appliFromDB._id;
+        if (id) {
+          updateUserInfo(id, { ...req.body, currentApplicationId: appliFromDB._id });
+        } else {
+          return res.status(400).json({ message: "Please log in" });
+        }
+      })
+      .catch((err) => console.log(err));
+  } else {
+    if (id) {
+      updateUserInfo(id, req.body);
+    } else {
+      return res.status(400).json({ message: "Please log in" });
+    }
+  }
+  console.log("req.body ", req.body);
 });
 //CANDIDATE SWIPES LEFT TO REFUSE JOB POST
 router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next) => {
@@ -158,6 +207,7 @@ router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next
         theUser
           .save()
           .then((updatedUser) => {
+            updatedUser.password = undefined;
             res.status(200).json({ updatedUser });
             return;
           })
@@ -169,7 +219,7 @@ router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next
   }
 });
 /* DELETE*/
-router.delete("/:id",isLoggedIn, (req, res, next) => {
+router.delete("/:id", isLoggedIn, (req, res, next) => {
   if (req.session.currentUser && req.params.id !== req.session.currentUser._id) {
     return res.status(403).json("You cannot delete this user.");
   }
@@ -187,4 +237,8 @@ router.delete("/:id",isLoggedIn, (req, res, next) => {
     })
     .catch((err) => res.status(500).json({ message: "Deleting went bad" }));
 });
+// //give badges to a candidate 
+// router.patch('/:id', [isLoggedIn, isRecruiter],(req,res,next)=>{
+  
+// })
 module.exports = router;

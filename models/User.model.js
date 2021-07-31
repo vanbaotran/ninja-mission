@@ -28,41 +28,43 @@ let userSchema = new Schema(
       default: "https://via.placeholder.com/150", // trouver une image par default
     },
     applicationId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Application" }],
-    cvUrl: [String],
+    cvUrl: {type: String,
+      default: "noCV"
+      },
     level: {
       type: String,
       enum: ["Warrior", "Ninja", "Samurai", "Sensei"],
     },
     codeLanguage: [String], // voir si enum et ou vérification bonne donnée
-    scope: { city: { type: [String] }, country: { type: [String] } },
+    scope: { city: { type: String }, country: { type: String } },
     birthday:Date,
     bio: {
       type: String,
-      maxlength: 500,
+      
     },
     title: String,
     funFact: {
       type: String,
-      maxlength: 250, 
+      
     },
     usefulLinks: {
       linkedin: String,
       github: String,
       portfolio: String,
     },
-    /* voir avec tran quel badge et type number ou string
-    badge: {
+    badges: {
       motivation: Number,
-      experience: Number,
-      ...
-    }
-    */
+      skills: Number,
+      humour: Number,
+      culture: Number,
+    },
     companyName: String,
     companyLogo: String,
     companyWebsite: String,
     industry: String,
     swipedOfferId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-    currentApplicationId: {type: mongoose.Schema.Types.ObjectId, ref: "Application"}
+    currentApplicationId: {type: mongoose.Schema.Types.ObjectId, ref: "Application"},
+    currentPostId: {type: mongoose.Schema.Types.ObjectId, ref: "Post"}
   },
   {
     timestamps: true,
