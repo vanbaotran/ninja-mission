@@ -40,12 +40,12 @@ let userSchema = new Schema(
     birthday:Date,
     bio: {
       type: String,
-      maxlength: 500,
+      
     },
     title: String,
     funFact: {
       type: String,
-      maxlength: 250, 
+      
     },
     usefulLinks: {
       linkedin: String,

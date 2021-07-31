@@ -150,6 +150,7 @@ router.get("/:id", isLoggedIn, (req, res, next) => {
 //PATCH update user profile
 router.patch("/", isLoggedIn, (req, res, next) => {
   const id = req.session.currentUser._id;
+  console.log(id)
   // let newApplicationId;
   if (req.body.password) {
     res.status(403).json("Password cannot be changed by this way.");
@@ -161,6 +162,7 @@ router.patch("/", isLoggedIn, (req, res, next) => {
       { ...body },
       { new: true, runValidators: true },
       function (err, updatedUser) {
+        console.log("=============",updatedUser, "==================", err)
         updatedUser.password = undefined;
         if (err) {
           return res.status(422).json(err);
@@ -173,7 +175,7 @@ router.patch("/", isLoggedIn, (req, res, next) => {
   if (req.body.currentPostId) {
     Application.findOne({ jobPostId: req.body.currentPostId })
       .then((appliFromDB) => {
-        console.log(appliFromDB);
+        console.log(id);
         let currentApplicationId = appliFromDB._id;
         if (id) {
           updateUserInfo(id, { ...req.body, currentApplicationId: appliFromDB._id });

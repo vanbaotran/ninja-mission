@@ -2,6 +2,7 @@ import React from 'react'
 import {uploadFile,editProfile} from '../service';
 import BlueTop from '../backgrounds/BlueTop';
 import SelectInput from "../inputs/SelectInput";
+import TextInput from "../inputs/TextInput";
 import service from '../service'
 const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
 const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
@@ -111,9 +112,18 @@ class CandidateForm extends React.Component{
             <label>Birthday 
             <input type='date' name='birthday' value={this.state.birthday} onChange={(e)=>this.handleChange(e)}/>
             </label>
-            <label>Bio
+            <TextInput
+            label="Bio"
+            name="bio"
+            value={this.state.bio}
+            change={this.handleChange}
+            area={true}
+            rows={10}
+            cols={20}
+          />
+            {/* <label>Bio
             <input type='text' name='bio' value={this.state.bio} onChange={(e)=>this.handleChange(e)} /> 
-            </label>
+            </label> */}
             <label>Avatar
             <input type='file' name='avatar'  onChange={(e)=> this.handleChangeFile(e)} />
             </label>

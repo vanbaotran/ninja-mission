@@ -165,7 +165,7 @@ input[type='file'] {
   display: block;
   margin:  1vh auto;
   width: 85vw;
-  max-width: 100%;
+  max-width: 550px;;
   height: 32px;
   border-radius: 32px;
   border-style: none;
