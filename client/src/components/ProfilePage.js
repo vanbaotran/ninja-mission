@@ -12,10 +12,8 @@ class ProfilePage extends React.Component {
     let birthDate = new Date(dateString);
     let age = today.getFullYear() - birthDate.getFullYear();
     let m = today.getMonth() - birthDate.getMonth();
-    if (m<0 || (m===0 && today.getDate() - birthDate.getDate())){
+    if (m<0 || (m===0 && (today.getDate() - birthDate.getDate())<0)){
       age--;
-    } else {
-      age =''
     }
     return age
   }
@@ -40,7 +38,7 @@ class ProfilePage extends React.Component {
         </div>
         <header>
           <img src={this.props.currentUser.avatar} alt='avatar'/>
-          <h1>{this.props.currentUser.name} {this.props.currentUser.birthday && ','} {this.getAge(this.props.currentUser.birthday)}</h1>
+          <h1>{this.props.currentUser.name} {this.props.currentUser.birthday && `, ${this.getAge(this.props.currentUser.birthday)}`}</h1>
         </header>
         <main>
           <Link to='/personalProfile'>
@@ -65,7 +63,7 @@ class ProfilePage extends React.Component {
             </div>
           </Link>
   
-          <Link to='/'>
+          <Link to='/myapplications'>
           <div className='row border-orange'>
           <div className='image'>
             <img src='/images/paper-roll.png' alt='applications'/>

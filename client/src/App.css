@@ -184,6 +184,9 @@ input[type='file'] {
 .yellow {
   background-color: #F4D35E;
 }
+.white {
+  background-color:white;
+}
 .text-blue {
   color : #0D3B66;
 }
@@ -609,6 +612,13 @@ background-color: rgb(196, 194, 194);
 ##     ##    ##       ##       ##        ##   ##  ##       ##       
 ##     ##    ##       ##       ##         ## ##   ##       ##       
 ##     ##    ##       ######## ########    ###    ######## ######## */
+.row-level {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px;
+  height: 13vh;
+  border-radius: 16px;
+}
 .my-level {
   overflow: hidden;
   margin: 0; height: 100%;
@@ -662,11 +672,15 @@ background-color: rgb(196, 194, 194);
   margin: 1em auto;
 }
 .head-name-candidate img{
+ max-width: 70%;
+ display: block;
+ margin: auto;
+}
+.head-name-candidate .circle {
   border: 4px solid #0D3B66;
   border-radius: 50%;
   height: 100px;
  width: 100px;
- max-width: 100%;
  padding: 0.3em;
 }
 .head-name-candidate {

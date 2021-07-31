@@ -83,14 +83,14 @@ export class PostForm extends Component {
                 this.props.updateUser(response);
               }
             );
-            this.props.history.push("/");
+            this.props.history.push(`/posts/${response.data.newPost._id}`);
           })
           .catch((err) => console.log(err));
       } else {
         service
           .patch(`/posts/${this.props.match.params.id}`, { ...this.state })
           .then((response) => {
-            this.props.history.push("/");
+            this.props.history.push(`/posts/${this.props.match.params.id}`);
           });
       }
       this.setState({
@@ -123,8 +123,8 @@ export class PostForm extends Component {
     return (
       <div className="post-form-main bg-ligth-grey flex-column">
         {this.state.errorMessage && (
-          <div className="text-red error-over blue">
-            <h1>{this.state.errorMessage}</h1>
+          <div className="overlay text-red error-over border-blue">
+            <h3>{this.state.errorMessage}</h3>
           </div>
         )}
         <h1>

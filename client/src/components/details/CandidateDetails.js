@@ -47,18 +47,16 @@ class CandidateDetails extends Component {
       }
     }
   }
-  getAge = (dateString) => {
+   getAge = (dateString) =>{
     let today = new Date();
     let birthDate = new Date(dateString);
     let age = today.getFullYear() - birthDate.getFullYear();
     let m = today.getMonth() - birthDate.getMonth();
-    if (m > 0 && today.getDate() - birthDate.getDate()) {
+    if (m<0 || (m===0 && (today.getDate() - birthDate.getDate())<0)){
       age--;
-    } else {
-      age = "";
     }
-    return age;
-  };
+    return age
+  }
   swipeCandidate = async () => {
     try {
       await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/refuse`, {
@@ -78,7 +76,7 @@ class CandidateDetails extends Component {
     }
   };
   render() {
-    let age = this.state.birthday ? this.getAge(this.state.birthday.toString()) : false;
+    let age = this.state.birthday ? this.getAge(this.state.birthday) : false;
 
     return (
       <div className="bg-ligth-grey details">
@@ -111,12 +109,13 @@ class CandidateDetails extends Component {
             <h1>
               {this.state.name} {age && `, ${age}`}
             </h1>
+            <div className='circle'>
             <img
               src={`/images/${
                 this.state.level ? `${this.state.level.toLowerCase()}.png` : "ninja.png"
               }`}
               alt="level ico"
-            />
+            /></div>
           </div>
         </div>
         <div className="body-candidate-details">

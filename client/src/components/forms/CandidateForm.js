@@ -51,6 +51,9 @@ class CandidateForm extends React.Component{
 }
   handleSubmit = (event) => {
     event.preventDefault();
+    if (!this.state.level || this.state.level === "none") {
+      return 
+    }
     console.log(this.state)
     editProfile({...this.state})
     .then(response=>{
@@ -134,8 +137,8 @@ class CandidateForm extends React.Component{
             change={this.handleChange}
             options={LevelOptions}
             multiple={false}
-          />
-          <p className='text-red'>{ this.state.level==='none' && this.state.errorMessage.level} </p>
+          /> 
+          <p className='text-red'>{(this.state.level==='none' || !this.state.level) && this.state.errorMessage.level} </p>
             <label>Job Title
             <input type='text' name='title' value={this.state.title} onChange={(e)=>this.handleChange(e)} />
             </label>

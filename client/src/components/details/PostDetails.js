@@ -16,7 +16,7 @@ class PostDetails extends Component {
     remote: false,
     funFact: "",
     website: "",
-    fromswipe: false,
+    from: false,
   };
   componentDidMount() {
     if (!this.props.currentUser) {
@@ -27,7 +27,7 @@ class PostDetails extends Component {
 
           this.setState({
             ...data,
-            fromswipe: this.props.fromswipe || false
+            from: this.props.from || false
           });
       }).catch(err => console.log(err))
       
@@ -47,7 +47,11 @@ class PostDetails extends Component {
     .catch(err=>console.log(err))
   }
   back = () => {
-    this.props.history.push(`/swipeOffer/${this.props.match.params.id}`);
+    if (this.props.from ==='swipe') {
+      this.props.history.push(`/swipeOffer/${this.props.match.params.id}`);
+    } else {
+      this.props.history.goBack()
+    }
   }
   render() {
     return (
@@ -58,7 +62,7 @@ class PostDetails extends Component {
             alt="logo comp"
           />
           <h1>{this.state.offerName}</h1>
-          {this.props.fromswipe  || <button className="btn blue" onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>}
+          { this.props.currentUser.profileType==='recruiter' && (this.props.from || <button className="btn blue" onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>)}
         </div>
         <div className="body-post-details flex-column">
           <div className="detail flex-row">
@@ -102,7 +106,7 @@ class PostDetails extends Component {
               {this.state.website}
             </a>
           </div>
-          {(this.props.fromswipe && <button className="btn red" onClick={this.back}>GO BACK</button>) || <button className="btn red" onClick={this.handleEdit}>EDIT THIS POST</button>}
+          {(this.props.currentUser.profileType==='recruiter' && ((this.props.from && <button className="btn red" onClick={this.back}>GO BACK</button>) || <button className="btn red" onClick={this.handleEdit}>EDIT THIS POST</button>) )||  <button className="btn red" onClick={this.back}>GO BACK</button>}
         </div>
       </div>
     );

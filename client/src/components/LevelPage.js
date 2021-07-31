@@ -19,7 +19,6 @@ class LevelPage extends React.Component{
     })
     .catch(err=>console.log(err))
   }
-
   render(){
     return (
       <div className='my-level'>
@@ -34,22 +33,22 @@ class LevelPage extends React.Component{
           <img src='/images/nunchaku.png'alt='levels'/>
         </header>
       <main>
-          <div onClick = {()=>this.updateLevel('Warrior')} className='row border-blue'>
+          <div onClick = {()=>this.updateLevel('Warrior')} className={`row-level border-blue ${this.props.currentUser?.level==='Warrior' ? 'yellow' : 'white'}`}>
             <h3>Warrior</h3>
             <div className='image'><img src='/images/warrior.png' alt='warrior'/></div>
             <h3>0 - 2 yrs experience</h3>
           </div>
-          <div onClick = {()=>this.updateLevel('Ninja')} className='row border-yellow'>
+          <div onClick = {()=>this.updateLevel('Ninja')} className={`row-level border-yellow ${this.props.currentUser?.level==='Ninja' ? 'yellow' : 'white'}`}>
             <h3>Ninja</h3>
            <div className='image'> <img src='/images/ninja.png' alt='ninja'/> </div>
             <h3>2 - 3 yrs experience</h3>
           </div>
-          <div onClick = {()=>this.updateLevel('Samurai')} className='row border-orange'>
+          <div onClick = {()=>this.updateLevel('Samurai')} className={`row-level border-orange ${this.props.currentUser?.level==='Samurai' ? 'yellow' : 'white'}`}>
             <h3>Samurai</h3>
              <div className='image'><img src='/images/samurai.png' alt='samurai'/></div>
             <h3>3 - 5 yrs experience</h3>
           </div>
-          <div onClick = {()=>this.updateLevel('Sensei')}className='row border-red'>
+          <div onClick = {()=>this.updateLevel('Sensei')} className={`row-level border-red ${this.props.currentUser?.level==='Sensei' ? 'yellow' : 'white'}`}>
             <h3>Sensei</h3>
              <div className='image'><img src='/images/sensei.png' alt='sensei'/></div>
             <h3>5 yrs+ experience</h3>

@@ -34,9 +34,10 @@ router.get("/:id/candidates", [isLoggedIn, isRecruiter], (req, res, next) => {
 });
 
 // get array of jobpostsid that candidate has choose
-router.get("/haveCandidate", [isLoggedIn, isCandidate], (req, res, next) => {
+router.get("/byCandidateId", [isLoggedIn, isCandidate], (req, res, next) => {
   let id = req.session.currentUser._id;
   Application.find({ candidateId: id })
+    .populate('jobPostId')
     .then((AppsfromDb) => {
       let arrCandidating = AppsfromDb ? AppsfromDb.map(el => el.jobPostId) : [];
       res.status(200).json({arrCandidating: arrCandidating});
