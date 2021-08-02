@@ -123,7 +123,7 @@ class CandidateForm extends React.Component{
       <BlueTop/>
         <form onSubmit={this.handleSubmit}>
           <div className='form-no-btn'>
-           <h1 className='text-blue'>Edit your profile</h1>
+           <h1 className='text-blue'>EDIT YOUR PROFILE</h1>
             <label>Name
             <input type='text' name='name' value={this.state.name} onChange={(e)=>this.handleChange(e)}/>
             <p className='text-red'>{ !this.state.name && this.state.errorMessage.empty} </p>

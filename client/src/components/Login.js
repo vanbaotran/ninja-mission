@@ -3,7 +3,10 @@ import {login} from './service';
 import BlueTop from "./backgrounds/BlueTop";
 
 class Login extends React.Component{
-  state = {email:'', password:''}
+  state = {
+    email:'',
+    password:'', 
+  }
   handleSubmit = (event) =>{
     event.preventDefault();
     const {email,password} = this.state
@@ -37,6 +40,7 @@ class Login extends React.Component{
             <label>Password
              <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
             </label>
+            {/* {!this.props.currentUser && <p className='text-red'>{this.state.errorMessage}</p>} */}
            </div>
             <button className='btn red'>LOG IN</button>
           </form>

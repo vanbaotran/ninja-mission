@@ -63,15 +63,23 @@ class RecruiterForm extends React.Component {
         <form onSubmit={this.handleSubmit}>
         <div className="form-no-btn">
         <h1 className="text-blue">Edit Your Company Profile</h1>
-          <label>
-            <img src={this.state.companyLogo || "/images/temple.png"} alt="logo" />
+          <div className='flex-row logo'>
+            <img 
+              src={this.state.companyLogo || "/images/temple.png"}
+              alt="logo"
+            />
+            <div className = 'upload-logo'> 
+            <label>
             <input
               type="file"
               name="companyLogo"
               accept=".png,.jpg,.jpeg"
               onChange={this.handleLogo}
             />
-          </label>
+              <img src='/images/icons/edit.png' alt=''/>
+            </label>
+            </div>
+          </div>
           <TextInput label="Name" name="name" value={this.state.name} change={this.handleChange} />
           <TextInput
             label="Email"

@@ -229,7 +229,7 @@ class SwipeJobPost extends Component {
             alt="heart ico"
             onClick={this.chooseOffer}
           />
-          <img className="btn-swipe" src="/images/icons/save.png" alt="save ico" />
+          <img className="btn-swipe" src="/images/icons/badge.png" alt="badge" />
         </div>
         {this.state.optionsIsOpen && (
           <OverlayWeapon

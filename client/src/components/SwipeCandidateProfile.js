@@ -159,10 +159,10 @@ class SwipeCandidateProfile extends React.Component {
             alt="heart ico"
             onClick={this.chooseCandidate}
           />
-          <img className="btn-swipe" src="/images/icons/save.png" alt="save ico" />
+          <img className="btn-swipe" src="/images/icons/badge.png" alt="badge ico" />
         </div>
         </div>
-          <div className="block-btn-swipe">
+          {/* <div className="block-btn-swipe">
           <img
             className="btn-swipe"
             src="/images/icons/reverse.png"
@@ -181,8 +181,7 @@ class SwipeCandidateProfile extends React.Component {
             alt="heart ico"
             onClick={this.chooseCandidate}
           />
-          <img className="btn-swipe" src="/images/icons/save.png" alt="save ico" />
-        </div>
+        </div> */}
         {this.state.optionsIsOpen && (
           <OverlayExperience
             filter={this.searchRandom}
