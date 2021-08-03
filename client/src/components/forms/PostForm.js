@@ -95,7 +95,7 @@ export class PostForm extends Component {
         service
           .patch(`/posts/${this.props.match.params.id}`, { ...this.state })
           .then((response) => {
-             this.state({popUp:true})
+             this.setState({popUp:true})
                 setTimeout(() => {
                   this.setState({popUp:false})
                   this.props.history.push(`/posts/${this.props.match.params.id}`);

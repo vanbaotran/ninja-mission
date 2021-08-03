@@ -42,7 +42,6 @@ async function insertMockData() {
         return;
       }
     });
-    // console.log(recruiters);
     let nbPostByRecruiter = Math.floor(250/recruiters.length);
     let sliceIndex=nbPostByRecruiter;
     let appId = [];
@@ -59,7 +58,6 @@ async function insertMockData() {
        if(!recruiter.applicationId) recruiter.applicationId = [];
        recruiter.applicationId.push(app._id);
        recruiter.currentApplicationId = app._id;
-      //  await recruiter.updateOne({_id: recruiter._id}, {applicationId: recruiter.applicationId, currentApplicationId: app._id});
        await postDb.save();
     })
     await recruiter.save();
