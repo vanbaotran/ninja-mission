@@ -15,11 +15,13 @@ const NavBar = () =>{
       <Link to='/swipeCandidate/random'>SWIPE CANDIDATE </Link>
       <Link to='/myoffers'>  My offers </Link>
       <Link to='/mydashboard'>  My dashboard </Link>
-        <Link to='/companyDetails'>  My COMPANY DETAILS </Link>
-         <Link to='/recruiterform'>  My COMPANY details EDIT </Link>
+      <Link to='/companyDetails'>  My COMPANY DETAILS </Link>
+      <Link to='/recruiterform'>  My COMPANY details EDIT </Link>
       <Link to='/myBadges'>  MY BADGES </Link>
-        <Link to='/options'> OverlayOptions </Link>
-         <Link to='/overlayupdated'> OverlayUpdated </Link>
+      <Link to='/options'> OverlayOptions </Link>
+      <Link to='/overlayupdated'> OverlayUpdated </Link>
+      <Link to='/chatbox/hihi'> Chatbox </Link>
+      
       
     </div>
   )

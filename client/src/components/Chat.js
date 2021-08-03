@@ -14,11 +14,15 @@ class Chat extends React.Component {
   });
 
   componentDidMount() {
+    const room = this.props.match.params.id
     console.log(this.props.match.params.id)
-    this.socket.on('receiveMessageFromOther', (message) => {
+    this.socket.emit('join-room', room, message =>{
+      console.log('room:', room)
+      console.log(message)
+    })
+     this.socket.on('receiveMessageFromOther', (message) => {
       this.setState({messages: [...this.state.messages, message ]})
     })
-
     this.socket.connect();
     this.socket.on("connect", () => {
       this.socket.emit("testCli", "test client emit");
