@@ -3,6 +3,7 @@ import service, { uploadFile } from "../service";
 import SelectInput from "../inputs/SelectInput";
 import TextInput from "../inputs/TextInput";
 import { dataPostToStatePost, editProfile } from "../service";
+import OverlayUpdated from '../overlays/OverlayUpdated'
 const LanguageOptions = [
   "PHP",
   "JS",
@@ -31,7 +32,7 @@ export class PostForm extends Component {
     remote: false,
     funFact: "", //maxlength: 250,
     website: "",
-
+    popUp: false,
     errorMessage: false,
   };
 
@@ -79,18 +80,26 @@ export class PostForm extends Component {
             this.props.updateCurrentPost(response.data.newPost._id);
             editProfile({ currentPostId: response.data.newPost._id }).then(
               (response) => {
-                console.log("CHANGING POST ID", response);
                 this.props.updateUser(response);
+                this.setState({popUp:true})
+                setTimeout(() => {
+                  this.setState({popUp:false})
+                  this.props.history.push(`/posts/${response.data.newPost._id}`);
+                }, 2000);
               }
             );
-            this.props.history.push(`/posts/${response.data.newPost._id}`);
+          
           })
           .catch((err) => console.log(err));
       } else {
         service
           .patch(`/posts/${this.props.match.params.id}`, { ...this.state })
           .then((response) => {
-            this.props.history.push(`/posts/${this.props.match.params.id}`);
+             this.state({popUp:true})
+                setTimeout(() => {
+                  this.setState({popUp:false})
+                  this.props.history.push(`/posts/${this.props.match.params.id}`);
+                }, 2000);
           });
       }
       this.setState({
@@ -127,34 +136,39 @@ export class PostForm extends Component {
             <h3>{this.state.errorMessage}</h3>
           </div>
         )}
+        {this.state.popUp && <OverlayUpdated/>}
         <h1>
           {this.props.match.params.id === "new"
             ? "ADD A NEW OFFER"
             : "EDIT THE OFFER"}
         </h1>
         <form className="flex-column form-all-page" onSubmit={(e) => this.handleSubmit(e)}>
-          <label>
-            <img
+          <div className='flex-row logo'>
+            <img 
               src={this.state.companyLogo || "/images/temple.png"}
               alt="logo"
             />
+            <div className = 'upload-logo'> 
+            <label>
             <input
               type="file"
               name="companyLogo"
               accept=".png,.jpg,.jpeg"
               onChange={this.handleLogo}
             />
-          </label>
-
+              <img src='/images/icons/edit.png' alt=''/>
+            </label>
+            </div>
+          </div>
           <TextInput
-            label="Name"
+            label="Offer Name"
             name="offerName"
             value={this.state.offerName}
             change={this.handleChange}
           />
           <TextInput
-            label="Position"
-            name="position"
+            label="Company Name"
+            name="companyName"
             value={this.state.position}
             change={this.handleChange}
           />

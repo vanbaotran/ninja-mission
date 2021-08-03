@@ -3,9 +3,11 @@ import {uploadFile,editProfile} from '../service';
 import BlueTop from '../backgrounds/BlueTop';
 import SelectInput from "../inputs/SelectInput";
 import TextInput from "../inputs/TextInput";
-import service from '../service'
+import service from '../service';
+import OverlayUpdated from '../overlays/OverlayUpdated'
 const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
 const LanguageOptions = ["PHP", "JS", "Python", "Ruby", "HTML", "CSS", "C++", "C", "Rust"];
+
 
 // import axios from 'axios';
 
@@ -30,7 +32,8 @@ class CandidateForm extends React.Component{
       empty:'This input cannot be empty!',
       valid:'This input needs to be valid!',
       level:'Please choose your level!'
-    }
+    },
+    popUp: false,
   }
   componentDidMount() {
      if (!this.props.currentUser) { this.props.history.push("/login") } else {
@@ -57,10 +60,14 @@ class CandidateForm extends React.Component{
     console.log(this.state)
     editProfile({...this.state})
     .then(response=>{
-      console.log(response)
-      this.setState(response)
+      this.setState({...response, popUp: true})
       this.props.updateUser(response)
-      this.props.history.push("/personalProfile")
+      setTimeout(() => {
+        this.setState({popUp:false})
+        this.props.history.push("/personalProfile")
+      }, 2000);
+      console.log(response)
+     
     })
     .catch(error => console.log(error))
   }
@@ -98,8 +105,21 @@ class CandidateForm extends React.Component{
       })
   }
   render(){
+    function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
     return(
       <div className='form'>
+      {this.state.popUp && <OverlayUpdated/>}
       <BlueTop/>
         <form onSubmit={this.handleSubmit}>
           <div className='form-no-btn'>
@@ -113,7 +133,7 @@ class CandidateForm extends React.Component{
              <p className='text-red'>{ !this.state.email && this.state.errorMessage} { this.validateEmail(this.state.email) && this.state.errorMessage.valid}</p>
             </label>
             <label>Birthday 
-            <input type='date' name='birthday' value={this.state.birthday} onChange={(e)=>this.handleChange(e)}/>
+            <input type='date' name='birthday' value={formatDate(this.state.birthday)} onChange={(e)=>this.handleChange(e)}/>
             </label>
             <TextInput
             label="Bio"

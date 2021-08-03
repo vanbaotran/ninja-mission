@@ -39,10 +39,10 @@ class CompanyDetails extends React.Component{
               <p className='title'>Website: </p>
               <p className='content'>{this.state.currentUser.companyWebsite}</p> 
             </div>
-             <div className='line'>
+             {/* <div className='line'>
               <p className='title'>Scope: </p>
               <p className='content'>{this.state.currentUser.scope?.city || ""}, {this.state.currentUser.scope?.country || ""} </p> 
-            </div>
+            </div> */}
             <div className='line'>
               <p className='title'>Fun Fact: </p>
               <p className='content'>{this.state.currentUser.funFact}</p> 

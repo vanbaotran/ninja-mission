@@ -27,18 +27,7 @@ let dataNewPassWord = data.map((el) => {
   el.password = hashPass;
   return el;
 });
-// const recruitersId = User.insertMany(dataNewPassWord)
-// .then(data=> {
-//   return data.map(el=>{
-//     if( el.profileType === "recruiter") {
-// console.log(recruitersId);
-//     return el._id
-//     } else {
-//       console.log("candidate");
-//       return;
-//     }
-//   });
-//     }).catch(err=>console.log(err))
+
 async function insertMockData() {
   try {
     const USERS = await User.insertMany(dataNewPassWord);

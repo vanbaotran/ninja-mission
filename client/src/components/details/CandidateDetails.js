@@ -81,8 +81,10 @@ class CandidateDetails extends Component {
     return (
       <div className="bg-ligth-grey details">
         <div className="head-candidate-details">
+        <img src='/images/icons/back-blue.png' className='icon-back-blue' onClick={()=>this.props.history.goBack()} alt=''/>
           <div className="head-avatar-candidate flex-column">
-            <img src={this.state.avatar ? this.state.avatar : "/images/ninja.png"} alt="avatar" />
+            <img src={this.state.avatar} alt="avatar" />
+            {/* <img src={this.state.avatar ? this.state.avatar : "/images/ninja.png"} alt="avatar" /> */}
             {this.props.currentUser && this.props.currentUser.profileType === "recruiter" && (
               <div className="block-btn-swipe-detail flex-row">
                 {(this.state.apply && <h2 className="text-red">{this.state.apply}</h2>) || (
@@ -103,7 +105,7 @@ class CandidateDetails extends Component {
                 )}
               </div>
             )}
-            <h4>{this.state.title}</h4>
+            <h2>{this.state.title}</h2>
           </div>
           <div className="head-name-candidate flex-row">
             <h1>
@@ -111,11 +113,16 @@ class CandidateDetails extends Component {
             </h1>
             <div className='circle'>
             <img
+              src={`/images/${this.state.level?.toLowerCase()}.png`}
+              alt="level ico"
+            />
+             {/* <img
               src={`/images/${
                 this.state.level ? `${this.state.level.toLowerCase()}.png` : "ninja.png"
               }`}
               alt="level ico"
-            /></div>
+            /> */}
+            </div>
           </div>
         </div>
         <div className="body-candidate-details">
