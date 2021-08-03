@@ -25,10 +25,13 @@ import MyBadges from './components/MyBadges';
 import OverlayOptions from './components/overlays/OverlayOptions';
 import MyApplications from './components/MyApplications'
 import OverlayUpdated from './components/overlays/OverlayUpdated'
+import Chat from './components/Chat';
+
 class App extends React.Component {
   state = {
     loggedInUser: null,
-    currentPostId: null
+    currentPostId: null,
+    candidate: null,
   }
 
  fetchUser() {
@@ -45,10 +48,13 @@ class App extends React.Component {
   updateCurrentPostId = (id) => {
     this.setState({ currentPostId: id });
   }
+  updateCandidate = (objCandidate) =>  {
+    this.setState({candidate: objCandidate})
+  }
   componentDidMount() {
     this.fetchUser()
   }
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps, prevState){
     // console.log(this.state.currentUser)
     if(prevProps.currentUser !== this.props.currentUser && (this.props.currentUser!==null)){
       editProfile({currentPostId:this.state.currentPostId})
@@ -58,6 +64,14 @@ class App extends React.Component {
       })
       .catch(err=>console.log(err))
     }
+    // if(prevState.candidate !== this.state.candidate ){
+    //   this.
+    //   .then(response=>{
+    //     this.setState({currentPostId:this.state.currentPostId})
+    //     console.log(response)
+    //   })
+    //   .catch(err=>console.log(err))
+    // }
    
   }
   updateLoggedInUser = (userObj) =>{
@@ -80,10 +94,10 @@ class App extends React.Component {
           <Route path='/swipeOffer/:id' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>} />
           <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
-          <Route path='/intest' render={()=><CandidateDetails currentUser={this.state.loggedInUser}/>} />
+          <Route path='/chatbox/:id' render={(props) => <Chat {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} currentCandidate={this.state.candidate} updateCandidate={this.updateCandidate}/>}/>
           <Route path='/swipeCandidate/random' render={(props)=><SwipeCandidateProfile  {...props} currentUser={this.state.loggedInUser}/>} />
           <Route path='/swipeCandidate/:id' render={(props)=><SwipeCandidateProfile {...props} currentUser={this.state.loggedInUser}/>} />
-          <Route path='/users/:id/fromswipe' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"swipe"}/>} />
+          <Route path='/users/:id/fromswipe' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"swipe"} currentCandidate={this.state.candidate} updateCandidate={this.updateCandidate}/>} />
           <Route path='/users/:id/fromdashboard' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"dashboard"}/>} />
           <Route path='/personalProfile' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} />} />
           <Route path='/myoffers' render={(props)=><MyOffersList {...props} currentPostId={this.state.currentPostId} currentUser={this.state.loggedInUser}/>} />
