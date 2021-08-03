@@ -6,13 +6,11 @@ let postSchema = new Schema(
     offerName: String,
     companyLogo: String, // voir si default ou required
     companyBio: {
-      type: String,
-      maxlength: 250,
+      type: String
     },
     companyName: String,
     description: {
       type: String,
-      maxlength: 500,
     },
     position: String,
     contract: {
@@ -28,7 +26,6 @@ let postSchema = new Schema(
     remote: Boolean,
     funFact: {
       type: String,
-      maxlength: 250,
     },
     website:String,
     recruiterId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

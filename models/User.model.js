@@ -45,7 +45,7 @@ let userSchema = new Schema(
     title: String,
     funFact: {
       type: String,
-      
+        
     },
     usefulLinks: {
       linkedin: String,
