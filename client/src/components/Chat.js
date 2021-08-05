@@ -2,7 +2,6 @@ import React from "react";
 import service from "./service";
 import { io } from "socket.io-client";
 
-
 class Chat extends React.Component {
   state = {
     roomId: "",
@@ -68,7 +67,7 @@ class Chat extends React.Component {
     this.props.updateCandidate({});
   }
   sendMyMessage = async (e) => {
-     let prefix_message = (this.props.currentUser.profileType === "recruiter" )? "R_" : "C_";
+    let prefix_message = (this.props.currentUser.profileType === "recruiter" )? "R_" : "C_";
     this.socket.emit("sendMessage", `${prefix_message}${this.state.message}`);
   };
   render() {
