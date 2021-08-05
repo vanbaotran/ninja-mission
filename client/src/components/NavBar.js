@@ -20,7 +20,8 @@ const NavBar = () =>{
       <Link to='/myBadges'>  MY BADGES </Link>
       <Link to='/options'> OverlayOptions </Link>
       <Link to='/overlayupdated'> OverlayUpdated </Link>
-      <Link to='/chatbox/hihi'> Chatbox </Link>
+      <Link to='/chatbox/610a92d5152f7035a580ff38_610a92d5152f7035a580ff64_610a92d5152f7035a580ffa1'> Chatbox </Link>
+      <Link to='/chatbox/hihi'> Chatbox2 </Link>
       
       
     </div>

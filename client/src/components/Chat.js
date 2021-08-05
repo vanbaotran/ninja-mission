@@ -9,11 +9,13 @@ class Chat extends React.Component {
 
   };
 
-  socket = io(`http://localhost:8000`, {
-    autoConnect: false,
-  });
+  socket = io('http://localhost:5000', {withCredentials:true,  autoConnect: false});
 
   componentDidMount() {
+    this.socket.connect();
+    this.socket.on("connect", () => {
+      this.socket.emit("testCli", "test client emit");
+    });
     const room = this.props.match.params.id
     console.log(this.props.match.params.id)
     this.socket.emit('join-room', room, message =>{
@@ -23,12 +25,8 @@ class Chat extends React.Component {
      this.socket.on('receiveMessageFromOther', (message) => {
       this.setState({messages: [...this.state.messages, message ]})
     })
-    this.socket.connect();
-    this.socket.on("connect", () => {
-      this.socket.emit("testCli", "test client emit");
-    });
     this.socket.on("testApi", (args) => {
-      this.setState({ message: args });
+      this.setState({ messages: [...this.state.messages, args] });
     });
   }
 
@@ -60,7 +58,8 @@ this.setState({messages: [...this.state.messages, this.state.messageA ], message
         >
           Send message:
         </button>
-          {this.state.messages.map(mess => <p>{mess}</p>)}
+        {this.state.message}
+          {this.state.messages.map((mess, idx )=> <p key={idx}>{mess}</p>)}
       </>
     );
   }
