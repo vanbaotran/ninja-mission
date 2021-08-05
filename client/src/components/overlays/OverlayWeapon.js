@@ -32,7 +32,7 @@ class OverlayWeapon extends Component {
   render() {
     return (
       <div className="overlay">
-          <img onClick={this.filterDataSwipeParent} src="/images/icons/close_black.png" alt="close ico" />
+          <img className='close-icon' onClick={this.filterDataSwipeParent} src="/images/icons/close_black.png" alt="close ico" />
         <h1>CHOOSE YOUR WEAPON</h1>
         <p>
           the weapon you are looking for stands for the contract type for your next position. By
@@ -42,19 +42,19 @@ class OverlayWeapon extends Component {
         </p>
         <div className="weapon-block">
           <div onClick={() => this.toggleFilter("Internship")} className={`weapon ${this.state.chooseFilter.includes("Internship") ? "bg-grey" : ""}`}>
-            <img src="/images/internship.png" alt="ico weapon" />
+            <img className ='weapon-icon' src="/images/internship.png" alt="ico weapon" />
             <p className="text-blue">Internship</p>
           </div>
           <div onClick={() => this.toggleFilter("Freelance")} className={`weapon ${this.state.chooseFilter.includes("Freelance") ? "bg-grey" : ""}`}>
-            <img src="/images/freelance.png" alt="ico weapon" />
+            <img className ='weapon-icon' src="/images/freelance.png" alt="ico weapon" />
             <p className="text-red">Freelance</p>
           </div>
           <div onClick={() => this.toggleFilter("Permanent")} className={`weapon ${this.state.chooseFilter.includes("Permanent") ? "bg-grey" : ""}`}>
-            <img src="/images/permanent.png" alt="ico weapon" />
+            <img className ='weapon-icon' src="/images/permanent.png" alt="ico weapon" />
             <p className="text-blue">Permanent</p>
           </div>
           <div onClick={() => this.toggleFilter("Temporary")} className={`weapon ${this.state.chooseFilter.includes("Temporary") ? "bg-grey" : ""}`}>
-            <img src="/images/temporary.png" alt="ico weapon" />
+            <img className ='weapon-icon' src="/images/temporary.png" alt="ico weapon" />
             <p className="text-red">Temporary</p>
           </div>
         </div>

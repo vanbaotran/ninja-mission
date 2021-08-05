@@ -42,10 +42,10 @@ function getPostData(id){
 }
 export {getPostData}
 
-// function getOfferList(recruiterId){
-//   return service.get(`/posts/recruiter/${recruiterId}`).then(response => response.data)
-// }
-// export {getOfferList}
+function deletePost(id){
+  return service.delete(`/posts/${id}`).then(response => response.data)
+}
+export {deletePost}
 
 function dataPostToStatePost(id) {
   return service.get(`/posts/${id}`).then(response => {

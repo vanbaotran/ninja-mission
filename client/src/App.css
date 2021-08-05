@@ -445,7 +445,7 @@ margin: auto;
 
 /* OVERLAY*/
 .overlay {
-  width: 60vw;
+  width: 70vw;
   padding: 0.5em;
   border-radius: 13px ;
   background-color: whitesmoke;
@@ -454,10 +454,16 @@ margin: auto;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
+  text-align: right;
+}
+.overlay .updated {
   text-align: center;
 }
-.overlay img {
+.overlay .validation {
   width: 40%;
+} 
+.overlay .close-icon {
+  text-align: right;
 }
 .overlay h1 {
   font-size: 1em;
@@ -466,7 +472,6 @@ margin: auto;
 .weapon-block, .level-block {
   display: flex;
   margin: 0.2em;
- 
 }
 .weapon, .level {
   display: flex;
@@ -476,15 +481,18 @@ margin: auto;
   padding: 1em;
   max-width: 20vw;
   font-size: 0.7em;
-  margin: auto;  
+  margin: 2px;  
 }
-.weapon-block, .level-block img {
-  width: 50px;
+.weapon-icon {
   height: 50px;
+  width: 50px;
+}
+.level-block img {
+  flex:1;
   margin: auto;
 }
 .bg-grey{
-background-color: rgb(196, 194, 194);
+  background-color: rgb(196, 194, 194);
 }
 /*
 ######  ##      ## #### ########  ########     ######     ###    ##    ## ########  #### ########     ###    ######## ######## 

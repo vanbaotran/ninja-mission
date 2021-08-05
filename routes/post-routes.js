@@ -44,6 +44,11 @@ postRoutes.post("/", [isLoggedIn, isRecruiter], (req, res, next) => {
 });
 
 postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
+  // Post.findOne({ _id:"61098e1701d2fa45b47b172d" })
+  // .then(postFromDB=>{
+  //   res.status(200).json(postFromDB)
+  // })
+  // .catch(err=>console.log)
   try {
     // initiate utils let
     let random, randomPost, countDoc, post;

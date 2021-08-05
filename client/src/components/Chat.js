@@ -20,6 +20,7 @@ class Chat extends React.Component {
     // fetch data users
     // console.log(prefix_message)
     let arrIds = roomId.split("_"); /// "<recruiterId>_<candidateId>_<application>"
+     console.log(arrIds);
     try {
       let recruiter, candidate;
 
@@ -40,6 +41,7 @@ class Chat extends React.Component {
         messages = messages.data.messages;
       }
       console.log(messages);
+      console.log(roomId)
       this.setState({
         roomId: roomId,
         recruiterId: arrIds[0],
@@ -51,7 +53,7 @@ class Chat extends React.Component {
       this.socket.emit("join-room", room);
       this.socket.on("receiveMessageFromOther", async (message) => {
         let newMessages = [...this.state.messages, message];
-        let newRoom = await service.patch(`/rooms/${this.state.roomId}`, { messages: newMessages });
+        let newRoom = await service.patch(`/rooms/${roomId}`, { messages: newMessages });
         this.setState({ messages: [...newRoom.data.messages] });
       });
     } catch (err) {
