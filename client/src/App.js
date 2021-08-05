@@ -32,6 +32,7 @@ class App extends React.Component {
     loggedInUser: null,
     currentPostId: null,
     candidate: null,
+    recruiter: null,
   }
 
  fetchUser() {
@@ -50,6 +51,9 @@ class App extends React.Component {
   }
   updateCandidate = (objCandidate) =>  {
     this.setState({candidate: objCandidate})
+  }
+   updateRecruiter = (objRecruiter) =>  {
+    this.setState({recruiter: objRecruiter})
   }
   componentDidMount() {
     this.fetchUser()
@@ -94,7 +98,7 @@ class App extends React.Component {
           <Route path='/swipeOffer/:id' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>} />
           <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
-          <Route path='/chatbox/:id' render={(props) => <Chat {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} currentCandidate={this.state.candidate} updateCandidate={this.updateCandidate}/>}/>
+          <Route path='/chatbox/:id' render={(props) => <Chat {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} currentCandidate={this.state.candidate} updateCandidate={this.updateCandidate} currentRecruiter={this.state.recruiter} updateRecruiter={this.updateRecruiter}/>}/>
           <Route path='/swipeCandidate/random' render={(props)=><SwipeCandidateProfile  {...props} currentUser={this.state.loggedInUser}/>} />
           <Route path='/swipeCandidate/:id' render={(props)=><SwipeCandidateProfile {...props} currentUser={this.state.loggedInUser}/>} />
           <Route path='/users/:id/fromswipe' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"swipe"} currentCandidate={this.state.candidate} updateCandidate={this.updateCandidate}/>} />

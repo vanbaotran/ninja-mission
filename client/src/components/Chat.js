@@ -1,65 +1,100 @@
 import React from "react";
+import service from "./service";
 import { io } from "socket.io-client";
 
 class Chat extends React.Component {
   state = {
-    orderId: "",
-    messageA: "",
+    roomId: "",
+    message: "",
     messages: [],
-
+    recruiterId: "",
+    candidateId: "",
+    err: "",
   };
 
-  socket = io('http://localhost:5000', {withCredentials:true,  autoConnect: false});
+  socket = io("http://localhost:5000", { withCredentials: true, autoConnect: false });
 
-  componentDidMount() {
-    this.socket.connect();
-    this.socket.on("connect", () => {
-      this.socket.emit("testCli", "test client emit");
-    });
-    const room = this.props.match.params.id
-    console.log(this.props.match.params.id)
-    this.socket.emit('join-room', room, message =>{
-      console.log('room:', room)
-      console.log(message)
-    })
-     this.socket.on('receiveMessageFromOther', (message) => {
-      this.setState({messages: [...this.state.messages, message ]})
-    })
-    this.socket.on("testApi", (args) => {
-      this.setState({ messages: [...this.state.messages, args] });
-    });
+  async componentDidMount() {
+    const roomId = this.props.match.params.id;
+    // fetch data users
+    let arrIds = roomId.split("_"); /// "<recruiterId>_<candidateId>_<application>"
+    try {
+      let recruiter, candidate;
+
+      candidate = await service.get(`/users/${arrIds[1]}`);
+      recruiter = await service.get(`/users/${arrIds[0]}`);
+
+      this.props.updateCandidate(candidate.data);
+
+      this.props.updateRecruiter(recruiter.data);
+
+      let room;
+      console.log("===================");
+      let messages = await service.get(`/rooms/${roomId}`);
+
+      if (!messages.data) {
+        room = await service.post(`/rooms`, { roomId: roomId });
+        messages = room.data.messages;
+      } else {
+        messages = messages.data.messages;
+      }
+      console.log(messages);
+      // this.setState({messages: messages})
+      //     console.log( "plop1", messages);
+      this.setState({
+        roomId: roomId,
+        recruiterId: arrIds[0],
+        candidateId: arrIds[1],
+        messages: messages,
+      });
+      //     // this.setState({messages: room.data.messages});
+      this.socket.connect();
+      this.socket.emit("join-room", room);
+      this.socket.on("receiveMessageFromOther", async (message) => {
+        let newMessages = [...this.state.messages, message];
+        let newRoom = await service.patch(`/rooms/${this.state.roomId}`, { messages: newMessages });
+        this.setState({ messages: [...newRoom.data.messages] });
+      });
+    } catch (err) {
+      console.log(err, "plop");
+    }
+    //////////////////////////
   }
 
   componentWillUnmount() {
+    // this.socket.on("disconnet",() => {service.patch(`/rooms/${this.state.roomId}`, {messages: this.state.messages})});
     this.socket.disconnect();
+    this.props.updateRecruiter({});
+    this.props.updateCandidate({});
   }
-sendMyMessage = (e) => {
-this.socket.emit("sendMessage", this.state.messageA);
-this.setState({messages: [...this.state.messages, this.state.messageA ], messageA: ""})
-}
+  sendMyMessage = async (e) => {
+    this.socket.emit("sendMessage", this.state.message);
+  };
   render() {
     return (
       <>
-        <label>
-          Message A
-          <input
-            nametype="text"
-            value={this.state.messageA}
-            onChange={(e) => {
-              this.setState({ messageA: e.target.value });
+        <div className="message-box flex-column">
+          <label>
+            Write Message:
+            <input
+              nametype="text"
+              value={this.state.message}
+              onChange={(e) => {
+                this.setState({ message: e.target.value });
+              }}
+            />
+          </label>
+          <button
+            className="btn blue"
+            onClick={(e) => {
+              this.sendMyMessage(e);
             }}
-          />
-        </label>
-        <p>{this.state.message}</p>
-        <button
-          onClick={(e) => {
-            this.sendMyMessage(e);
-          }}
-        >
-          Send message:
-        </button>
-        {this.state.message}
-          {this.state.messages.map((mess, idx )=> <p key={idx}>{mess}</p>)}
+          >
+            SEND:
+          </button>
+        </div>
+        {this.state.err}
+        {this.state.messages && this.state.messages.map((mess, idx) => <p key={idx}>{mess}</p>)}
       </>
     );
   }

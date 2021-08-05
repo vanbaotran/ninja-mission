@@ -33,7 +33,6 @@ mongoose
 const app_name = require("./package.json").name;
 const debug = require("debug")(`${app_name}:${path.basename(__filename).split(".")[0]}`);
 
-
 // Middleware Setup
 app.use(logger("dev"));
 app.use(bodyParser.json());
@@ -69,20 +68,18 @@ app.use(
 const server = http.createServer(app);
 const io = require("socket.io")(server, { cors: corsOptions });
 
-io.on("connection", function(socket) {
-console.log(socket.id)
+io.on("connection", function (socket) {
+  console.log(socket.id);
 
-socket.on('join-room',(room)=>{
-      console.log(room)
-      socket.join(room);
-      io.to(room).emit("receiveMessageFromOther","salut par la! from room"+room);
-    socket.on('sendMessage',(mess)=>{
-      
-     io.to(room).emit("receiveMessageFromOther","salut par la!"+mess);
-    })
-    })
-})
-    
+  socket.on("join-room", (room) => {
+    console.log(room);
+    socket.join(room);
+    socket.on("sendMessage", (mess) => {
+      io.to(room).emit("receiveMessageFromOther", mess);
+    });
+  });
+});
+
 // default value for title local
 app.locals.title = "Express - Generated with IronGenerator";
 app.use("/upload", require("./routes/upload-routes.js"));
@@ -92,16 +89,17 @@ const postRouter = require("./routes/post-routes");
 app.use("/posts", postRouter);
 const applicationRouter = require("./routes/application-routes");
 app.use("/applications", applicationRouter);
+const roomRouter = require("./routes/room-routes");
+app.use("/rooms", roomRouter);
+// app.put("/chatbox/:id", (req, res, next) => {
+//   const roomId = req.params.id;
 
-app.put("/chatbox/:id", (req, res, next) => {
-  const roomId = req.params.id;
+//   const newRoom = { status: 4 };
 
-  const newRoom = { status: 4 };
+//   req.io.to(roomId).emit("order:update", message);
 
-  req.io.to(roomId).emit("order:update", message);
-
-  res.json(message);
-});
+//   res.json(message);
+// });
 
 // Serve static files from client/build folder
 app.use(express.static("client/build"));
@@ -111,9 +109,6 @@ app.use((req, res, next) => {
     if (err) next(err);
   });
 });
-
-// const chat = require('./routes/chat');
-// app.use('/', chat);
 
 app.use((err, req, res, next) => {
   // always log the error
