@@ -26,12 +26,14 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 const app = express();
 const corsOptions = {
   credentials: true,
-  origin: ['http://localhost:3000']
+  origin: ['http://localhost:3000'],
+  methods: ["GET", "POST"]
 }
 app.use(cors(corsOptions));
 
+// var io = require('socket.io').listen(server);
 const server = require('http').createServer(app);
-const io = require("socket.io")(server, {
+const io = require("socket.io")(server, { 
   cors: corsOptions
 });
 
@@ -40,12 +42,16 @@ app.use((req, res, next) => {
   req.io = io
   next()
 })
+
 io.on("connection", (socket) => {
-  console.log('client connected', socket.id)
-    socket.on('join-room',(room)=>{
-      console.log(room)
-      req.io.to(room).emit("receiveMessageFromOther",message);
-    })
+  //  socket.on('sendMessage', chatboxId => {
+  //    console.log('User just joined the chat #:', chatboxId)
+  //   socket.join(`${chatboxId}`)
+  //   io.to(chatboxId).emit('hi');
+  //  })
+   socket.on('sendMessage', msg =>{
+     io.emit('receiveMessageFromOther', msg)
+   })
 });
 // Middleware Setup
 app.use(logger('dev'));
@@ -88,15 +94,15 @@ app.use('/posts', postRouter);
 const applicationRouter = require('./routes/application-routes');
 app.use('/applications',applicationRouter)
 
-app.put('/chatbox/:id', (req, res, next) => {
-  const roomId = req.params.id
+// app.put('/chatbox/:id', (req, res, next) => {
+//   const roomId = req.params.id
 
-  const newRoom = {status: 4}
+//   const newRoom = {status: 4}
 
-  req.io.to(roomId).emit('order:update', message)
+//   req.io.to(roomId).emit('receiveMessageFromOther', message)
 
-  res.json(message)
-})
+//   res.json(message)
+// })
 
 // Serve static files from client/build folder
 app.use(express.static('client/build'));

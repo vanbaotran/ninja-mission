@@ -413,10 +413,11 @@ h4 {
   padding: 1em;
   border: 2px solid #0D3B66;
   border-radius: 16px;
-
+  z-index:0
 }
 .body-swipe img {
-  height: 100px;
+  height: 60vh; 
+  z-index:-1; margin-left:auto; margin-right:auto
 }
 .info-block img{
 height: 12vh;
@@ -432,10 +433,10 @@ margin: auto;
 
 .block-btn-swipe {
   display: flex;
-position: absolute;
-top: 85vh;
-left: 50%;
-transform: translateX(-50%);
+  position: absolute;
+  top: 88vh;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .btn-swipe {
@@ -496,19 +497,29 @@ background-color: rgb(196, 194, 194);
 
 .swipeCandidate .block-footer {
   display: flex;
-  
+  align-items: center;
+  justify-content: space-between;
 } 
+.block-footer h1 {
+  text-align: left;
+  font-size: 1.5em;
+  width: 50vw;
+}
 .swipeCandidate .image-level {
   border: 3px solid #0D3B66;
-  width: 70px;
-  height: 70px;
   border-radius: 50%;
   display: flex;
   padding: 0.5em;
+  width: 60px;
+  height: 60px;
 }
 .swipeCandidate .image-level img {
   margin: auto;
   height: 90%;
+}
+.block-to-swipe {
+  height: 60vh;
+  margin: 20px;
 }
 /*
  ######  ####  ######   ##    ##    ##     ## ########  
@@ -731,9 +742,9 @@ background-color: rgb(196, 194, 194);
 }
 .block-btn-swipe-detail {
   width: 300px;
-margin: auto;
-justify-content: space-between;
-transform: translateY(-60px);
+  margin: auto;
+  justify-content: space-between;
+  transform: translateY(-60px);
 }
 .block-btn-swipe-detail > h2{
   text-align: center;

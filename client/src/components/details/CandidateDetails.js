@@ -171,7 +171,7 @@ class CandidateDetails extends Component {
               </a>
             )}
           </div>
-          <button className="btn red" onClick={this.openChat}> HAVE A CHAT!</button>
+          {/* <button className="btn red" onClick={this.openChat}> HAVE A CHAT!</button> */}
         </div>
         {(this.props.from === "swipe" && (
           <Link to={`/swipeCandidate/${this.props.match.params.id}`}>

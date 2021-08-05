@@ -1,6 +1,7 @@
 import React from "react";
 import { io } from "socket.io-client";
 
+
 class Chat extends React.Component {
   state = {
     orderId: "",
@@ -8,37 +9,25 @@ class Chat extends React.Component {
     messages: [],
 
   };
-
-  socket = io(`http://localhost:8000`, {
+  displayMessage = (msg) =>{
+    this.setState({
+      messageA: msg
+    })
+  }
+  socket = io(`${process.env.REACT_APP_APIURL || ""}/`, {
     autoConnect: false,
-  });
+  })
 
   componentDidMount() {
-    const room = this.props.match.params.id
-    console.log(this.props.match.params.id)
-    this.socket.emit('join-room', room, message =>{
-      console.log('room:', room)
-      console.log(message)
+    this.socket.on('receiveMessageFromOther', (order) => {
+      alert('order has just updated from server:', order.status)
     })
-     this.socket.on('receiveMessageFromOther', (message) => {
-      this.setState({messages: [...this.state.messages, message ]})
-    })
-    this.socket.connect();
-    this.socket.on("connect", () => {
-      this.socket.emit("testCli", "test client emit");
-    });
-    this.socket.on("testApi", (args) => {
-      this.setState({ message: args });
-    });
+    this.socket.connect()
   }
 
   componentWillUnmount() {
     this.socket.disconnect();
   }
-sendMyMessage = (e) => {
-this.socket.emit("sendMessage", this.state.messageA);
-this.setState({messages: [...this.state.messages, this.state.messageA ], messageA: ""})
-}
   render() {
     return (
       <>
@@ -55,12 +44,15 @@ this.setState({messages: [...this.state.messages, this.state.messageA ], message
         <p>{this.state.message}</p>
         <button
           onClick={(e) => {
-            this.sendMyMessage(e);
+             this.socket.emit("sendMessage", this.state.messageA);
+            this.setState({
+              messages:[...this.state.messages, this.state.messageA ], messageA: ""
+            })
           }}
         >
           Send message:
         </button>
-          {this.state.messages.map(mess => <p>{mess}</p>)}
+          {this.state.messages.map((mess) => <p>{mess}</p>)}
       </>
     );
   }
