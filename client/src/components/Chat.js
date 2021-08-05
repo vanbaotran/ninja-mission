@@ -16,8 +16,9 @@ class Chat extends React.Component {
 
   async componentDidMount() {
     const roomId = this.props.match.params.id;
-    let prefix_message = this.props.currentUser.profileType === "recruiter" ? "R_" : "C_";
+    // let prefix_message = (this.props.currentUser.profileType === "recruiter" )? "R_" : "C_";
     // fetch data users
+    // console.log(prefix_message)
     let arrIds = roomId.split("_"); /// "<recruiterId>_<candidateId>_<application>"
     try {
       let recruiter, candidate;
@@ -49,7 +50,7 @@ class Chat extends React.Component {
       this.socket.connect();
       this.socket.emit("join-room", room);
       this.socket.on("receiveMessageFromOther", async (message) => {
-        let newMessages = [...this.state.messages, `${prefix_message}${message}`];
+        let newMessages = [...this.state.messages, message];
         let newRoom = await service.patch(`/rooms/${this.state.roomId}`, { messages: newMessages });
         this.setState({ messages: [...newRoom.data.messages] });
       });
@@ -66,9 +67,9 @@ class Chat extends React.Component {
     this.props.updateCandidate({});
   }
   sendMyMessage = async (e) => {
-    this.socket.emit("sendMessage", this.state.message);
+     let prefix_message = (this.props.currentUser.profileType === "recruiter" )? "R_" : "C_";
+    this.socket.emit("sendMessage", `${prefix_message}${this.state.message}`);
   };
-  ownerMessageData = (mess) => {};
   render() {
     return (
       <>
