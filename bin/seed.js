@@ -42,29 +42,38 @@ async function insertMockData() {
         return;
       }
     });
-    let nbPostByRecruiter = Math.floor(250/recruiters.length);
-    let sliceIndex=nbPostByRecruiter;
+    let nbPostByRecruiter = Math.floor(250 / recruiters.length);
+    let sliceIndex = nbPostByRecruiter;
     let appId = [];
     let offset = 0;
     for (const recruiter of recruiters) {
-    const postsByRecruiter = dataPost.slice(offset*nbPostByRecruiter, sliceIndex);
-    offset +=1;
-    sliceIndex = sliceIndex+nbPostByRecruiter;
-    let postsFromDb = await Post.insertMany(postsByRecruiter);
-    postsFromDb.forEach(async postDb => {
-       let app = await App.create({jobPostId: postDb._id});
-       postDb.recruiterId = recruiter._id;
-       postDb.applicationId = app._id;
-       if(!recruiter.applicationId) recruiter.applicationId = [];
-       recruiter.applicationId.push(app._id);
-       recruiter.currentApplicationId = app._id;
-       await postDb.save();
-    })
-    await recruiter.save();
+      const postsByRecruiter = dataPost.slice(offset * nbPostByRecruiter, sliceIndex);
+      offset += 1;
+      sliceIndex = sliceIndex + nbPostByRecruiter;
+      let postsFromDb = await Post.insertMany(postsByRecruiter);
+      const appIds = [];
+      let currentApp = [];
+      postsFromDb.forEach(async (postDb) => {
+        try {
+          let app = await App.create({ jobPostId: postDb._id });
+          appIds.push(app._id);
+          currentApp = [app._id];
+          await Post.updateOne(
+            { _id: postDb._id },
+            { recruiterId: recruiter._id, applicationId: app._id }
+          );
+          console.log(appIds)
+          await User.updateOne(
+            { _id: recruiter._id },
+            { currentApplicationId: currentApp[0], applicationId: appIds }
+          );
+        } catch (error) {
+          console.log("====================", error);
+        }
+      });
     }
-      
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 insertMockData();
