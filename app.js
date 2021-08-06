@@ -124,5 +124,8 @@ const port = process.env.PORT || 5000;
 server.listen(port, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);
 });
-
+app.use((req, res, next) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 module.exports = app;
