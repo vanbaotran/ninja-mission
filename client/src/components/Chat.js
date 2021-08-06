@@ -113,7 +113,7 @@ class Chat extends React.Component {
             return (
               <div className="flex-row block-mess" key={idx}>
               <div className="id-chat bg-ligth-grey">
-                {avatar && <img src={avatar} alt="avatar" />}
+                {(this.props.currentUser.avatar === avatar) && <img src={avatar} alt="avatar" />}
                 {name && <p>{name} </p>}
                 </div>
                 <h4>{arrMess[1] || mess}</h4>
