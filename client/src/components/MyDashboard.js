@@ -52,7 +52,7 @@ class MyDashBoard extends React.Component {
                   className="element"
                   key={offer._id}
                 >
-                  <h2>{offer.offerName}</h2>
+                  <h2>{offer.position}</h2>
                   <p>
                     {dateNumber > 1 ? `${dateNumber} days ago` :
                       "today"}
@@ -65,7 +65,7 @@ class MyDashBoard extends React.Component {
                   className="element"
                   key={offer._id}
                 >
-                  <h2>{offer.offerName}</h2>
+                  <h2>{offer.position}</h2>
                   <p>
                     {dateNumber > 1 ? `${dateNumber} days ago` :
                       "today"}

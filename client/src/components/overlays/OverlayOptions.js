@@ -1,10 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-const OverlayOptions = () => {
+
+
+const OverlayOptions = (props) => {
   return (
     <div className='overlay options'>
     <h1>OPTIONS</h1>
-    <Link to='/myBadges'><button className='btn blue'>GIVE A BADGE</button></Link>
+    <button onClick={() => props.history.push({pathname:"/giveBadges", state: props.history.location.state})} className='btn blue'>GIVE A BADGE</button>
     <button className='btn red'>REPORT</button>
     <button className='btn yellow'>DELETE THIS MATCH</button>
     <p>Cancel</p>

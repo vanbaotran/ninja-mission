@@ -11,6 +11,7 @@ import {loggedIn, editProfile} from './components/service';
 import ProfilePage from './components/ProfilePage'
 // import NavBar from './components/NavBar';
 // import BlueTop from "./components/backgrounds/blueTop";
+import GiveBadges from "./components/GiveBadges"
 import SwipeJobPost from './components/SwipeJobPost';
 import PostDetails from './components/details/PostDetails';
 import Logout from './components/Logout';
@@ -104,6 +105,7 @@ class App extends React.Component {
           <Route path='/options' render={(props)=><OverlayOptions currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/myapplications' render={(props)=><MyApplications currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/overlayupdated' render={(props)=><OverlayUpdated {...props} />} />
+          <Route path='/giveBadges' render={(props)=><GiveBadges {...props} />} />
 
      
         </Switch>

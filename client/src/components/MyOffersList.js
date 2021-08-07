@@ -28,10 +28,10 @@ class MyOffersList extends React.Component{
       <div>
      {this.state.offerList.map((offer)=>{
       return (this.props.currentPostId===offer._id && <div onClick={()=>this.goToDetails(offer._id)} style={{backgroundColor:'#F7E194'}} className="list element" key={offer._id}> 
-         <h2>{offer.offerName}</h2>
+         <h2>{offer.position}</h2>
         </div>) ||
         (<div onClick={()=>this.goToDetails(offer._id)} style={{}} className="list element" key={offer._id}>
-         <h2>{offer.offerName}</h2>
+         <h2>{offer.position}</h2>
         </div>)
     })}
     </div>

@@ -45,6 +45,9 @@ postRoutes.post("/", [isLoggedIn, isRecruiter], (req, res, next) => {
 
 postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
   try {
+  //  let data = await Post.findOne({_id:"610d4c2b05ddd96b28137300"});
+  //  res.status(200).json(data);
+  //  return;
     // initiate utils let
     let random, randomPost, countDoc, post;
     // get currentUser

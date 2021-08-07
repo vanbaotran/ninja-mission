@@ -47,44 +47,75 @@ class SwipeCandidateProfile extends React.Component {
   };
   detailPost = () => {
     this.props.history.push(`/users/${this.state.candidate._id}/fromswipe`);
-  }
+  };
   swipeCandidate = async () => {
     try {
-    await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/refuse`, {id: this.state.candidate._id})
-    let copyRemember = [...this.state.remember, `R_${this.state.candidate._id}`];
-    this.setState({
-      remember: copyRemember
-    })
-    this.searchRandom();
-
+      await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/refuse`, {
+        id: this.state.candidate._id,
+      });
+      let copyRemember = [
+        ...this.state.remember,
+        `R_${this.state.candidate._id}`,
+      ];
+      this.setState({
+        remember: copyRemember,
+      });
+      this.searchRandom();
     } catch (error) {
       console.log(error);
     }
-  }
-   chooseCandidate = async () => {
+  };
+  chooseCandidate = async () => {
     try {
-    await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {id: this.state.candidate._id})
-    let copyRemember = [...this.state.remember, `A_${this.state.candidate._id}`];
-    this.setState({
-      remember: copyRemember
-    })
-    this.searchRandom();
-
+      await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {
+        id: this.state.candidate._id,
+      });
+      let copyRemember = [...this.state.remember, `A_${this.state.candidate._id}`];
+      this.setState({
+        remember: copyRemember,
+      });
+      this.searchRandom();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
   componentDidMount = () => {
-    if(this.props.match.params.id){
-      service.get(`/users/${this.props.match.params.id}`)
-      .then(response=>{
-        this.setState({
-          candidate:response.data
+    if (this.props.match.params.id) {
+      service
+        .get(`/users/${this.props.match.params.id}`)
+        .then((response) => {
+          this.setState({
+            candidate: response.data,
+          });
         })
-      })
-      .catch(err=>console.log(err))
+        .catch((err) => console.log(err));
     } else {
-    this.searchRandom();
+      this.searchRandom();
+    }
+  };
+  comeBack = async () => {
+    try {
+      if (this.state.remember.length < 1) {
+        return;
+      } else {
+        let copyRemember = [...this.state.remember];
+        let beforeVal = copyRemember.pop().split("_");
+        let action = beforeVal[0];
+        let oldIdCandidate = beforeVal[1];
+        if (action === "R") {
+          // if last action is swipe update  application to remove old choice
+          await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/undoRefuse`, {id: oldIdCandidate} );;
+          let oldCandidate = await service.get(`/users/${oldIdCandidate}`);
+          this.setState({candidate: oldCandidate.data, remember: copyRemember});
+        }
+        if (action === "A") {
+           await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/undoAccept`, {id: oldIdCandidate} );;
+          let oldCandidate = await service.get(`/users/${oldIdCandidate}`);
+          this.setState({candidate: oldCandidate.data, remember:copyRemember});
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   render() {
@@ -95,7 +126,9 @@ class SwipeCandidateProfile extends React.Component {
             <img
               className="ico-swipe ico-profile"
               src="/images/icons/profile.png"
-              onClick={()=>{this.props.history.push('/profilepage')}}
+              onClick={() => {
+                this.props.history.push("/profilepage");
+              }}
               alt="ico"
             />
             <img
@@ -104,26 +137,20 @@ class SwipeCandidateProfile extends React.Component {
               alt="ico"
               onClick={this.openFilter}
             />
-            <img
-              className="logo-header-swipe"
-              src="/images/ninja-logo.png"
-              alt="ico"
-            />
-            <img
-              className="ico-swipe ico-chat"
-              src="/images/icons/chat.png"
-              alt="ico"
-            />
+            <img className="logo-header-swipe" src="/images/ninja-logo.png" alt="ico" />
+            <img className="ico-swipe ico-chat" src="/images/icons/chat.png" alt="ico" />
           </div>
           <div className="body-swipe">
-            {(!this.state.candidate && 
-             <h1>{(this.state.errorMessage && <div className="text-red">{this.state.errorMessage}</div> )|| "Loading..."}</h1>) || (
+            {(!this.state.candidate && (
+              <h1>
+                {(this.state.errorMessage && (
+                  <div className="text-red">{this.state.errorMessage}</div>
+                )) ||
+                  "Loading..."}
+              </h1>
+            )) || (
               <div className="block-to-swipe" onClick={this.detailPost}>
-                <img
-                  className="avatar"
-                  src={this.state.candidate.avatar}
-                  alt="avatar"
-                />
+                <img className="avatar" src={this.state.candidate.avatar} alt="avatar" />
                 <div className="block-footer">
                   <h1>{this.state.candidate.title}</h1>
                   <div className="image-level">
@@ -140,48 +167,28 @@ class SwipeCandidateProfile extends React.Component {
               </div>
             )}
           </div>
-           <div className="block-btn-swipe">
-          <img
-            className="btn-swipe"
-            src="/images/icons/reverse.png"
-            alt="reverse ico"
-            onClick={this.comeBack}
-          />
-          <img
-            className="btn-swipe"
-            src="/images/icons/cancel.png"
-            alt="cancel ico"
-            onClick={this.swipeCandidate}
-          />
-          <img
-            className="btn-swipe"
-            src="/images/icons/heart.png"
-            alt="heart ico"
-            onClick={this.chooseCandidate}
-          />
-          <img className="btn-swipe" src="/images/icons/badge.png" alt="badge ico" />
+          <div className="block-btn-swipe">
+            <img
+              className="btn-swipe"
+              src="/images/icons/reverse.png"
+              alt="reverse ico"
+              onClick={this.comeBack}
+            />
+            <img
+              className="btn-swipe"
+              src="/images/icons/cancel.png"
+              alt="cancel ico"
+              onClick={this.swipeCandidate}
+            />
+            <img
+              className="btn-swipe"
+              src="/images/icons/heart.png"
+              alt="heart ico"
+              onClick={this.chooseCandidate}
+            />
+            <img className="btn-swipe" src="/images/icons/badge.png" alt="badge ico" onClick={() => this.props.history.push({pathname:`/myBadges/${this.state.candidate._id}`, state: {user: this.state.candidate}})} />
+          </div>
         </div>
-        </div>
-          {/* <div className="block-btn-swipe">
-          <img
-            className="btn-swipe"
-            src="/images/icons/reverse.png"
-            alt="reverse ico"
-            onClick={this.comeBack}
-          />
-          <img
-            className="btn-swipe"
-            src="/images/icons/cancel.png"
-            alt="cancel ico"
-            onClick={this.swipeCandidate}
-          />
-          <img
-            className="btn-swipe"
-            src="/images/icons/heart.png"
-            alt="heart ico"
-            onClick={this.chooseCandidate}
-          />
-        </div> */}
         {this.state.optionsIsOpen && (
           <OverlayExperience
             filter={this.searchRandom}

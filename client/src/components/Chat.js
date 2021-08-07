@@ -12,7 +12,7 @@ class Chat extends React.Component {
     err: "",
   };
 
-  socket = io(process.env.REACT_APP_API_URL, { withCredentials: true, autoConnect: false });
+  socket = io(process.env.REACT_APP_API_URL || "http://localhost:5000", { withCredentials: true, autoConnect: false });
 
   async componentDidMount() {
     const roomId = this.props.match.params.id;
@@ -73,6 +73,7 @@ class Chat extends React.Component {
     this.socket.emit("sendMessage", `${prefix_message}${this.state.message}`);
   };
   render() {
+    let note = this.props.currentUser.profileType === "recruiter" ? this.props.currentCandidate : this.props.currentRecruiter;
     return (
       <section className='chatbox'>
        <div className='chatbox-header flex-row'>
@@ -81,7 +82,7 @@ class Chat extends React.Component {
           {(this.props.currentUser?._id === this.props.currentCandidate?._id) ? <img src={this.props.currentRecruiter?.companyLogo} alt='companyLogo'/> : <img className='border-blue' src={this.props.currentCandidate?.avatar} alt='candidateAvatar'/>}
           {(this.props.currentUser?._id === this.props.currentRecruiter?._id) && <img className='level-img' src={`/images/${this.props.currentCandidate?.level}.png`} alt='level'/>}
         </div>
-         <img className='icons' onClick={()=>this.props.history.push('/options')} src='/images/icons/settings-blue.png' alt='settings ico'/>
+         <img className='icons' onClick={()=>this.props.history.push({pathname:'/options', state: note})} src='/images/icons/settings-blue.png' alt='settings ico'/>
        </div>
         {this.state.err}
         {this.state.messages &&

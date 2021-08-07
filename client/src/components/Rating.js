@@ -2,6 +2,7 @@ import React from 'react'
 
 function Rating(props){
     let rating = Math.round(props.children)
+    console.log(props.children)
     let stars='';
     let star = '✩'
     let starFilled = '★'
@@ -14,7 +15,7 @@ function Rating(props){
 
     return (
         <div className='rating'>
-            {stars}
+            {[...stars].reverse().join("")}
         </div>
     )
 }

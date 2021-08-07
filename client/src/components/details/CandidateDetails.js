@@ -23,7 +23,7 @@ class CandidateDetails extends Component {
             console.log(application);
             if (application.data.acceptedCandidateId.includes(this.props.match.params.id)) {
               apply = "ACCEPTED";
-              this.props.history.push("/chatbox")
+              this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.match.params.id}_${this.props.currentUser.currentApplicationId}`)
             } else if (application.data.refusedCandidateId.includes(this.props.match.params.id)) {
               apply = "REFUSED";
             } else {
@@ -62,7 +62,7 @@ class CandidateDetails extends Component {
   swipeCandidate = async () => {
     try {
       await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/refuse`, {
-        id: this.props.currentUser?._id,
+        id: this.props.match.params.id,
       });
     } catch (error) {
       console.log(error);
@@ -71,7 +71,7 @@ class CandidateDetails extends Component {
   chooseCandidate = async () => {
     try {
       await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {
-        id: this.props.currentUser._id,
+        id: this.props.match.params.id,
       });
       this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.currentUser._id}_${this.props.currentUser.currentApplicationId}`)
     } catch (error) {
@@ -91,7 +91,7 @@ class CandidateDetails extends Component {
           <div className="head-avatar-candidate flex-column">
             <img src={this.state.showingCandidate?.avatar} alt="avatar" />
             {/* <img src={this.state.avatar ? this.state.avatar : "/images/ninja.png"} alt="avatar" /> */}
-            {this.state.showingCandidate && this.state.showingCandidate.profileType === "recruiter" && (
+            {this.state.showingCandidate && this.props.currentUser.profileType === "recruiter" && (
               <div className="block-btn-swipe-detail flex-row">
                 {(this.state.apply && <h2 className="text-red">{this.state.apply}</h2>) || (
                   <>

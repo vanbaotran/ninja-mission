@@ -95,6 +95,12 @@ router.get("/loggedin", (req, res, next) => {
 
 /* GET */
 router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
+  // try {
+  //   randomUser = await User.findOne({_id:"610d4c2a05ddd96b281372c4"})
+  //    res.status(200).json(randomUser);
+  // } catch (error) {
+  //   console.log(error)
+  // }
   let random, randomUser, countDoc, user;
   // FILTER EXP LEVEL:
   let filter = {};

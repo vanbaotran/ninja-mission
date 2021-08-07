@@ -9,7 +9,7 @@ router.get("/", [isLoggedIn, isCandidate], (req, res, next) => {
   Application.find({ candidateId: id })
     .populate("jobPostId")
     .then((AppsfromDb) => {
-      res.status(200).json(AppsfromDb);
+      res.status(200).json(AppsfromDb);     
       return;
     })
     .catch((err) =>
