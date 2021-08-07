@@ -75,12 +75,6 @@ postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
       res.status(200).json(randomPost);
       return;
     }
-    // // if offers is swipped repeat find random post job
-    // while (user.swipedOfferId.includes(randomPost._id)) {
-    //   random = Math.floor(Math.random() * countDoc);
-    //   randomPost = await Post.findOne(filter).populate("recruiterId").skip(random);
-    // }
-    // return random postdata
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Post not found", error: error });

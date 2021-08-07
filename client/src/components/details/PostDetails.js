@@ -1,21 +1,8 @@
 import React, { Component } from "react";
-import { dataPostToStatePost, editProfile } from "../service";
+import { dataPostToStatePost, editProfile, deletePost } from "../service";
 
 class PostDetails extends Component {
   state = {
-    offerName: "",
-    companyLogo: "", // voir si default ou required
-    companyBio: "",
-    companyName: "",
-    description: "",
-    position: "",
-    contract: "",
-    experienceLevel: "",
-    codeLanguage: [], // voir si enum et ou vérification bonne donnée
-    //location: { city: { type: [String] }, country: { type: [String] } },
-    remote: false,
-    funFact: "",
-    website: "",
     from: false,
   };
   componentDidMount() {
@@ -24,11 +11,12 @@ class PostDetails extends Component {
     } else {
       dataPostToStatePost(this.props.match.params.id)
         .then(data => {
-
+      
           this.setState({
             ...data,
             from: this.props.from || false
           });
+          console.log(this.state)
       }).catch(err => console.log(err))
       
     }
@@ -53,6 +41,14 @@ class PostDetails extends Component {
       this.props.history.goBack()
     }
   }
+  deleteThisPost = () => {
+    deletePost(this.props.match.params.id)
+    .then(response =>{
+      console.log('deleted this post')
+      this.props.history.goBack()
+    })
+    .catch(err=>console.log(err))
+  }
   render() {
     return (
       <div className=" details flex--column">
@@ -70,7 +66,7 @@ class PostDetails extends Component {
               <h4>Sensority Level</h4>
               <p>{this.state.experienceLevel}</p>
             </div>
-            <img src={`/images/${this.state.experienceLevel.toLowerCase()}.png`} alt="logo level" />
+            <img src={`/images/${this.state.experienceLevel?.toLowerCase()}.png`} alt="logo level" />
           </div>
           <div className="detail">
             <h4>Employement Type</h4>
@@ -80,7 +76,7 @@ class PostDetails extends Component {
             <h4>Job Function</h4>
             <p>{this.state.position}</p>
           </div>
-          {this.state.codeLanguage.length > 0 && (
+          {this.state.codeLanguage?.length > 0 && (
             <div className="detail">
               <h4>Code Languages</h4>
               <p>{this.state.codeLanguage.join(", ")}</p>
@@ -88,25 +84,26 @@ class PostDetails extends Component {
           )}
           <div className="who">
             <h2>WHO ARE WE</h2>
-            <p>{this.state.companyBio}</p>
+            <p>{this.state?.companyBio}</p>
           </div>
           <div className="who">
             <h2>WHO DO WE NEED</h2>
-            <p>{this.state.description}</p>
+            <p>{this.state?.description}</p>
           </div>
           {this.state.funFact && (
             <div className="who">
               <h2>FUN FACT</h2>
-              <p>{this.state.funFact}</p>
+              <p>{this.state?.funFact}</p>
             </div>
           )}
           <div className="who">
             <h2>WEBSITE</h2>
-            <a href={this.state.website} rel="noreferrer" target="_blank">
-              {this.state.website}
+            <a href={this.state?.website} rel="noreferrer" target="_blank">
+              {this.state?.website}
             </a>
           </div>
-          {(this.props.currentUser.profileType==='recruiter' && ((this.props.from && <button className="btn red" onClick={this.back}>GO BACK</button>) || <button className="btn red" onClick={this.handleEdit}>EDIT THIS POST</button>) )||  <button className="btn red" onClick={this.back}>GO BACK</button>}
+          {(this.props.currentUser?.profileType==='recruiter' && ((this.props.from && <button className="btn blue" onClick={this.back}>GO BACK</button>) || <button className="btn blue" onClick={this.handleEdit}>EDIT THIS POST</button>) )||  <button className="btn red" onClick={this.back}>GO BACK</button>}
+          {this.props.currentUser?.profileType==='recruiter'  && <button className="btn red" onClick={this.deleteThisPost}>DELETE THIS POST</button> }
         </div>
       </div>
     );

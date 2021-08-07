@@ -6,12 +6,8 @@ class CandidateDetails extends Component {
   state = {
     from: false,
     apply: false,   
+    showingCandidate:{}
   };
-  // componentDidUpdate(prevProps) {
-  //   if(prevProps.currentCandidate !== this.props.currentCandidate) {
-  //     this.setState({go:true});
-  //   }
-  // }
   componentDidMount() {
     if (!this.props.currentUser) {
       this.props.history.push("/login");
@@ -24,8 +20,6 @@ class CandidateDetails extends Component {
             let application = await service.get(
               `applications/${this.props.currentUser.currentApplicationId}`
             );
-            this.props.updateCandidate(response.data)
-
             console.log(application);
             if (application.data.acceptedCandidateId.includes(this.props.match.params.id)) {
               apply = "ACCEPTED";
@@ -39,6 +33,7 @@ class CandidateDetails extends Component {
             this.setState({
               from: this.props.from || false,
               apply: apply,
+              showingCandidate:response.data
             });
           })
           .catch((err) => console.log(err));
@@ -46,7 +41,6 @@ class CandidateDetails extends Component {
         service
           .get(`/users/${this.props.currentUser._id}`)
           .then((response) => {
-            this.props.updateCandidate(response.data)
             this.setState({
               from: this.props.from || false,
             });
@@ -68,7 +62,7 @@ class CandidateDetails extends Component {
   swipeCandidate = async () => {
     try {
       await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/refuse`, {
-        id: this.props.currentCandidate?._id,
+        id: this.props.currentUser?._id,
       });
     } catch (error) {
       console.log(error);
@@ -77,9 +71,9 @@ class CandidateDetails extends Component {
   chooseCandidate = async () => {
     try {
       await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {
-        id: this.props.currentCandidate._id,
+        id: this.props.currentUser._id,
       });
-      this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.currentCandidate._id}_${this.props.currentUser.currentApplicationId}`)
+      this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.currentUser._id}_${this.props.currentUser.currentApplicationId}`)
     } catch (error) {
       console.log(error);
     }
@@ -95,9 +89,9 @@ class CandidateDetails extends Component {
         <div className="head-candidate-details">
         <img src='/images/icons/back-blue.png' className='icon-back-blue' onClick={()=>this.props.history.goBack()} alt=''/>
           <div className="head-avatar-candidate flex-column">
-            <img src={this.props.currentCandidate?.avatar} alt="avatar" />
+            <img src={this.state.showingCandidate?.avatar} alt="avatar" />
             {/* <img src={this.state.avatar ? this.state.avatar : "/images/ninja.png"} alt="avatar" /> */}
-            {this.props.currentUser && this.props.currentUser.profileType === "recruiter" && (
+            {this.state.showingCandidate && this.state.showingCandidate.profileType === "recruiter" && (
               <div className="block-btn-swipe-detail flex-row">
                 {(this.state.apply && <h2 className="text-red">{this.state.apply}</h2>) || (
                   <>
@@ -117,20 +111,20 @@ class CandidateDetails extends Component {
                 )}
               </div>
             )}
-            <h2>{this.props.currentCandidate?.title}</h2>
+            <h2>{this.state.showingCandidate?.title}</h2>
           </div>
           <div className="head-name-candidate flex-row">
             <h1>
-              {this.props.currentCandidate?.name} {age && `, ${age}`}
+              {this.state.showingCandidate?.name} {age && `, ${age}`}
             </h1>
             <div className='circle'>
             <img
-              src={`/images/${this.props.currentCandidate?.level?.toLowerCase()}.png`}
+              src={`/images/${this.state.showingCandidate?.level?.toLowerCase()}.png`}
               alt="level ico"
             />
              {/* <img
               src={`/images/${
-                this.props.currentCandidate?.level ? `${this.props.currentCandidate?.level.toLowerCase()}.png` : "ninja.png"
+                this.state.showingCandidate?.level ? `${this.state.showingCandidate?.level.toLowerCase()}.png` : "ninja.png"
               }`}
               alt="level ico"
             /> */}
@@ -141,32 +135,32 @@ class CandidateDetails extends Component {
           <div className="detail">
             <div>
               <h4>CODE LANGUAGES</h4>
-              <p>{this.props.currentCandidate?.codeLanguage ? this.props.currentCandidate?.codeLanguage.join(", ") : "none"}</p>
+              <p>{this.state.showingCandidate?.codeLanguage ? this.state.showingCandidate?.codeLanguage.join(", ") : "none"}</p>
             </div>
           </div>
           <div className="who">
             <h4>BIO</h4>
-            <p>{this.props.currentCandidate?.bio}</p>
+            <p>{this.state.showingCandidate?.bio}</p>
           </div>
-          {this.props.currentCandidate?.funFact && (
+          {this.state.showingCandidate?.funFact && (
             <div className="who">
               <h4>FUN FACT</h4>
-              <p>{this.props.currentCandidate?.funFact}</p>
+              <p>{this.state.showingCandidate?.funFact}</p>
             </div>
           )}
           <div className="links-candidate flex-row ">
-            {this.props.currentCandidate?.usefulLinks && (
+            {this.state.showingCandidate?.usefulLinks && (
               <>
-                <a href={this.props.currentCandidate?.usefulLinks.linkedin} rel="noreferrer" target="_blank">
+                <a href={this.state.showingCandidate?.usefulLinks.linkedin} rel="noreferrer" target="_blank">
                   <img src={"/images/icons/linkedin.png"} alt="ico linkedin" />
                 </a>
-                <a href={this.props.currentCandidate?.usefulLinks.github} rel="noreferrer" target="_blank">
+                <a href={this.state.showingCandidate?.usefulLinks.github} rel="noreferrer" target="_blank">
                   <img src={"/images/icons/github.png"} alt="ico github" />
                 </a>
               </>
             )}
-            {this.props.currentCandidate?.cvUrl && (
-              <a href={this.props.currentCandidate?.cvUrl} rel="noreferrer" target="_blank">
+            {this.state.showingCandidate?.cvUrl && (
+              <a href={this.state.showingCandidate?.cvUrl} rel="noreferrer" target="_blank">
                 <img src={"/images/icons/cv.png"} alt="ico cv" />
               </a>
             )}

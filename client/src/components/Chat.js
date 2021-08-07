@@ -20,6 +20,7 @@ class Chat extends React.Component {
     // fetch data users
     // console.log(prefix_message)
     let arrIds = roomId.split("_"); /// "<recruiterId>_<candidateId>_<application>"
+     console.log(arrIds);
     try {
       let recruiter, candidate;
 
@@ -40,6 +41,7 @@ class Chat extends React.Component {
         messages = messages.data.messages;
       }
       console.log(messages);
+      console.log(roomId)
       this.setState({
         roomId: roomId,
         recruiterId: arrIds[0],
@@ -51,7 +53,7 @@ class Chat extends React.Component {
       this.socket.emit("join-room", room);
       this.socket.on("receiveMessageFromOther", async (message) => {
         let newMessages = [...this.state.messages, message];
-        let newRoom = await service.patch(`/rooms/${this.state.roomId}`, { messages: newMessages });
+        let newRoom = await service.patch(`/rooms/${roomId}`, { messages: newMessages });
         this.setState({ messages: [...newRoom.data.messages] });
       });
     } catch (err) {
@@ -72,32 +74,20 @@ class Chat extends React.Component {
   };
   render() {
     return (
-      <>
-        <div className="message-box flex-column">
-          <label>
-            Write Message:
-            <input
-              nametype="text"
-              value={this.state.message}
-              onChange={(e) => {
-                this.setState({ message: e.target.value });
-              }}
-            />
-          </label>
-          <button
-            className="btn blue"
-            onClick={(e) => {
-              this.sendMyMessage(e);
-            }}
-          >
-            SEND:
-          </button>
+      <section className='chatbox'>
+       <div className='chatbox-header flex-row'>
+         <img className='icons' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt='back ico'/>
+        <div className='avatar'>
+          {(this.props.currentUser?._id === this.props.currentCandidate?._id) ? <img src={this.props.currentRecruiter?.companyLogo} alt='companyLogo'/> : <img className='border-blue' src={this.props.currentCandidate?.avatar} alt='candidateAvatar'/>}
+          {(this.props.currentUser?._id === this.props.currentRecruiter?._id) && <img className='level-img' src={`/images/${this.props.currentCandidate?.level}.png`} alt='level'/>}
         </div>
+         <img className='icons' onClick={()=>this.props.history.push('/options')} src='/images/icons/settings-blue.png' alt='settings ico'/>
+       </div>
         {this.state.err}
         {this.state.messages &&
           this.state.messages.map((mess, idx) => {
             let arrMess = mess.split("_");
-            let avatar, name;
+            let avatar, name, divStyle;
             if(arrMess[0] === "R") {
               avatar= this.props.currentRecruiter.avatar ;
               name= this.props.currentRecruiter.name ;
@@ -109,16 +99,34 @@ class Chat extends React.Component {
               name = false;
             }
             return (
-              <div className="flex-row block-mess" key={idx}>
-              <div className="id-chat bg-ligth-grey">
-                {avatar && <img src={avatar} alt="avatar" />}
-                {name && <p>{name} </p>}
-                </div>
+              <div className="block-mess flex-row" style={divStyle} key={idx}>
+               {(this.props.currentUser.avatar === avatar) && <img  src={avatar} alt="avatar" />}
+              <div className="id-chat bg-ligth-grey flex-column">
                 <h4>{arrMess[1] || mess}</h4>
+                  {name && <p>{name}</p>}
+                </div>
               </div>
             );
           })}
-      </>
+           <div className="message-box flex-row">
+            <input
+              nametype="text"
+              value={this.state.message}
+              onChange={(e) => {
+                this.setState({ message: e.target.value });
+              }}
+              placeholder='Message'
+            />
+          <button
+            className="btn blue"
+            onClick={(e) => {
+              this.sendMyMessage(e);
+            }}
+          >
+            Send
+          </button>
+        </div>
+      </section>
     );
   }
 }

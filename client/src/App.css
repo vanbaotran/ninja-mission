@@ -445,7 +445,7 @@ margin: auto;
 
 /* OVERLAY*/
 .overlay {
-  width: 60vw;
+  width: 70vw;
   padding: 0.5em;
   border-radius: 13px ;
   background-color: whitesmoke;
@@ -454,10 +454,16 @@ margin: auto;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
+  text-align: right;
+}
+.overlay .updated {
   text-align: center;
 }
-.overlay img {
+.overlay .validation {
   width: 40%;
+} 
+.overlay .close-icon {
+  text-align: right;
 }
 .overlay h1 {
   font-size: 1em;
@@ -466,7 +472,6 @@ margin: auto;
 .weapon-block, .level-block {
   display: flex;
   margin: 0.2em;
- 
 }
 .weapon, .level {
   display: flex;
@@ -476,15 +481,18 @@ margin: auto;
   padding: 1em;
   max-width: 20vw;
   font-size: 0.7em;
-  margin: auto;  
+  margin: 2px;  
 }
-.weapon-block, .level-block img {
-  width: 50px;
+.weapon-icon {
   height: 50px;
+  width: 50px;
+}
+.level-block img {
+  flex:1;
   margin: auto;
 }
 .bg-grey{
-background-color: rgb(196, 194, 194);
+  background-color: rgb(196, 194, 194);
 }
 /*
 ######  ##      ## #### ########  ########     ######     ###    ##    ## ########  #### ########     ###    ######## ######## 
@@ -889,26 +897,51 @@ section {
 ##       ##     ## #########    ##    
 ##    ## ##     ## ##     ##    ##    
  ######  ##     ## ##     ##    ##  */
- .id-chat {
+ .chatbox {
+   position:relative;
+   background-color: #F9F7F3;
+   height: 100vh;
+ }
+ .message-box .btn {
+  width: 15vw;
+  font-size: 0.8em;
+  height: 2em;
+  border-radius: 0;
+  margin: 0;
+ }
+ .message-box input {
+   width: 84vw;
+  max-width: 90%;
+   border-radius: 0;
+   border: none;
+ }
+ .message-box {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  justify-content: flex-end;
+ }
+ .chatbox-header {
+   justify-content: space-between;
+   align-items: center;
+   background-color: #FAF0CA;
+   padding:20px;
+ }
+ .chatbox-header .icons {
+   max-width: 10%;
+ }
+ .chatbox-header .avatar img {
+   border-radius: 50%;
+   width: 50px;
    border: 2px solid #0D3B66;
-   border-radius: 16px;
-   align-items: center;
-   margin: 0.2em auto;
-  }
-  .id-chat p {
-   margin: 0.3em 0.3em;
+   background-color: white;
+ }
+ .chatbox-header .avatar .level-img {
+  width: 30px;
+  border: 2px solid #F4D35E;
+ }
+ .block-mess img {
+   border-radius: 50%;
+   max-width: 5%;
+ }
 
- }
- .block-mess {
-   align-items: center;
-   margin: auto;
-   width: 70%;
- }
- .block-mess h4 {
-   flex:1;
-   margin-left: 2em;
-   text-align: left;
- }
- .id-chat img {
-max-height: 50px;
- }

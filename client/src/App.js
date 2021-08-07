@@ -68,15 +68,6 @@ class App extends React.Component {
       })
       .catch(err=>console.log(err))
     }
-    // if(prevState.candidate !== this.state.candidate ){
-    //   this.
-    //   .then(response=>{
-    //     this.setState({currentPostId:this.state.currentPostId})
-    //     console.log(response)
-    //   })
-    //   .catch(err=>console.log(err))
-    // }
-   
   }
   updateLoggedInUser = (userObj) =>{
     this.setState({loggedInUser:userObj})
@@ -91,8 +82,9 @@ class App extends React.Component {
           <Route path='/editCandidateform' render={(props)=><CandidateForm {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/profilepage' render={(props)=><ProfilePage  {...props} currentUser={this.state.loggedInUser} currentPostId={this.state.currentPostId}/>} />
           <Route path='/postform/:id' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
+          <Route path='/postform/new' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
           <Route path='/posts/:id/fromswipe' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} fromswipe={true} />} />
-          <Route path='/posts/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId} />} />
+          <Route exact path='/posts/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId} />} />
           <Route path='/recruiterform' render={(props) => <RecruiterForm {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} />} />
           <Route path='/swipeOffer/random' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>} />
           <Route path='/swipeOffer/:id' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>} />
@@ -101,9 +93,9 @@ class App extends React.Component {
           <Route path='/chatbox/:id' render={(props) => <Chat {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} currentCandidate={this.state.candidate} updateCandidate={this.updateCandidate} currentRecruiter={this.state.recruiter} updateRecruiter={this.updateRecruiter}/>}/>
           <Route path='/swipeCandidate/random' render={(props)=><SwipeCandidateProfile  {...props} currentUser={this.state.loggedInUser}/>} />
           <Route path='/swipeCandidate/:id' render={(props)=><SwipeCandidateProfile {...props} currentUser={this.state.loggedInUser}/>} />
-          <Route path='/users/:id/fromswipe' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"swipe"} currentCandidate={this.state.candidate} updateCandidate={this.updateCandidate}/>} />
+          <Route path='/users/:id/fromswipe' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"swipe"}/>} />
           <Route path='/users/:id/fromdashboard' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"dashboard"}/>} />
-          <Route path='/personalProfile' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} />} />
+          <Route path='/personalProfile' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser}/>} />
           <Route path='/myoffers' render={(props)=><MyOffersList {...props} currentPostId={this.state.currentPostId} currentUser={this.state.loggedInUser}/>} />
           <Route exact path='/mydashboard' render={(props)=><MyDashBoard {...props} currentPostId={this.state.currentPostId} currentUser={this.state.loggedInUser}/>} />
           <Route path='/mydashboard/:id' render={(props)=><DashboardDetails currentUser={this.state.loggedInUser} {...props} />} />
@@ -112,6 +104,8 @@ class App extends React.Component {
           <Route path='/options' render={(props)=><OverlayOptions currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/myapplications' render={(props)=><MyApplications currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/overlayupdated' render={(props)=><OverlayUpdated {...props} />} />
+
+     
         </Switch>
       </div> 
     );

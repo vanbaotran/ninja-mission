@@ -82,9 +82,10 @@ export class PostForm extends Component {
               (response) => {
                 this.props.updateUser(response);
                 this.setState({popUp:true})
+                console.log(response)
                 setTimeout(() => {
                   this.setState({popUp:false})
-                  this.props.history.push(`/posts/${response.data.newPost._id}`);
+                  this.props.history.push(`/posts/${response._id}`);
                 }, 2000);
               }
             );
