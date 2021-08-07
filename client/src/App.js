@@ -104,6 +104,8 @@ class App extends React.Component {
           <Route path='/options' render={(props)=><OverlayOptions currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/myapplications' render={(props)=><MyApplications currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/overlayupdated' render={(props)=><OverlayUpdated {...props} />} />
+
+     
         </Switch>
       </div> 
     );

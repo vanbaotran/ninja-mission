@@ -11,13 +11,13 @@ router.get("/:roomId", async (req, res, next) => {
     }
     res.status(200).json(room);
   } catch (error) {
-    res.status(500).json({message: "houston We have a problem"});
+    res.status(500).json({message: "We have a problem"});
     return;
   }
 });
 router.post("/", async (req, res, next) => {
   try {
-    let newRoom = await Room.create({roomId: req.body.roomId, messages:["Welcome on your private chat!"]});
+    let newRoom = await Room.create({roomId: req.body.roomId, messages:["It's a match! Start the conversation"]});
     if(!newRoom) {
       res.status(500).json({err: "oops la db est cassé!"});
       return;
