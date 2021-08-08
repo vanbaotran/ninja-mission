@@ -25,7 +25,8 @@ import CompanyDetails from './components/details/CompanyDetails';
 import MyBadges from './components/MyBadges';
 import OverlayOptions from './components/overlays/OverlayOptions';
 import MyApplications from './components/MyApplications'
-import OverlayUpdated from './components/overlays/OverlayUpdated'
+import OverlayUpdated from './components/overlays/OverlayUpdated';
+import Conversations from './components/Conversations'
 import Chat from './components/Chat';
 
 class App extends React.Component {
@@ -106,6 +107,7 @@ class App extends React.Component {
           <Route path='/myapplications' render={(props)=><MyApplications currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/overlayupdated' render={(props)=><OverlayUpdated {...props} />} />
           <Route path='/giveBadges' render={(props)=><GiveBadges {...props} />} />
+          <Route path='/conversations' render={(props)=><Conversations {...props} />} />
 
      
         </Switch>

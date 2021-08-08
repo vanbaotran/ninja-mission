@@ -1,6 +1,7 @@
 import React from "react";
 import service from "./service";
 import { io } from "socket.io-client";
+import OverlayOptions from './overlays/OverlayOptions'
 
 class Chat extends React.Component {
   state = {
@@ -10,6 +11,7 @@ class Chat extends React.Component {
     recruiterId: "",
     candidateId: "",
     err: "",
+    overlayisOpen:false
   };
 
   socket = io(process.env.REACT_APP_API_URL || "http://localhost:5000", { withCredentials: true, autoConnect: false });
@@ -35,7 +37,7 @@ class Chat extends React.Component {
       let messages = await service.get(`/rooms/${roomId}`);
 
       if (!messages.data) {
-        room = await service.post(`/rooms`, { roomId: roomId });
+        room = await service.post(`/rooms`, { roomId: roomId, recruiterId: arrIds[0], candidateId: arrIds[1], applicationId: arrIds[2]});
         messages = room.data.messages;
       } else {
         messages = messages.data.messages;
@@ -61,7 +63,11 @@ class Chat extends React.Component {
     }
     //////////////////////////
   }
-
+  toggleOverlay = () =>{
+      this.setState({
+      overlayisOpen: !this.state.overlayisOpen
+    })
+  }
   componentWillUnmount() {
     // this.socket.on("disconnet",() => {service.patch(`/rooms/${this.state.roomId}`, {messages: this.state.messages})});
     this.socket.disconnect();
@@ -76,14 +82,16 @@ class Chat extends React.Component {
     let note = this.props.currentUser.profileType === "recruiter" ? this.props.currentCandidate : this.props.currentRecruiter;
     return (
       <section className='chatbox'>
+      {this.state.overlayisOpen && <OverlayOptions {...this.props} toggle={this.toggleOverlay} reviewedPerson={note}/> }
        <div className='chatbox-header flex-row'>
          <img className='icons' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt='back ico'/>
         <div className='avatar'>
           {(this.props.currentUser?._id === this.props.currentCandidate?._id) ? <img src={this.props.currentRecruiter?.companyLogo} alt='companyLogo'/> : <img className='border-blue' src={this.props.currentCandidate?.avatar} alt='candidateAvatar'/>}
           {(this.props.currentUser?._id === this.props.currentRecruiter?._id) && <img className='level-img' src={`/images/${this.props.currentCandidate?.level}.png`} alt='level'/>}
         </div>
-         <img className='icons' onClick={()=>this.props.history.push({pathname:'/options', state: note})} src='/images/icons/settings-blue.png' alt='settings ico'/>
+         <img className='icons' onClick={()=>this.toggleOverlay()} src='/images/icons/settings-blue.png' alt='settings ico'/>
        </div>
+        <p className='text-gray'>It's a match! Start the conversation</p>
         {this.state.err}
         {this.state.messages &&
           this.state.messages.map((mess, idx) => {

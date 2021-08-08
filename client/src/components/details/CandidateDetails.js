@@ -43,6 +43,7 @@ class CandidateDetails extends Component {
           .then((response) => {
             this.setState({
               from: this.props.from || false,
+              showingCandidate: response.data
             });
           })
           .catch((err) => console.log(err));
@@ -87,7 +88,11 @@ class CandidateDetails extends Component {
     return (
       <div className="bg-ligth-grey details">
         <div className="head-candidate-details">
-        <img src='/images/icons/back-blue.png' className='icon-back-blue' onClick={()=>this.props.history.goBack()} alt=''/>
+        <div className='candidate-details-top-line flex-row'>
+          <img src='/images/icons/back-blue.png' className='icon-back-blue' onClick={()=>this.props.history.goBack()} alt=''/>
+          {/* <img src='/images/ninja-logo.png' className='' onClick={()=>this.props.history.push('/swipeCandidate/random')} alt=''/> */}
+          <img src='/images/icons/profile.png' className='profile-icon' onClick={()=>this.props.history.push('profilepage')} alt=''/>
+        </div>
           <div className="head-avatar-candidate flex-column">
             <img src={this.state.showingCandidate?.avatar} alt="avatar" />
             {/* <img src={this.state.avatar ? this.state.avatar : "/images/ninja.png"} alt="avatar" /> */}

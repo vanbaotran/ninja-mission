@@ -74,7 +74,7 @@ class DashboardDetails extends React.Component {
       `/applications/${jobPost.data.applicationId._id}/candidates`
     );
     this.setState({
-      jobPost: jobPost.data.offerName,
+      jobPost: jobPost.data.position,
       candidateList: candidatesData.data.candidateId,
       jobCodeLanguages:jobPost.data.codeLanguage
     });

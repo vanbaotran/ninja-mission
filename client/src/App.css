@@ -9,7 +9,7 @@ img {
   max-width: 100%;
 }
 .bg-redtop,.bg-bluetop {
-  position: absolute;
+  position: absolute; 
   top: 0%;
   clip-path: polygon(0 0, 100% 0, 0 50%);
   z-index: -10;
@@ -123,7 +123,6 @@ input[type='file'] {
 }
 .icon-back-blue {
   width: 1.5em;
-  margin: 2em
 }
 /*
 ##          ###    ##    ## ########  ########     ###     ######   ######## 
@@ -205,6 +204,9 @@ input[type='file'] {
 }
 .text-yellow {
   color: #F6DA79;
+}
+.text-gray {
+  color: #9CA5AC;
 }
 .list .element{
   width: 340px;
@@ -527,7 +529,7 @@ margin: auto;
 }
 .block-to-swipe {
   height: 60vh;
-  margin: 20px;
+  margin: 5vw;
 }
 /*
  ######  ####  ######   ##    ##    ##     ## ########  
@@ -791,6 +793,14 @@ margin: auto;
   text-decoration: none;
   color: black;
 }
+.candidate-details-top-line {
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+.candidate-details-top-line .profile-icon {
+  max-width: 10%;
+}
 /*
 ##     ## ##    ##    ########     ###    ########   ######   ########  ######  
 ###   ###  ##  ##     ##     ##   ## ##   ##     ## ##    ##  ##       ##    ## 
@@ -945,3 +955,14 @@ section {
    max-width: 5%;
  }
 
+/*
+ ######   #######  ##    ## ##     ## ######## ########   ######     ###    ######## ####  #######  ##    ##  ######  
+##    ## ##     ## ###   ## ##     ## ##       ##     ## ##    ##   ## ##      ##     ##  ##     ## ###   ## ##    ## 
+##       ##     ## ####  ## ##     ## ##       ##     ## ##        ##   ##     ##     ##  ##     ## ####  ## ##       
+##       ##     ## ## ## ## ##     ## ######   ########   ######  ##     ##    ##     ##  ##     ## ## ## ##  ######  
+##       ##     ## ##  ####  ##   ##  ##       ##   ##         ## #########    ##     ##  ##     ## ##  ####       ## 
+##    ## ##     ## ##   ###   ## ##   ##       ##    ##  ##    ## ##     ##    ##     ##  ##     ## ##   ### ##    ## 
+ ######   #######  ##    ##    ###    ######## ##     ##  ######  ##     ##    ##    ####  #######  ##    ##  ######  */
+.convo-element img {
+  max-width: 30%;
+ }

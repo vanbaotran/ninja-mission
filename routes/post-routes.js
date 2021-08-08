@@ -45,39 +45,39 @@ postRoutes.post("/", [isLoggedIn, isRecruiter], (req, res, next) => {
 
 postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
   try {
-  //  let data = await Post.findOne({_id:"610d4c2b05ddd96b28137300"});
-  //  res.status(200).json(data);
-  //  return;
-    // initiate utils let
-    let random, randomPost, countDoc, post;
-    // get currentUser
-    let user = await User.findOne({ _id: req.session.currentUser._id });
-    // FILTER CONTRACT:
-    let filter = {};
-    if (req.query?.filterContract) {
-      filter = { contract: { $in: req.query.filterContract.split("_") } };
-    }
-    // FILTER already candidating offer and swipped offer
-    let alreadyCandidatingApp = await Application.find({ candidateId: user._id });
-    let alreadyCandidatingOffer = alreadyCandidatingApp.map((app) => app.jobPostId);
-    let arrFilter = [...user.swipedOfferId, ...alreadyCandidatingOffer];
-    filter = { ...filter, _id: { $nin: arrFilter } };
-    countDoc = await Post.countDocuments({ ...filter });
-    random = Math.floor(Math.random() * countDoc);
+   let data = await Post.findOne({_id:"61098e1501d2fa45b47b1699"});
+   res.status(200).json(data);
+   return;
+    // // initiate utils let
+    // let random, randomPost, countDoc, post;
+    // // get currentUser
+    // let user = await User.findOne({ _id: req.session.currentUser._id });
+    // // FILTER CONTRACT:
+    // let filter = {};
+    // if (req.query?.filterContract) {
+    //   filter = { contract: { $in: req.query.filterContract.split("_") } };
+    // }
+    // // FILTER already candidating offer and swipped offer
+    // let alreadyCandidatingApp = await Application.find({ candidateId: user._id });
+    // let alreadyCandidatingOffer = alreadyCandidatingApp.map((app) => app.jobPostId);
+    // let arrFilter = [...user.swipedOfferId, ...alreadyCandidatingOffer];
+    // filter = { ...filter, _id: { $nin: arrFilter } };
+    // countDoc = await Post.countDocuments({ ...filter });
+    // random = Math.floor(Math.random() * countDoc);
 
-    //get random post with or not query params
-    randomPost = await Post.findOne({ ...filter })
-      .populate("recruiterId")
-      .skip(random);
-    // if no post find return 204 no content
-    console.log(randomPost, filter);
-    if (!randomPost) {
-      res.status(204).json();
-      return;
-    } else {
-      res.status(200).json(randomPost);
-      return;
-    }
+    // //get random post with or not query params
+    // randomPost = await Post.findOne({ ...filter })
+    //   .populate("recruiterId")
+    //   .skip(random);
+    // // if no post find return 204 no content
+    // console.log(randomPost, filter);
+    // if (!randomPost) {
+    //   res.status(204).json();
+    //   return;
+    // } else {
+    //   res.status(200).json(randomPost);
+    //   return;
+    // }
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Post not found", error: error });

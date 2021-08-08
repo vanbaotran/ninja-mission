@@ -22,7 +22,7 @@ const NavBar = () =>{
       <Link to='/overlayupdated'> OverlayUpdated </Link>
       <Link to='/chatbox/61098e0901d2fa45b47b1390_61098e0901d2fa45b47b1356_61098e1701d2fa45b47b1730'> Chatbox </Link>
       <Link to='/chatbox/hihi'> Chatbox2 </Link>
-      
+      <Link to='/conversations'> Conversations</Link>
       
     </div>
   )
