@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+html, body, body > div, .app {
+  height: 100%;
+}
 body{
   font-family: 'EB Garamond', serif;
   background-color: #FAF0CA;
@@ -935,10 +938,10 @@ section {
    justify-content: space-between;
    align-items: center;
    background-color: #FAF0CA;
-   padding:20px;
+   padding:10px 20px;
  }
  .chatbox-header .icons {
-   max-width: 10%;
+   max-width: 6%;
  }
  .chatbox-header .avatar img {
    border-radius: 50%;
@@ -946,15 +949,29 @@ section {
    border: 2px solid #0D3B66;
    background-color: white;
  }
- .chatbox-header .avatar .level-img {
-  width: 30px;
-  border: 2px solid #F4D35E;
+ .chatbox-header .avatar {
+   align-items:center;
+ }
+ .chatbox-header .avatar p {
+  margin-block-start: 0;
+  margin-block-end: 0;
  }
  .block-mess img {
    border-radius: 50%;
-   max-width: 5%;
+   max-width: 7%;
+   background-color: white;
+   margin: 2px;
  }
-
+.text-message {
+  background-color: white;
+  border-radius: 16px;
+  padding: 2px;
+  max-width: 200px;
+}
+.block-mess {
+  align-items: start;
+  margin:2px;
+}
 /*
  ######   #######  ##    ## ##     ## ######## ########   ######     ###    ######## ####  #######  ##    ##  ######  
 ##    ## ##     ## ###   ## ##     ## ##       ##     ## ##    ##   ## ##      ##     ##  ##     ## ###   ## ##    ## 
@@ -963,6 +980,28 @@ section {
 ##       ##     ## ##  ####  ##   ##  ##       ##   ##         ## #########    ##     ##  ##     ## ##  ####       ## 
 ##    ## ##     ## ##   ###   ## ##   ##       ##    ##  ##    ## ##     ##    ##     ##  ##     ## ##   ### ##    ## 
  ######   #######  ##    ##    ###    ######## ##     ##  ######  ##     ##    ##    ####  #######  ##    ##  ######  */
-.convo-element img {
+ .conversations {
+   background-color: #F9F7F3;
+   height: 100vh;
+ }
+ .convo-element {
+   background-color: white;
+   margin: 10px;
+ }
+ .convo-element p {
+  margin-block-start: 0.5em;
+  margin-block-end: 0;
+ }
+ .convo-element img {
   max-width: 30%;
  }
+.conversations .top-line img{
+  width: 10%;
+}
+.conversations .top-line {
+  padding: 10px 20px;
+  margin: 0;
+}
+.conversations .top-line h1 {
+  font-size: 1.5em;
+}

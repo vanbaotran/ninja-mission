@@ -79,15 +79,17 @@ class Chat extends React.Component {
     this.socket.emit("sendMessage", `${prefix_message}${this.state.message}`);
   };
   render() {
-    let note = this.props.currentUser.profileType === "recruiter" ? this.props.currentCandidate : this.props.currentRecruiter;
+    let myChatBuddy = this.props.currentUser.profileType === "recruiter" ? this.props.currentCandidate : this.props.currentRecruiter;
+    let myself = this.props.currentUser;
     return (
       <section className='chatbox'>
-      {this.state.overlayisOpen && <OverlayOptions {...this.props} toggle={this.toggleOverlay} reviewedPerson={note}/> }
+      {this.state.overlayisOpen && <OverlayOptions {...this.props} toggle={this.toggleOverlay} reviewedPerson={myChatBuddy}/> }
        <div className='chatbox-header flex-row'>
          <img className='icons' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt='back ico'/>
-        <div className='avatar'>
-          {(this.props.currentUser?._id === this.props.currentCandidate?._id) ? <img src={this.props.currentRecruiter?.companyLogo} alt='companyLogo'/> : <img className='border-blue' src={this.props.currentCandidate?.avatar} alt='candidateAvatar'/>}
-          {(this.props.currentUser?._id === this.props.currentRecruiter?._id) && <img className='level-img' src={`/images/${this.props.currentCandidate?.level}.png`} alt='level'/>}
+        <div className='avatar flex-column'>
+          {(this.props.currentUser?._id === this.props.currentCandidate?._id) ? <img src={this.props.currentRecruiter?.companyLogo} alt=''/> : <img className='border-blue' src={this.props.currentCandidate?.avatar} alt=''/>}
+          {/* {(this.props.currentUser?._id === this.props.currentRecruiter?._id) && <img className='level-img' src={`/images/${this.props.currentCandidate?.level}.png`} alt='level'/>} */}
+          <p>{myChatBuddy?.name}</p>
         </div>
          <img className='icons' onClick={()=>this.toggleOverlay()} src='/images/icons/settings-blue.png' alt='settings ico'/>
        </div>
@@ -96,24 +98,26 @@ class Chat extends React.Component {
         {this.state.messages &&
           this.state.messages.map((mess, idx) => {
             let arrMess = mess.split("_");
-            let avatar, name, divStyle;
+            let avatar, divStyle;
+            //define who I am to set CSS for the message
+            if ((myself.profileType === 'recruiter' && mess.startsWith('R')) || (myself.profileType === 'candidate' && mess.startsWith('C')) ) {
+              divStyle = {justifyContent:'flex-end'}
+            }
             if(arrMess[0] === "R") {
               avatar= this.props.currentRecruiter.avatar ;
-              name= this.props.currentRecruiter.name ;
             } else if (arrMess[0] === "C") {
               avatar= this.props.currentCandidate.avatar ;
-              name= this.props.currentCandidate.name ;
             } else {
-              avatar = false;
-              name = false;
+              avatar = false; 
             }
             return (
+
               <div className="block-mess flex-row" style={divStyle} key={idx}>
-               {(this.props.currentUser.avatar === avatar) && <img  src={avatar} alt="avatar" />}
-              <div className="id-chat bg-ligth-grey flex-column">
-                <h4>{arrMess[1] || mess}</h4>
-                  {name && <p>{name}</p>}
-                </div>
+               {(myChatBuddy.avatar === avatar) && <img  src={avatar} alt="avatar" />}
+               <div className='text-message'>
+                <p>{arrMess[1] || mess}</p>
+              </div>
+        
               </div>
             );
           })}

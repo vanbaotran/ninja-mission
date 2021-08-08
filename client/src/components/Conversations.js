@@ -23,6 +23,11 @@ class Conversations extends React.Component {
     console.log(this.state.conversations)
     return (
       <div className='conversations'>
+        <div className='top-line flex-row'>
+         { this.props.currentUser?.profileType === 'recruiter'? <img src='/images/icons/people-blue.png' alt=''/> : <img src='/images/icons/people-blue.png' alt=''/> }
+          <h1 className='text-red'>CONVERSATIONS</h1>
+          <img src='' alt=''/>
+        </div>
         {this.state.conversations.length !== 0 && this.state.conversations.map(el=>{
           if (recruiter){
             return (<div className ='convo-element flex-row' onClick={()=>this.goToChat(el.roomId)} key={el._id}>
@@ -35,7 +40,7 @@ class Conversations extends React.Component {
           } else {
              return (<div  className ='convo-element flex-row' onClick={()=>this.goToChat(el.roomId)} key={el._id}>
             <img src={el.recruiterId.avatar} alt=''/>
-            <div className='flex-column'>
+            <div className='flex-column' style={{alignItems:'flex-start',justifyContent:'center',marginLeft:'40px'}}>
               <p> {el.recruiterId.name} </p>
               <p className='text-gray'> {el.applicationId.jobPostId.position} </p>
             </div>

@@ -214,7 +214,6 @@ router.patch('/badges/:id', isLoggedIn, (req,res,next)=>{
       let oldBadgeValue = Number(oldBadges[eachBadge])
       //if newBadge is given for the 1st time (oldBadge === NaN)
       if (newBadgeValue !== 0 && (oldBadgeValue===0 || isNaN(oldBadgeValue))) {
-        console.log('new rating')
         newRating = newBadgeValue;
       //if newBadge is given and oldBadge exists
       } else if (newBadgeValue !== 0 && oldBadgeValue){
