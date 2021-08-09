@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import OverlayWeapon from "./overlays/OverlayWeapon";
 import service from "./service";
 import InfoIco from "./swipe/InfoIco";
+import OverlayMatch from './overlays/OverlayMatch'
 // import useSwipeable from 'react-swipeable';
 
 class SwipeJobPost extends Component {
@@ -11,6 +12,7 @@ class SwipeJobPost extends Component {
     offer: false,
     errorMessage: "",
     remember: [],
+    overlayisOpen:false
   };
   openFilter = (e) => {
     this.setState({ optionsIsOpen: true });
@@ -113,8 +115,21 @@ class SwipeJobPost extends Component {
       let copyRemember = [...this.state.remember, `C_${idApp}`]; // stock id for reverse
       // update application with apply of candidate
       console.log(this.state.offer)
-      await service.patch(`/applications/${this.state.offer.applicationId}/add`);
+      let theApplication = await service.patch(`/applications/${this.state.offer.applicationId}/add`);
       let newRandom = await this.newRandom();
+      //check if it's a match
+      let matched = false;
+      if (theApplication.data.application.acceptedCandidateId.includes(this.props.currentUser._id)){
+        matched = true;
+        this.setState({
+          overlayisOpen: matched
+        })
+        setTimeout(() => {
+          this.props.history.push(`/chatbox/${this.state.offer.recruiterId}_${this.props.currentUser._id}_${theApplication.data.application._id}`)
+        }, 2000);
+        return;
+      } 
+      //check if there is still offer available
       if (newRandom) {
         this.setState({
           offer: newRandom,
@@ -180,6 +195,7 @@ class SwipeJobPost extends Component {
 
     return (
       <div className="swipe">
+      {this.state.overlayisOpen && <OverlayMatch/>}
         <div className="header-swipe">
           <img className="ico-swipe ico-profile" onClick={()=>this.props.history.push('/profilepage')}src="/images/icons/profile.png" alt="ico" />
           <img
@@ -189,7 +205,7 @@ class SwipeJobPost extends Component {
             onClick={this.openFilter}
           />
           <img className="logo-header-swipe" src="/images/ninja-logo.png" alt="ico" />
-          <img className="ico-swipe ico-chat" src="/images/icons/chat.png" alt="ico" />
+          <img onClick={()=>this.props.history.push('/conversations')} className="ico-swipe ico-chat" src="/images/icons/chat.png" alt="ico" />
         </div>
         <div className="body-swipe">
           {(!this.state.offer && (

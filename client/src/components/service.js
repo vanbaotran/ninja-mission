@@ -50,7 +50,6 @@ export {deletePost}
 function dataPostToStatePost(id) {
   return service.get(`/posts/${id}`).then(response => {
     let {
-      offerName,
       companyLogo,
       companyBio,
       companyName,
@@ -64,7 +63,6 @@ function dataPostToStatePost(id) {
       website,
     } = response.data;
     return {
-      offerName,
       companyLogo,
       companyBio,
       companyName,

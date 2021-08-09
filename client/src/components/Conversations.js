@@ -24,10 +24,11 @@ class Conversations extends React.Component {
     return (
       <div className='conversations'>
         <div className='top-line flex-row'>
-         { this.props.currentUser?.profileType === 'recruiter'? <img src='/images/icons/people-blue.png' alt=''/> : <img src='/images/icons/people-blue.png' alt=''/> }
+         { this.props.currentUser?.profileType === 'recruiter'? <img onClick={()=>this.props.history.push('/swipeCandidate/random')} src='/images/icons/people-blue.png' alt=''/> : <img onClick={()=>this.props.history.push('/swipeOffer/random')}  src='/images/icons/offer.png' alt=''/> }
           <h1 className='text-red'>CONVERSATIONS</h1>
           <img src='' alt=''/>
         </div>
+        <p className='headline text-gray'>Messages</p>
         {this.state.conversations.length !== 0 && this.state.conversations.map(el=>{
           if (recruiter){
             return (<div className ='convo-element flex-row' onClick={()=>this.goToChat(el.roomId)} key={el._id}>

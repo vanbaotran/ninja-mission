@@ -19,7 +19,6 @@ const ContractOptions = ["Internship", "Freelance", "Permanent", "Temporary"];
 const LevelOptions = ["Warrior", "Ninja", "Samurai", "Sensei"];
 export class PostForm extends Component {
   state = {
-    offerName: "",
     companyLogo: "",
     companyBio: "",
     companyName: "",
@@ -75,17 +74,17 @@ export class PostForm extends Component {
       if (this.props.match.params.id === "new") {
         service
           .post("/posts", { ...this.state })
-          .then((response) => {
+          .then((postFromDB) => {
             // console.log("in submi", response)
-            this.props.updateCurrentPost(response.data.newPost._id);
-            editProfile({ currentPostId: response.data.newPost._id }).then(
+            this.props.updateCurrentPost(postFromDB.data.newPost._id);
+            editProfile({ currentPostId: postFromDB.data.newPost._id }).then(
               (response) => {
                 this.props.updateUser(response);
                 this.setState({popUp:true})
                 console.log(response)
                 setTimeout(() => {
                   this.setState({popUp:false})
-                  this.props.history.push(`/posts/${response._id}`);
+                  this.props.history.push(`/posts/${postFromDB.data.newPost._id}`);
                 }, 2000);
               }
             );
@@ -162,15 +161,15 @@ export class PostForm extends Component {
             </div>
           </div>
           <TextInput
-            label="Offer Name"
-            name="offerName"
-            value={this.state.offerName}
+            label="Position"
+            name="position"
+            value={this.state.position}
             change={this.handleChange}
           />
           <TextInput
             label="Company Name"
             name="companyName"
-            value={this.state.position}
+            value={this.state.companyName}
             change={this.handleChange}
           />
           <SelectInput
@@ -202,7 +201,7 @@ export class PostForm extends Component {
           <SelectInput
             label="Languages"
             name="codeLanguage"
-            value={[...this.state.codeLanguage]}
+            value={this.state.codeLanguage}
             change={this.handleChangeMultiple}
             options={LanguageOptions}
             multiple={true}

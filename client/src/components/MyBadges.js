@@ -6,7 +6,7 @@ class MyBadges extends React.Component {
     console.log(this.props.history.location.state.user.badges)
   }
   render(){
-    let user = this.props.history.location.state.user;
+    let user = this.props.history.location.state?.user;
     // if (this.props.currentUser.profileType==='candidate'){
       return (
       <div>

@@ -14,7 +14,6 @@ import ProfilePage from './components/ProfilePage'
 import GiveBadges from "./components/GiveBadges"
 import SwipeJobPost from './components/SwipeJobPost';
 import PostDetails from './components/details/PostDetails';
-import Logout from './components/Logout';
 import LevelPage from './components/LevelPage';
 import CandidateDetails from "./components/details/CandidateDetails"
 import SwipeCandidateProfile from './components/SwipeCandidateProfile'
@@ -78,11 +77,11 @@ class App extends React.Component {
     return (
       <div className="App">
         <Switch>
-          <Route exact path='/' component={Homepage}/>
+          <Route exact path='/' render={(props)=><Homepage {...props} currentUser={this.state.loggedInUser}/>}/>
           <Route path='/login'  render={(props)=><Login {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>}/>
           <Route path='/signup' render={(props)=><Signup {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/editCandidateform' render={(props)=><CandidateForm {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
-          <Route path='/profilepage' render={(props)=><ProfilePage  {...props} currentUser={this.state.loggedInUser} currentPostId={this.state.currentPostId}/>} />
+          <Route path='/profilepage' render={(props)=><ProfilePage  {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} currentPostId={this.state.currentPostId}/>} />
           <Route path='/postform/:id' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
           <Route path='/postform/new' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
           <Route path='/posts/:id/fromswipe' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} fromswipe={true} />} />
@@ -90,10 +89,9 @@ class App extends React.Component {
           <Route path='/recruiterform' render={(props) => <RecruiterForm {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} />} />
           <Route path='/swipeOffer/random' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>} />
           <Route path='/swipeOffer/:id' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>} />
-          <Route path='/logout' render={()=><Logout currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/levelspage' render={()=><LevelPage currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser}/>} />
           <Route path='/chatbox/:id' render={(props) => <Chat {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} currentCandidate={this.state.candidate} updateCandidate={this.updateCandidate} currentRecruiter={this.state.recruiter} updateRecruiter={this.updateRecruiter}/>}/>
-          <Route path='/swipeCandidate/random' render={(props)=><SwipeCandidateProfile  {...props} currentUser={this.state.loggedInUser}/>} />
+          <Route path='/swipeCandidate/random' render={(props)=><SwipeCandidateProfile  {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>} />
           <Route path='/swipeCandidate/:id' render={(props)=><SwipeCandidateProfile {...props} currentUser={this.state.loggedInUser}/>} />
           <Route path='/users/:id/fromswipe' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"swipe"}/>} />
           <Route path='/users/:id/fromdashboard' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"dashboard"}/>} />
@@ -108,8 +106,7 @@ class App extends React.Component {
           <Route path='/overlayupdated' render={(props)=><OverlayUpdated {...props} />} />
           <Route path='/giveBadges' render={(props)=><GiveBadges {...props} />} />
           <Route path='/conversations' render={(props)=><Conversations {...props} />} />
-
-     
+          
         </Switch>
       </div> 
     );

@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { dataPostToStatePost, editProfile, deletePost } from "../service";
+import OverlayUpdated from '../overlays/OverlayUpdated'
 
 class PostDetails extends Component {
   state = {
     from: false,
+    overlayisOpen:false
   };
   componentDidMount() {
     if (!this.props.currentUser) {
@@ -30,7 +32,16 @@ class PostDetails extends Component {
     editProfile({currentPostId:this.props.match.params.id})
     .then(response=>{
       console.log('CHANGING POST ID', response)
-      this.props.updateUser(response)
+      this.props.updateUser(response);
+      this.setState({
+        overlayisOpen: true
+      })
+      setTimeout(() => {
+        this.setState({
+        overlayisOpen: false
+      })
+      this.props.history.push('/myoffers')
+      }, 1500);
     })
     .catch(err=>console.log(err))
   }
@@ -42,23 +53,30 @@ class PostDetails extends Component {
     }
   }
   deleteThisPost = () => {
+    this.props.updateCurrentPost('');
     deletePost(this.props.match.params.id)
     .then(response =>{
-      console.log('deleted this post')
-      this.props.history.goBack()
-    })
+        editProfile({currentPostId:null,currentApplicationId:null})
+        .then(userFromDB=>{
+          console.log('DELETE',userFromDB)
+          this.props.updateUser(userFromDB)
+          this.props.history.push('/myoffers')
+        })
+        .catch(err=>console.log(err))
+      })
     .catch(err=>console.log(err))
   }
   render() {
     return (
       <div className=" details flex--column">
+        {this.state.overlayisOpen && <OverlayUpdated />}
         <div className="head-post-details flex-column bg-ligth-grey">
           <img
             src={this.state.companyLogo ? this.state.companyLogo : "/images/temple.png"}
             alt="logo comp"
           />
-          <h1>{this.state.offerName}</h1>
-          { this.props.currentUser.profileType==='recruiter' && (this.props.from || <button className="btn blue" onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>)}
+          <h1>{this.state.position}</h1>
+          {(this.props.currentUser.profileType==='recruiter' && this.props.currentUser.currentPostId !== this.props.match.params.id)&& (this.props.from || <button className="btn blue" onClick={this.updateCurrentPost}>CHOOSE TO BE CURRENT POST</button>)}
         </div>
         <div className="body-post-details flex-column">
           <div className="detail flex-row">

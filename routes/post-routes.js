@@ -45,7 +45,7 @@ postRoutes.post("/", [isLoggedIn, isRecruiter], (req, res, next) => {
 
 postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
   try {
-   let data = await Post.findOne({_id:"61098e1501d2fa45b47b1699"});
+   let data = await Post.findOne({_id:"61098e0c01d2fa45b47b13a7"});
    res.status(200).json(data);
    return;
     // // initiate utils let
@@ -128,6 +128,19 @@ postRoutes.delete("/:id", [isLoggedIn, isRecruiter], (req, res, next) => {
       res.status(403).json({ message: "You are not allowed to delete this posttt" });
       return;
     }
+    //delete application 
+    Application.findOne({jobPostId:req.params.id})
+    .then(theApplication =>{
+      User.findOne({currentApplicationId:theApplication._id})
+      .then(theUser=>{
+        theUser.currentApplicationId = ''
+        theUser.save()
+        .then(theApplication.deleteOne({_id:theApplication._id}))
+        .catch(err=>console.log(err))
+      })
+    })
+    .catch(err=>console.log(err))
+    //update user's currentApplicationId
     Post.deleteOne({ _id: thePost._id }, function (err) {
       if (err) {
         return res.status(500).json({ message: "Deleting post went wrong" });

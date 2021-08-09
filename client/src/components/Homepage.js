@@ -1,11 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import NavBar from "./NavBar";
+// import NavBar from "./NavBar";
 class Homepage extends React.Component {
+  loginCheck = ()=>{
+    if (this.props.currentUser){
+      console.log(this.props.currentUser)
+      if (this.props.currentUser.profileType ==='recruiter'){
+        this.props.history.push('/swipeCandidate/random')
+      } else if (this.props.currentUser.profileType ==='candidate') {
+        this.props.history.push('/swipeOffer/random')
+      }
+    }
+  }
   render() {
     return (
-      <div className="sub-app">
-        <NavBar />
+      <div onClick={this.loginCheck()} className="sub-app">
+        {/* <NavBar /> */}
         <section className="landPage">
           <div className="sub-landPage">
             <img className="logo" src="/images/ninja-logo.png" alt="logo" />

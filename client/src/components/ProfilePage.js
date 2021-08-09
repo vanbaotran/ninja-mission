@@ -2,7 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { getPostData} from './service';
 import BlueTop from "./backgrounds/BlueTop";
-import RedBottom from './backgrounds/RedBottom'
+import RedBottom from './backgrounds/RedBottom';
+import {logout} from './service'
 class ProfilePage extends React.Component {
   state = {
     currentPost:{}
@@ -24,17 +25,27 @@ class ProfilePage extends React.Component {
     })
     .catch(err=>console.log(err))
   }
-
+  logout = () =>{
+    if(this.props.currentUser){
+      logout()
+      .then(()=>{
+        this.props.updateUser(null)
+        console.log('LOGGED OUT')
+        this.props.history.push('/')
+        })
+      .catch(err=>console.log(err))
+    }
+  }
   render(){
-    if(this.props.currentUser.profileType==='candidate'){
+    if(this.props.currentUser?.profileType==='candidate'){
       return(
         <div className='profile-page'>
         <BlueTop/>
         <RedBottom/>
          <div className='top-line flex-row'>
-           <img src='' alt=''/>
+        <Link to='/swipeOffer/random'><img src='/images/icons/offer-yellow.png' alt='settings'/></Link>
           <h1 className='text-yellow'>My Profile</h1>
-          <Link to='/swipeOffer/random'><img src='/images/icons/offer.png' alt='settings'/></Link>
+         <img onClick={()=>{this.logout()}} src='/images/icons/logout.png' alt='logout'/>
         </div>
         <header>
           <img src={this.props.currentUser.avatar} alt='avatar'/>
@@ -95,11 +106,11 @@ class ProfilePage extends React.Component {
            <div className='top-line flex-row'>
           <Link to='/swipeCandidate/random'><img src='/images/icons/people.png' alt='settings'/></Link>
           <h1 className='text-yellow'>My Profile</h1>
-           <img src='' alt=''/>
+          <img onClick={()=>{this.logout()}}  src='/images/icons/logout.png' alt='logout'/>
         </div>
           <header>
-            <img src={this.props.currentUser.companyLogo || "/images/temple.png"} alt='avatar'/>
-            <h1>{this.props.currentUser.name}</h1>
+            <img src={this.props.currentUser?.companyLogo || "/images/temple.png"} alt='avatar'/>
+            <h1>{this.props.currentUser?.name}</h1>
           </header>
           <main>
             <Link to='/companyDetails'>
@@ -143,7 +154,7 @@ class ProfilePage extends React.Component {
                    <div className='title'>
                     <div className='flex-column'>
                       <p>My Current Post</p>
-                      <span className='small-text'>{this.state.currentPost.offerName}</span>
+                      <span className='small-text'>{this.state.currentPost?.position}</span>
                     </div>
                 </div>
               </div>

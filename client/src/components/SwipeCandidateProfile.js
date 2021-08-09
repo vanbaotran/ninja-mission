@@ -1,6 +1,8 @@
 import React from "react";
 import service from "./service";
 import OverlayExperience from "./overlays/OverlayExperience";
+import OverlayMatch from './overlays/OverlayMatch';
+import OverlayAlert from './overlays/OverlayAlert'
 class SwipeCandidateProfile extends React.Component {
   state = {
     optionsIsOpen: false,
@@ -8,6 +10,7 @@ class SwipeCandidateProfile extends React.Component {
     candidate: false,
     errorMessage: "",
     remember: [],
+    overlayisOpen:false
   };
   openFilter = (e) => {
     this.setState({ optionsIsOpen: true });
@@ -67,14 +70,27 @@ class SwipeCandidateProfile extends React.Component {
   };
   chooseCandidate = async () => {
     try {
-      await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {
+     let theApplication = await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {
         id: this.state.candidate._id,
       });
+      let matched = false;
       let copyRemember = [...this.state.remember, `A_${this.state.candidate._id}`];
-      this.setState({
-        remember: copyRemember,
-      });
+      if (theApplication.data.application.candidateId.includes(this.state.candidate._id)) {
+        matched = true;
+        this.setState({
+          remember: copyRemember,
+          overlayisOpen: matched
+        });
+        setTimeout(() => {
+          this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.state.candidate._id}_${theApplication.data.application._id}`)
+        }, 2000);  
+      } else {
+        this.setState({
+          remember: copyRemember,
+        });
       this.searchRandom();
+      }
+   
     } catch (error) {
       console.log(error);
     }
@@ -121,6 +137,8 @@ class SwipeCandidateProfile extends React.Component {
   render() {
     return (
       <div className="swipeCandidate">
+      {this.state.overlayisOpen && <OverlayMatch/>}
+      {!this.props.currentUser.currentPostId && <OverlayAlert {...this.props}/>}
         <div className="swipe">
           <div className="header-swipe">
             <img
@@ -138,7 +156,7 @@ class SwipeCandidateProfile extends React.Component {
               onClick={this.openFilter}
             />
             <img className="logo-header-swipe" src="/images/ninja-logo.png" alt="ico" />
-            <img className="ico-swipe ico-chat" src="/images/icons/chat.png" alt="ico" />
+            <img onClick={()=>this.props.history.push('/conversations')} className="ico-swipe ico-chat" src="/images/icons/chat.png" alt="ico" />
           </div>
           <div className="body-swipe">
             {(!this.state.candidate && (

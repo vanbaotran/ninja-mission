@@ -95,53 +95,53 @@ router.get("/loggedin", (req, res, next) => {
 
 /* GET */
 router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
-  // try {
-  //   randomUser = await User.findOne({_id:"610d4c2a05ddd96b281372c4"})
-  //    res.status(200).json(randomUser);
-  // } catch (error) {
-  //   console.log(error)
-  // }
-  let random, randomUser, countDoc, user;
-  // FILTER EXP LEVEL:
-  let filter = {};
-  if (req.query?.filterLevel) {
-    filter = { level: { $in: req.query.filterLevel.split("_") } };
-  }
   try {
-    user = await User.findOne({ _id: req.session.currentUser._id }).populate(
-      "currentApplicationId"
-    );
-    console.log(user);
-    if (!user.currentApplicationId) {
-      return res.status(204).json();
-    }
-    filter = {
-      ...filter,
-      _id: {
-        $nin: [
-          ...user.currentApplicationId.refusedCandidateId,
-          ...user.currentApplicationId.acceptedCandidateId,
-        ],
-      },
-    };
-    await User.countDocuments({ profileType: "candidate", ...filter })
-      .then((count) => {
-        countDoc = count;
-        random = Math.floor(Math.random() * count);
-      })
-      .catch((err) => console.log(err));
-
-    //if recruiter doesnt have a job post, he cannot swipe
-    randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(random);
-    if (!randomUser) {
-      return res.status(204).json();
-    }
-    randomUser.password = undefined;
-    res.status(200).json(randomUser);
-    return;
+    randomUser = await User.findOne({_id:"61098e0901d2fa45b47b132e"})
+     res.status(200).json(randomUser);
   } catch (error) {
-    return res.status(500).json({ message: "Users not found1", error: error });
+    console.log(error)
   }
+  // let random, randomUser, countDoc, user;
+  // // FILTER EXP LEVEL:
+  // let filter = {};
+  // if (req.query?.filterLevel) {
+  //   filter = { level: { $in: req.query.filterLevel.split("_") } };
+  // }
+  // try {
+  //   user = await User.findOne({ _id: req.session.currentUser._id }).populate(
+  //     "currentApplicationId"
+  //   );
+  //   console.log(user);
+  //   if (!user.currentApplicationId) {
+  //     return res.status(204).json();
+  //   }
+  //   filter = {
+  //     ...filter,
+  //     _id: {
+  //       $nin: [
+  //         ...user.currentApplicationId.refusedCandidateId,
+  //         ...user.currentApplicationId.acceptedCandidateId,
+  //       ],
+  //     },
+  //   };
+  //   await User.countDocuments({ profileType: "candidate", ...filter })
+  //     .then((count) => {
+  //       countDoc = count;
+  //       random = Math.floor(Math.random() * count);
+  //     })
+  //     .catch((err) => console.log(err));
+
+  //   //if recruiter doesnt have a job post, he cannot swipe
+  //   randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(random);
+  //   if (!randomUser) {
+  //     return res.status(204).json();
+  //   }
+  //   randomUser.password = undefined;
+  //   res.status(200).json(randomUser);
+  //   return;
+  // } catch (error) {
+  //   return res.status(500).json({ message: "Users not found1", error: error });
+  // }
 });
 // GET USER DETAILS
 router.get("/:id", isLoggedIn, (req, res, next) => {

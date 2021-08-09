@@ -364,17 +364,17 @@ h4 {
       ## ##  ##  ##  ##  ##        ##          ##        ######### ##    ##  ##       
 ##    ## ##  ##  ##  ##  ##        ##          ##        ##     ## ##    ##  ##       
  ######   ###  ###  #### ##        ########    ##        ##     ##  ######   ######## */
-
+.swipe {
+  width: 414px;
+}
  .header-swipe {
-  /* display: flex;
-  align-items: center; */
-  /* background-color: #FAF0CA; */
+  display: block;
   justify-content: space-around;
   position: absolute;
   top: 0;
   left:0;
-  width: 100%;
   height: 15vh;
+  width: 100%;
 }
 .logo-header-swipe {
   height: 20vh;
@@ -418,7 +418,8 @@ h4 {
   padding: 1em;
   border: 2px solid #0D3B66;
   border-radius: 16px;
-  z-index:0
+  z-index:0;
+  width: 360px;
 }
 .body-swipe img {
   height: 60vh; 
@@ -427,6 +428,10 @@ h4 {
 .info-block img{
 height: 12vh;
 margin: auto;
+}
+.info-block p {
+  margin-block-end: 0.2em;
+  margin-block-start: 0;
 }
 .company-logo {
   min-height: 20vh;
@@ -450,22 +455,31 @@ margin: auto;
 
 /* OVERLAY*/
 .overlay {
+  max-height: 80vh;
+  overflow-y: scroll;
   width: 70vw;
   padding: 0.5em;
   border-radius: 13px ;
   background-color: whitesmoke;
-  position: absolute;
+  position: fixed;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  text-align: right;
+  text-align: center;
+  z-index: 100;
+}
+.overlay .matched {
+  width: 80px;
+}
+.overlay .alert {
+  width: 80px;
 }
 .overlay .updated {
   text-align: center;
 }
 .overlay .validation {
-  width: 40%;
+  width: 80px;
 } 
 .overlay .close-icon {
   text-align: right;
@@ -530,10 +544,7 @@ margin: auto;
   margin: auto;
   height: 90%;
 }
-.block-to-swipe {
-  height: 60vh;
-  margin: 5vw;
-}
+
 /*
  ######  ####  ######   ##    ##    ##     ## ########  
 ##    ##  ##  ##    ##  ###   ##    ##     ## ##     ## 
@@ -575,10 +586,12 @@ margin: auto;
   display: flex;
   justify-content: space-around;
   background-color: white;
-  margin: 10px;
+  margin: 10px auto;
   height: 13vh;
   border-radius: 16px;
+  width: 390px;
 }
+
 .profile-page h1 {
   margin: 10px;
 }
@@ -590,19 +603,24 @@ margin: auto;
 .profile-page .top-line img{
   width: 20px;
 }
+.profile-page .row .image img {
+  max-width: 100%;
+  width: 70px;
+  margin: auto;
+}
 .profile-page header img {
   display: block;
   margin:auto;
   width: 25vw;
 }
 .my-badges img{
-  height: 10vh;
+  max-height: 100%;
 }
 .recruiter .image img {
-  width: 15vw;
+  width: 70px;
 }
 .title {
-  width: 60vw;
+  width: 200px;
   position: relative;
 }
 .title p {
@@ -672,9 +690,11 @@ margin: auto;
 .row-level {
   display: flex;
   justify-content: space-around;
-  margin: 10px;
+  margin: 10px auto;
   height: 13vh;
   border-radius: 16px;
+  width: 380px;
+  align-items: center;
 }
 .my-level {
   overflow: hidden;
@@ -687,19 +707,20 @@ margin: auto;
 .my-level header img{
   display: block;
   margin: 20px auto;
-  width: 30vw;
+  width: 110px;
   border: 4px solid #F6DA79;
   border-radius: 20px;
   padding: 5px;
 }
-.image img {
+.my-level .image img {
   margin: auto;
+  width: 80px;
 }
 .my-level .row {
   align-items: center;
 }
 .my-level h3 {
-  text-align: center;
+  margin: 25px;
 }
 
 /*
@@ -996,7 +1017,7 @@ section {
   max-width: 30%;
  }
 .conversations .top-line img{
-  width: 10%;
+  width: 20px;
 }
 .conversations .top-line {
   padding: 10px 20px;
@@ -1004,4 +1025,8 @@ section {
 }
 .conversations .top-line h1 {
   font-size: 1.5em;
+}
+.conversations .headline {
+  text-align: left;
+  margin-left: 20px;
 }
