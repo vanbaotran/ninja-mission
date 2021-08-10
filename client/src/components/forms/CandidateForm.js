@@ -1,5 +1,5 @@
 import React from 'react'
-import {uploadFile,editProfile} from '../service';
+import {uploadFile,editProfile, deleteUser} from '../service';
 import BlueTop from '../backgrounds/BlueTop';
 import SelectInput from "../inputs/SelectInput";
 import TextInput from "../inputs/TextInput";
@@ -104,6 +104,11 @@ class CandidateForm extends React.Component{
         console.log('Error while uploading the file: ', err);
       })
   }
+  deleteAccount = async (e) => {
+    let data = await deleteUser(this.props.currentUser._id);
+    console.log(data);
+    this.props.history.push({ pathname: "/", state: { from: "delete" } });
+  }
   render(){
     function formatDate(date) {
     var d = new Date(date),
@@ -194,6 +199,7 @@ class CandidateForm extends React.Component{
           </div>
             <button className='btn blue'>SAVE THE CHANGES</button>
         </form>
+        {this.props.currentUser.profileType === "candidate" && <button className="btn red" onClick={(e) => this.deleteAccount(e)}>Delete my account</button>}
       </div>
     )
   }

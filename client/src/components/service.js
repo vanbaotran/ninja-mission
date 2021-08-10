@@ -7,7 +7,7 @@ const service = axios.create({
 export default service;
 
 function login(email, password) {
-  return service.post('/users/login', {email, password}).then(response => response.data)
+  return service.post('/users/login', {email, password}).then(response => response.data || null)
 }
 export {login}
  
@@ -46,6 +46,10 @@ function deletePost(id){
   return service.delete(`/posts/${id}`).then(response => response.data)
 }
 export {deletePost}
+function deleteUser(id){
+  return service.delete(`/users/${id}`).then(response => response.data)
+}
+export {deleteUser}
 
 function dataPostToStatePost(id) {
   return service.get(`/posts/${id}`).then(response => {

@@ -1,6 +1,6 @@
 import React from "react";
 import TextInput from "../inputs/TextInput";
-import service, { uploadFile } from "../service";
+import service, { uploadFile, deleteUser } from "../service";
 import BlueTop from "../backgrounds/BlueTop";
 
 class RecruiterForm extends React.Component {
@@ -55,6 +55,11 @@ class RecruiterForm extends React.Component {
         this.setState({...response.data });
       });  
     }
+  }
+  deleteAccount = async (e) => {
+    let data = await deleteUser(this.props.currentUser._id);
+    console.log(data);
+    this.props.history.push({ pathname: "/", state: { from: "delete" } });
   }
   render() {
     return (
@@ -135,6 +140,7 @@ class RecruiterForm extends React.Component {
 </div>
           <button className='btn red'>SAVE THE CHANGES</button>
         </form>
+        {this.props.currentUser.profileType === "recruiter" && <button className="btn blue" onClick={(e) => this.deleteAccount(e)}>Delete my account</button>}
       </div>
     );
   }
