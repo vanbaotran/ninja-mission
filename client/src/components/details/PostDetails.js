@@ -68,8 +68,9 @@ class PostDetails extends Component {
   }
   render() {
     return (
-      <div className=" details flex--column">
+      <div className="details">
         {this.state.overlayisOpen && <OverlayUpdated />}
+        <img className='icon' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt=''/>
         <div className="head-post-details flex-column bg-ligth-grey">
           <img
             src={this.state.companyLogo ? this.state.companyLogo : "/images/temple.png"}

@@ -12,7 +12,7 @@ img {
   max-width: 100%;
 }
 .bg-redtop,.bg-bluetop {
-  position: absolute; 
+  position: fixed; 
   top: 0%;
   clip-path: polygon(0 0, 100% 0, 0 50%);
   z-index: -10;
@@ -20,7 +20,7 @@ img {
   height: 100%;
 }
 .bg-redbottom,.bg-bluebottom {
-  position: absolute;
+  position: fixed;
   bottom: 0%;
   clip-path: polygon(100% 100%, 100% 50%, 0 100%);
   z-index: -10;
@@ -224,6 +224,8 @@ input[type='file'] {
 .dashboard, .my-badges {
   display: flex;
   flex-wrap: wrap;
+  max-width: 500px;
+  margin: 0 auto;
 }
 .dashboard .element {
   width: 150px;
@@ -239,8 +241,13 @@ input[type='file'] {
  ######   #######  ##     ## ##        ##     ## ##    ##    ##       ########  ########    ##    ##     ## #### ########  ######  */
 
  .company-details {
-   margin: 30px;
+   max-width: 500px;
+   margin: 0 auto;
+   padding: 30px;
  }
+ .company-details .icon {
+  width: 20px;
+}
 .company-details .title {
   text-align: left;
   font-weight: 900;
@@ -248,13 +255,20 @@ input[type='file'] {
  }
  .company-details .content {
    text-align: left;
-   width: 400px;
+   width:70%;
+   text-overflow: ellipsis;
  }
 .company-details .line {
   display: flex;
  }
 .company-details-main {
   margin-bottom: 2em;
+ }
+
+ .company-details-head img {
+  display: block;
+  max-width: 360px;
+  margin:0 auto;
  }
 /*
 ########     ###     ######  ##     ## ########   #######     ###    ########  ########     ########  ######## ########    ###    #### ##        ######     
@@ -326,7 +340,9 @@ h4 {
 .top-line {
   align-items: center;
   justify-content: space-between;
-  margin: 20px;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 .top-line h1 {
   text-align: center;
@@ -343,6 +359,7 @@ h4 {
 .sort h4 {
   width: 30vw;
 }
+
 /*
 ##     ## ##    ##    ########     ###     ######  ##     ## ########   #######     ###    ########  ########  
 ###   ###  ##  ##     ##     ##   ## ##   ##    ## ##     ## ##     ## ##     ##   ## ##   ##     ## ##     ## 
@@ -372,9 +389,11 @@ h4 {
   justify-content: space-around;
   position: absolute;
   top: 0;
-  left:0;
+  left:50%;
+  transform: translateX(-50%);
   height: 15vh;
   width: 100%;
+  max-width: 500px;
 }
 .logo-header-swipe {
   height: 20vh;
@@ -590,7 +609,6 @@ margin: auto;
   border-radius: 16px;
   width: 390px;
 }
-
 .profile-page h1 {
   margin: 10px;
 }
@@ -610,10 +628,17 @@ margin: auto;
 .profile-page header img {
   display: block;
   margin:auto;
-  width: 25vw;
+  width: 130px;
 }
-.my-badges img{
-  max-height: 100%;
+.ico-rating{
+  display: flex;
+  align-items: center;
+  width:70px;
+}
+.ico-rating img{
+  max-height: 80%;
+  display: block;
+  margin: 0 auto;
 }
 .recruiter .image img {
   width: 70px;
@@ -733,6 +758,11 @@ margin: auto;
 */
 .details {
   min-height: 100vh;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.details .icon {
+  width: 20px;
 }
 .head-post-details, .head-candidate-details {
   width: 100%;
@@ -833,22 +863,27 @@ margin: auto;
 ##     ##    ##       ##     ## ##     ## ##     ## ##    ##  ##       ##    ## 
 ##     ##    ##       ########  ##     ## ########   ######   ########  ######  */
 .my-badges .element {
-  width: 30vw;
+  max-width: 130px;
+  margin: 5%;
   border:none;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 .my-badges .element img {
   max-width: 100%;
+  max-height: 120px;
   display: block;
   margin: auto;
 }
-.rating {
+.show-rating {
   color: #F95738;
-  font-size: 1.5em;
+  font-size: 1.2em;
   text-align: center;
 }
 section {
   margin: 10px auto;
+  width:50%;
+  display: flex;
+  flex-direction: column;
 }
  /*
  #######  ########  ######## ####  #######  ##    ##  ######  

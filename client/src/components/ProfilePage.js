@@ -87,7 +87,7 @@ class ProfilePage extends React.Component {
   
           <Link to='/myBadges'>
             <div className='row border-red'>
-            <div className='image my-badges'>
+            <div className='ico-rating'>
               <img src='/images/my-badges.png' alt='badges'/>
             </div>
             <div className='title'>

@@ -4,7 +4,7 @@ function Rating(props){
     let rating = Math.round(props.children)
     console.log(props.children)
     let stars='';
-    let star = '✩'
+    let star = '☆'
     let starFilled = '★'
     for (let i=0;i<rating;i++){
         stars+=starFilled;
@@ -14,8 +14,8 @@ function Rating(props){
     }
 
     return (
-        <div className='rating'>
-            {[...stars].reverse().join("")}
+        <div className='show-rating'>
+            {[...stars]}
         </div>
     )
 }

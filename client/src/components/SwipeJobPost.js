@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import OverlayWeapon from "./overlays/OverlayWeapon";
 import service from "./service";
 import InfoIco from "./swipe/InfoIco";
-import OverlayMatch from './overlays/OverlayMatch'
+import OverlayMatch from './overlays/OverlayMatch';
+import {getUserData} from './service'
 // import useSwipeable from 'react-swipeable';
 
 class SwipeJobPost extends Component {
@@ -187,6 +188,13 @@ class SwipeJobPost extends Component {
       console.log(error);
     }
   };
+  showRecruiterBadges = () =>{
+    getUserData(this.state.offer.recruiterId)
+    .then(recruiter =>{
+      this.props.history.push({pathname:`/myBadges/${recruiter._id}`, state: {user: recruiter}})
+    })
+    .catch(err=>console.log(err))
+  }
   render() {
     let compagnyLogo =
       this.state.offer?.companyLogo ||
@@ -245,7 +253,7 @@ class SwipeJobPost extends Component {
             alt="heart ico"
             onClick={this.chooseOffer}
           />
-          <img className="btn-swipe" src="/images/icons/badge.png" alt="badge" />
+          <img className="btn-swipe" onClick={()=>this.showRecruiterBadges()} src="/images/icons/badge.png" alt="badge" />
         </div>
         {this.state.optionsIsOpen && (
           <OverlayWeapon

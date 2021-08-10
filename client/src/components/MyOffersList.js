@@ -1,5 +1,7 @@
 import React from 'react';
-import service from './service'
+import service from './service';
+import BlueTop from './backgrounds/BlueTop';
+import BlueBottom from './backgrounds/BlueBottom'
 class MyOffersList extends React.Component{
   state ={
     offerList:[]
@@ -23,9 +25,15 @@ class MyOffersList extends React.Component{
   }
   render(){
     return (
-      <div className="list"> 
-      <h1>MY OFFERS </h1>
-      <div>
+      <div className='wrapper'>
+      <div className="top-line flex-row"> 
+        <img src='/images/icons/back.png' onClick={()=>{this.props.history.goBack()}}alt=''/>
+        <h1 className='text-yellow'>My Offers </h1>
+        <img src='' alt=''/>
+      </div>
+      <BlueTop/>
+      <BlueBottom />
+      <div className="list">
      {this.state.offerList.map((offer)=>{
       return (this.props.currentUser.currentPostId===offer._id && <div onClick={()=>this.goToDetails(offer._id)} style={{backgroundColor:'#F7E194'}} className="list element" key={offer._id}> 
          <h2>{offer.position}</h2>
