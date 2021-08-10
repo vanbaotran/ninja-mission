@@ -406,7 +406,7 @@ h4 {
   position: absolute;
   display: flex;
   margin:  0 auto;
-  top: 16vh;
+  top: 18vh;
   max-height: 70vh;
   min-width: 100%;
 }
@@ -422,7 +422,6 @@ h4 {
   width: 360px;
 }
 .body-swipe img {
-  height: 60vh; 
   z-index:-1; margin-left:auto; margin-right:auto
 }
 .info-block img{
@@ -444,7 +443,7 @@ margin: auto;
 .block-btn-swipe {
   display: flex;
   position: absolute;
-  top: 88vh;
+  top: 680px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -530,7 +529,7 @@ margin: auto;
 .block-footer h1 {
   text-align: left;
   font-size: 1.5em;
-  width: 50vw;
+  width: 250px;
 }
 .swipeCandidate .image-level {
   border: 3px solid #0D3B66;
@@ -701,7 +700,7 @@ margin: auto;
   margin: 0; height: 100%;
 }
 .my-level .image, .profile-page .image {
-  width: 18vw;
+  width: 70px;
   display: flex;
 }
 .my-level header img{
@@ -932,37 +931,43 @@ section {
 ##    ## ##     ## ##     ##    ##    
  ######  ##     ## ##     ##    ##  */
  .chatbox {
+   max-width: 500px;
+   margin: 0 auto;
    position:relative;
    background-color: #F9F7F3;
    height: 100vh;
  }
  .message-box .btn {
-  width: 15vw;
+   width: 50px;
   font-size: 0.8em;
   height: 2em;
   border-radius: 0;
   margin: 0;
  }
  .message-box input {
-   width: 84vw;
-  max-width: 90%;
-   border-radius: 0;
-   border: none;
+  border-radius: 0;
+  border: none;
+  width: 400px;
  }
  .message-box {
+  max-width: 500px;
+  margin: 0 auto;
   position: fixed;
   bottom: 0;
-  left: 0;
-  justify-content: flex-end;
+  left: 50%;
+  transform: translateX(-50%);
+  justify-content: flex-start;
  }
  .chatbox-header {
+   max-width: 500px;
+   margin: 0 auto;
    justify-content: space-between;
    align-items: center;
    background-color: #FAF0CA;
    padding:10px 20px;
  }
  .chatbox-header .icons {
-   max-width: 6%;
+   max-width: 20px;
  }
  .chatbox-header .avatar img {
    border-radius: 50%;
@@ -988,6 +993,9 @@ section {
   border-radius: 16px;
   padding: 2px;
   max-width: 200px;
+}
+.text-message p {
+  padding: 5px;
 }
 .block-mess {
   align-items: start;
