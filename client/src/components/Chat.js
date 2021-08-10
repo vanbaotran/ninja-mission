@@ -82,7 +82,7 @@ class Chat extends React.Component {
     let myChatBuddy = this.props.currentUser.profileType === "recruiter" ? this.props.currentCandidate : this.props.currentRecruiter;
     let myself = this.props.currentUser;
     return (
-      <section className='chatbox'>
+      <div className='chatbox'>
       {this.state.overlayisOpen && <OverlayOptions {...this.props} toggle={this.toggleOverlay} reviewedPerson={myChatBuddy}/> }
        <div className='chatbox-header flex-row'>
          <img className='icons' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt='back ico'/>
@@ -122,9 +122,10 @@ class Chat extends React.Component {
             );
           })}
            <div className="message-box flex-row">
-            <input
+            <textarea
               nametype="text"
               value={this.state.message}
+              className='chat-area'
               onChange={(e) => {
                 this.setState({ message: e.target.value });
               }}
@@ -139,7 +140,7 @@ class Chat extends React.Component {
             Send
           </button>
         </div>
-      </section>
+      </div>
     );
   }
 }

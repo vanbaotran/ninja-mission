@@ -3,7 +3,6 @@ import OverlayWeapon from "./overlays/OverlayWeapon";
 import service from "./service";
 import InfoIco from "./swipe/InfoIco";
 import OverlayMatch from './overlays/OverlayMatch';
-import {getUserData} from './service'
 // import useSwipeable from 'react-swipeable';
 
 class SwipeJobPost extends Component {
@@ -189,11 +188,7 @@ class SwipeJobPost extends Component {
     }
   };
   showRecruiterBadges = () =>{
-    getUserData(this.state.offer.recruiterId)
-    .then(recruiter =>{
-      this.props.history.push({pathname:`/myBadges/${recruiter._id}`, state: {user: recruiter}})
-    })
-    .catch(err=>console.log(err))
+    this.props.history.push({pathname:`/myBadges/${(this.state.offer.recruiterId._id)}`, state: {user: this.state.offer.recruiterId}})
   }
   render() {
     let compagnyLogo =

@@ -12,6 +12,7 @@ class OverlayAlert extends Component {
     .then(response=>{
       console.log('CHANGING POST ID', response)
       this.props.updateUser(response);
+      this.props.random()
     })
     .catch(err=>console.log(err))
   }

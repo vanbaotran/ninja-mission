@@ -138,7 +138,7 @@ class SwipeCandidateProfile extends React.Component {
     return (
       <div className="swipeCandidate">
       {this.state.overlayisOpen && <OverlayMatch/>}
-      {!this.props.currentUser.currentPostId && <OverlayAlert {...this.props}/>}
+      {!this.props.currentUser.currentPostId && <OverlayAlert {...this.props} random={this.searchRandom}/>}
         <div className="swipe">
           <div className="header-swipe">
             <img

@@ -177,7 +177,7 @@ input[type='file'] {
   display: block;
   margin:  1vh auto;
   width: 85vw;
-  max-width: 550px;;
+  max-width: 400px;
   height: 32px;
   border-radius: 32px;
   border-style: none;
@@ -278,6 +278,10 @@ input[type='file'] {
 ##     ## #########       ## ##     ## ##     ## ##     ## ######### ##   ##   ##     ##    ##     ## ##          ##    #########  ##  ##             ##    
 ##     ## ##     ## ##    ## ##     ## ##     ## ##     ## ##     ## ##    ##  ##     ##    ##     ## ##          ##    ##     ##  ##  ##       ##    ##    
 ########  ##     ##  ######  ##     ## ########   #######  ##     ## ##     ## ########     ########  ########    ##    ##     ## #### ########  ######*/
+.dashboard-details {
+  max-width: 500px;
+  margin: 0 auto;
+}
 .dashboard-details header{
   display: flex;
   align-items: center;
@@ -323,24 +327,25 @@ h4 {
 .search {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  position: relative;
+  margin: 0 auto;
+}
+.input-search input {
+  flex:1;
 }
 .icon-search {
-  width: 15px;
+  height: 1em;
   max-width: 100%;
-  position: absolute;
-  right: 4vw;
-  top:1.5vh;
+  transform: translateX(-150%) translateY(20%);
 }
 .search input {
-  width: 60vw;
-  max-width: 100%;
+  max-width: 80%;
+  position: relative;
 }
 .top-line {
   align-items: center;
   justify-content: space-between;
   padding: 20px;
+  width: 100%;
   max-width: 500px;
   margin: 0 auto;
 }
@@ -474,8 +479,8 @@ margin: auto;
 /* OVERLAY*/
 .overlay {
   max-height: 80vh;
-  overflow-y: scroll;
-  width: 70vw;
+  overflow-y: auto;
+  width: 350px;
   padding: 0.5em;
   border-radius: 13px ;
   background-color: whitesmoke;
@@ -509,6 +514,10 @@ margin: auto;
 .weapon-block, .level-block {
   display: flex;
   margin: 0.2em;
+  justify-content: center;
+}
+.weapon {
+  max-width: 20vw;
 }
 .weapon, .level {
   display: flex;
@@ -516,9 +525,11 @@ margin: auto;
   border: 1px solid rgb(196, 194, 194);
   border-radius: 16px;
   padding: 1em;
-  max-width: 20vw;
   font-size: 0.7em;
   margin: 2px;  
+}
+.level {
+  max-width: 50px;
 }
 .weapon-icon {
   height: 50px;
@@ -966,25 +977,30 @@ section {
 ##    ## ##     ## ##     ##    ##    
  ######  ##     ## ##     ##    ##  */
  .chatbox {
+    overflow: auto;
    max-width: 500px;
    margin: 0 auto;
    position:relative;
    background-color: #F9F7F3;
    height: 100vh;
+   padding-bottom: 3.5em;
  }
  .message-box .btn {
-   width: 50px;
+  width: 50px;
   font-size: 0.8em;
-  height: 2em;
+  height: 4em;
   border-radius: 0;
   margin: 0;
  }
- .message-box input {
+ .message-box .chat-area {
+   height: 3em;
   border-radius: 0;
   border: none;
-  width: 400px;
+  flex:1;
+  max-width: 90%;
  }
  .message-box {
+  background-color: #F9F7F3;
   max-width: 500px;
   margin: 0 auto;
   position: fixed;
@@ -1027,7 +1043,9 @@ section {
   background-color: white;
   border-radius: 16px;
   padding: 2px;
-  max-width: 200px;
+  max-width: 70%;
+  overflow: auto;
+  max-height: 400px;
 }
 .text-message p {
   padding: 5px;
