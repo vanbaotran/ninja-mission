@@ -40,13 +40,13 @@ router.post("/signup", (req, res, next) => {
           res.status(200).json(aNewUser);
         })
         .catch((err) => {
-          res.status(400).json({ message: "Saving user to database went wrong"});
+          res.status(400).json({ message: "Saving user to database went wrong" });
         });
     })
     .catch((err) => {
-      console.log(err)
-      res.status(500).json({ message: "Email check went bad", err })
-      });
+      console.log(err);
+      res.status(500).json({ message: "Email check went bad", err });
+    });
 });
 // LOGIN
 router.post("/login", (req, res, next) => {
@@ -56,17 +56,17 @@ router.post("/login", (req, res, next) => {
     .then((user) => {
       console.log(user);
       if (!user) {
-        return res.status(204).json()
+        return res.status(204).json();
       }
       if (bcrypt.compareSync(password, user.password) !== true) {
-        return res.status(400).json({message: "Wrong credentials"});
+        return res.status(400).json({ message: "Wrong credentials" });
       } else {
         req.session.currentUser = user;
         console.log(user);
         res.json(user);
       }
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 //LOGOUT
 router.post("/logout", isLoggedIn, (req, res, next) => {
@@ -76,19 +76,19 @@ router.post("/logout", isLoggedIn, (req, res, next) => {
 });
 router.get("/loggedin", (req, res, next) => {
   if (req.session.currentUser) {
-    User.findOne({ _id: req.session.currentUser._id }).then((userFromDb) => {
-      userFromDb.password = undefined;
-      res.status(200).json(userFromDb);
-      return;
-    })
-    .catch(err => {
-      res.status(500).json(err);
-      return;
+    User.findOne({ _id: req.session.currentUser._id })
+      .then((userFromDb) => {
+        userFromDb.password = undefined;
+        res.status(200).json(userFromDb);
+        return;
+      })
+      .catch((err) => {
+        res.status(500).json(err);
+        return;
       });
   } else {
-
-  res.status(403).json({ message: "Unauthorized" });
-  return;
+    res.status(403).json({ message: "Unauthorized" });
+    return;
   }
 });
 
@@ -158,7 +158,7 @@ router.get("/:id", isLoggedIn, (req, res, next) => {
 //PATCH update user profile
 router.patch("/", isLoggedIn, (req, res, next) => {
   const id = req.session.currentUser._id;
-  console.log(id)
+  console.log(id);
   // let newApplicationId;
   if (req.body.password) {
     res.status(403).json("Password cannot be changed by this way.");
@@ -170,7 +170,7 @@ router.patch("/", isLoggedIn, (req, res, next) => {
       { ...body },
       { new: true, runValidators: true },
       function (err, updatedUser) {
-        console.log("=============",updatedUser, "==================", err)
+        console.log("=============", updatedUser, "==================", err);
         updatedUser.password = undefined;
         if (err) {
           return res.status(422).json(err);
@@ -227,24 +227,48 @@ router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next
   }
 });
 /* DELETE*/
-router.delete("/:id", isLoggedIn, async (req, res, next) => {
+router.delete("/:id", /*isLoggedIn,*/ async (req, res, next) => {
   try {
-  let user = req.session.currentUser;
-  console.log("user======>", user)
-  if (user && req.params.id !== user._id) {
-    return res.status(403).json("You cannot delete this user.");
-  }
-      if(user.profileType === "recruiter") {
-        let isdeletePosts = await Post.deleteMany({recruiterId: user._id });
-        let isdeleteApps = await Post.deleteMany({ _id: { $in: user.applicationId } });
-        console.log(isdeletePosts,isdeleteApps)
+    let user = req.session.currentUser;
+    console.log("user======>", user);
+    if (user && req.params.id !== user._id) {
+      return res.status(403).json("You cannot delete this user.");
+    }
+    if (user.profileType === "recruiter") {
+      let isdeletePosts = await Post.deleteMany({ recruiterId: user._id });
+      let isdeleteApps = await Post.deleteMany({ _id: { $in: user.applicationId } });
+      console.log(isdeletePosts, isdeleteApps);
+    }
+    if (user.profileType === "candidate") {
+      let apps = await Application.find({ candidateId: user._id });
+      console.log(apps)
+      for (let app of apps) {
+        let { candidateId, acceptedCandidateId, refusedCandidateId } = app;
+        candidateId.splice(candidateId.indexOf(user._id), 1);
+        let idxAccept = acceptedCandidateId.indexOf(user._id);
+        let idxRefuse = refusedCandidateId.indexOf(user._id);
+        if (idxAccept !== -1) {
+          acceptedCandidateId = acceptedCandidateId.splice(idxAccept, 1);
+        }
+        if (idxRefuse !== -1) {
+          refusedCandidateId = refusedCandidateId.splice(idxRefuse, 1);
+        }
+        await Application.updateOne(
+          { _id: app._id },
+          {
+            candidateId: candidateId,
+            acceptedCandidateId: acceptedCandidateId,
+            refusedCandidateId: refusedCandidateId,
+          }
+        );
       }
-      await User.deleteOne({ _id: req.params.id });
-      req.session.destroy();
+    }
+    await User.deleteOne({ _id: req.params.id });
+    req.session.destroy();
     res.json({ message: "You account is delete." });
     return;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
   // User.findOneAndDelete({ _id: req.params.id })
   //   .then((deleteUser) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import {uploadFile,editProfile} from '../service';
+import {uploadFile,editProfile, deleteUser} from '../service';
 import BlueTop from '../backgrounds/BlueTop';
 import SelectInput from "../inputs/SelectInput";
 import TextInput from "../inputs/TextInput";
@@ -103,6 +103,11 @@ class CandidateForm extends React.Component{
       .catch(err => {
         console.log('Error while uploading the file: ', err);
       })
+  }
+  deleteAccount = async (e) => {
+    let data = await deleteUser(this.props.currentUser._id);
+    console.log(data);
+    this.props.history.push({ pathname: "/", state: { from: "delete" } });
   }
   render(){
     function formatDate(date) {
