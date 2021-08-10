@@ -42,7 +42,7 @@ async function insertMockData() {
         return;
       }
     });
-    let nbPostByRecruiter = Math.floor(250 / recruiters.length);
+    let nbPostByRecruiter = Math.floor(30 / recruiters.length);
     let sliceIndex = nbPostByRecruiter;
     let appId = [];
     let offset = 0;

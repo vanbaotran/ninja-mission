@@ -345,7 +345,8 @@ h4 {
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  width: 100%;
+  /* width: 100%; */
+  width: 85vw;
   max-width: 500px;
   margin: 0 auto;
 }
@@ -443,7 +444,8 @@ h4 {
   border: 2px solid #0D3B66;
   border-radius: 16px;
   z-index:0;
-  width: 360px;
+  width: 80vw;
+  max-width: 350px;
 }
 .body-swipe img {
   z-index:-1; margin-left:auto; margin-right:auto
@@ -457,7 +459,9 @@ margin: auto;
   margin-block-start: 0;
 }
 .company-logo {
-  min-height: 20vh;
+  max-height: 200px;
+  margin: 0 auto;
+
 }
 .block-infoico {
   display: flex;
@@ -467,7 +471,7 @@ margin: auto;
 .block-btn-swipe {
   display: flex;
   position: absolute;
-  top: 680px;
+  top: 90%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -618,7 +622,8 @@ margin: auto;
   margin: 10px auto;
   height: 13vh;
   border-radius: 16px;
-  width: 390px;
+  width: 90vw;
+  max-width: 390px;
 }
 .profile-page h1 {
   margin: 10px;
@@ -728,7 +733,8 @@ margin: auto;
   margin: 10px auto;
   height: 13vh;
   border-radius: 16px;
-  width: 380px;
+  width: 90vw;
+  max-width: 390px;
   align-items: center;
 }
 .my-level {
@@ -997,6 +1003,7 @@ section {
   border-radius: 0;
   border: none;
   flex:1;
+  width: 85vw;
   max-width: 90%;
  }
  .message-box {
