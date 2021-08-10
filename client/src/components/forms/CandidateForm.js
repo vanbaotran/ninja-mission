@@ -194,6 +194,7 @@ class CandidateForm extends React.Component{
           </div>
             <button className='btn blue'>SAVE THE CHANGES</button>
         </form>
+        {this.props.currentUser.profileType === "candidate" && <button className="btn red" onClick={(e) => this.deleteAccount(e)}>Delete my account</button>}
       </div>
     )
   }

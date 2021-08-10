@@ -1,6 +1,6 @@
 import React from "react";
 import TextInput from "../inputs/TextInput";
-import service, { uploadFile } from "../service";
+import service, { uploadFile, deleteUser } from "../service";
 import BlueTop from "../backgrounds/BlueTop";
 
 class RecruiterForm extends React.Component {
@@ -55,6 +55,9 @@ class RecruiterForm extends React.Component {
         this.setState({...response.data });
       });  
     }
+  }
+  deleteAccount = () => {
+    deleteUser(this.props.currentUser._id);
   }
   render() {
     return (
@@ -135,6 +138,7 @@ class RecruiterForm extends React.Component {
 </div>
           <button className='btn red'>SAVE THE CHANGES</button>
         </form>
+        {this.props.currentUser.profileType === "recruiter" && <button className="btn blue" onClick={(e) => this.deleteAccount(e)}>Delete my account</button>}
       </div>
     );
   }
