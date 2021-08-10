@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
+const Post = require("../models/Post.model");
 const Application = require("../models/Application.model");
 const { isCandidate, isRecruiter, isLoggedIn } = require("./useful");
 const bcrypt = require("bcryptjs");
@@ -95,53 +96,53 @@ router.get("/loggedin", (req, res, next) => {
 
 /* GET */
 router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
-  try {
-    randomUser = await User.findOne({_id:"61098e0901d2fa45b47b132e"})
-     res.status(200).json(randomUser);
-  } catch (error) {
-    console.log(error)
-  }
-  // let random, randomUser, countDoc, user;
-  // // FILTER EXP LEVEL:
-  // let filter = {};
-  // if (req.query?.filterLevel) {
-  //   filter = { level: { $in: req.query.filterLevel.split("_") } };
-  // }
   // try {
-  //   user = await User.findOne({ _id: req.session.currentUser._id }).populate(
-  //     "currentApplicationId"
-  //   );
-  //   console.log(user);
-  //   if (!user.currentApplicationId) {
-  //     return res.status(204).json();
-  //   }
-  //   filter = {
-  //     ...filter,
-  //     _id: {
-  //       $nin: [
-  //         ...user.currentApplicationId.refusedCandidateId,
-  //         ...user.currentApplicationId.acceptedCandidateId,
-  //       ],
-  //     },
-  //   };
-  //   await User.countDocuments({ profileType: "candidate", ...filter })
-  //     .then((count) => {
-  //       countDoc = count;
-  //       random = Math.floor(Math.random() * count);
-  //     })
-  //     .catch((err) => console.log(err));
-
-  //   //if recruiter doesnt have a job post, he cannot swipe
-  //   randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(random);
-  //   if (!randomUser) {
-  //     return res.status(204).json();
-  //   }
-  //   randomUser.password = undefined;
-  //   res.status(200).json(randomUser);
-  //   return;
+  //   randomUser = await User.findOne({_id:"610d4c2a05ddd96b281372c4"})
+  //    res.status(200).json(randomUser);
   // } catch (error) {
-  //   return res.status(500).json({ message: "Users not found1", error: error });
+  //   console.log(error)
   // }
+  let random, randomUser, countDoc, user;
+  // FILTER EXP LEVEL:
+  let filter = {};
+  if (req.query?.filterLevel) {
+    filter = { level: { $in: req.query.filterLevel.split("_") } };
+  }
+  try {
+    user = await User.findOne({ _id: req.session.currentUser._id }).populate(
+      "currentApplicationId"
+    );
+    console.log(user);
+    if (!user.currentApplicationId) {
+      return res.status(204).json();
+    }
+    filter = {
+      ...filter,
+      _id: {
+        $nin: [
+          ...user.currentApplicationId.refusedCandidateId,
+          ...user.currentApplicationId.acceptedCandidateId,
+        ],
+      },
+    };
+    await User.countDocuments({ profileType: "candidate", ...filter })
+      .then((count) => {
+        countDoc = count;
+        random = Math.floor(Math.random() * count);
+      })
+      .catch((err) => console.log(err));
+
+    //if recruiter doesnt have a job post, he cannot swipe
+    randomUser = await User.findOne({ profileType: "candidate", ...filter }).skip(random);
+    if (!randomUser) {
+      return res.status(204).json();
+    }
+    randomUser.password = undefined;
+    res.status(200).json(randomUser);
+    return;
+  } catch (error) {
+    return res.status(500).json({ message: "Users not found1", error: error });
+  }
 });
 // GET USER DETAILS
 router.get("/:id", isLoggedIn, (req, res, next) => {
@@ -160,6 +161,7 @@ router.get("/:id", isLoggedIn, (req, res, next) => {
 router.patch("/", isLoggedIn, (req, res, next) => {
   const id = req.session.currentUser._id;
   console.log(id)
+  // let newApplicationId;
   if (req.body.password) {
     res.status(403).json("Password cannot be changed by this way.");
     return;
@@ -201,38 +203,6 @@ router.patch("/", isLoggedIn, (req, res, next) => {
   }
   console.log("req.body ", req.body);
 });
-//PATCH AND CALCULATE BADGES FOR USERS 
-router.patch('/badges/:id', isLoggedIn, (req,res,next)=>{
- let id = req.params.id;
- updatedBadges = {};
- User.findOne({_id:id})
- .then(userFromDb=>{
-    let oldBadges = userFromDb.badges;
-    for (eachBadge in req.body.badges) {
-      let newRating;
-      let newBadgeValue = Number(req.body.badges[eachBadge]);
-      let oldBadgeValue = Number(oldBadges[eachBadge])
-      //if newBadge is given for the 1st time (oldBadge === NaN)
-      if (newBadgeValue !== 0 && (oldBadgeValue===0 || isNaN(oldBadgeValue))) {
-        newRating = newBadgeValue;
-      //if newBadge is given and oldBadge exists
-      } else if (newBadgeValue !== 0 && oldBadgeValue){
-        newRating = Math.round((oldBadgeValue + newBadgeValue)/2);
-      //if newBadge is not given
-      } else {
-        newRating = oldBadgeValue
-      }
-       updatedBadges[eachBadge] = newRating
-    }
-    userFromDb.badges= updatedBadges;
-    userFromDb.save()
-    .then(updatedUser => {
-      res.status(200).json(updatedUser)
-    })
-    .catch(err=>res.status(500).json({message:'Updating DB went wrong'}))
- })
- .catch(err=>res.status(500).json({message:'Calculating badges went wrong'}))
-})
 //CANDIDATE SWIPES LEFT TO REFUSE JOB POST
 router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next) => {
   const id = req.session.currentUser._id;
@@ -259,26 +229,40 @@ router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next
   }
 });
 /* DELETE*/
-router.delete("/:id", isLoggedIn, (req, res, next) => {
-  if (req.session.currentUser && req.params.id !== req.session.currentUser._id) {
+router.delete("/:id", isLoggedIn, async (req, res, next) => {
+  try {
+  let user = req.session.currentUser;
+  console.log("user======>", user)
+  if (user && req.params.id !== user._id) {
     return res.status(403).json("You cannot delete this user.");
   }
-  User.findOneAndDelete({ _id: req.params.id })
-    .then((deleteUser) => {
-      if (!deleteUser) {
-        res.status(400).json({ message: "No user to delete" });
-        return;
+      if(user.profileType === "recruiter") {
+        // let posts = await Post.find({recruiterId: user._id });
+        // let apps = await Application.find({_id: {$in: user.applicationId}});
+        let isdeletePosts = await Post.deleteMany({recruiterId: user._id });
+        let isdeleteApps = await Post.deleteMany({ _id: { $in: user.applicationId } });
+        console.log(isdeletePosts,isdeleteApps)
       }
+      await User.deleteOne({ _id: req.params.id });
       req.session.destroy();
-      res.status(200).json({
-        status: "ok",
-        message: `User with id ${deleteUser._id} was deleted.`,
-      });
-    })
-    .catch((err) => res.status(500).json({ message: "Deleting went bad" }));
+    res.json({ message: "You account is delete." });
+    return;
+  } catch (error) {
+    console.log(error)
+  }
+  // User.findOneAndDelete({ _id: req.params.id })
+  //   .then((deleteUser) => {
+  //     if (!deleteUser) {
+  //       res.status(400).json({ message: "No user to delete" });
+  //       return;
+  //     }
+  //     req.session.destroy();
+  //     res.status(200).json({
+  //       status: "ok",
+  //       message: `User with id ${deleteUser._id} was deleted.`,
+  //     });
+  //   })
+  //   .catch((err) => res.status(500).json({ message: "Deleting went bad" }));
 });
-// //give badges to a candidate 
-// router.patch('/:id', [isLoggedIn, isRecruiter],(req,res,next)=>{
-  
-// })
+
 module.exports = router;

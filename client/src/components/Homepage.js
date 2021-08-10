@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // import NavBar from "./NavBar";
 class Homepage extends React.Component {
   loginCheck = ()=>{
-    if (this.props.currentUser){
+    if (this.props.currentUser && this.props.location.state?.from !== "delete"){
       console.log(this.props.currentUser)
       if (this.props.currentUser.profileType ==='recruiter'){
         this.props.history.push('/swipeCandidate/random')
