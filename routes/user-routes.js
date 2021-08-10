@@ -56,19 +56,17 @@ router.post("/login", (req, res, next) => {
     .then((user) => {
       console.log(user);
       if (!user) {
-        return next(
-          new Error("No user with that email. Please sign up if you are new to Ninja Mission")
-        );
+        return res.status(204).json()
       }
       if (bcrypt.compareSync(password, user.password) !== true) {
-        return next(new Error("Wrong credentials"));
+        return res.status(400).json({message: "Wrong credentials"});
       } else {
         req.session.currentUser = user;
         console.log(user);
         res.json(user);
       }
     })
-    .catch(next);
+    .catch(err => console.log(err));
 });
 //LOGOUT
 router.post("/logout", isLoggedIn, (req, res, next) => {
@@ -237,8 +235,6 @@ router.delete("/:id", isLoggedIn, async (req, res, next) => {
     return res.status(403).json("You cannot delete this user.");
   }
       if(user.profileType === "recruiter") {
-        // let posts = await Post.find({recruiterId: user._id });
-        // let apps = await Application.find({_id: {$in: user.applicationId}});
         let isdeletePosts = await Post.deleteMany({recruiterId: user._id });
         let isdeleteApps = await Post.deleteMany({ _id: { $in: user.applicationId } });
         console.log(isdeletePosts,isdeleteApps)

@@ -5,14 +5,21 @@ import BlueTop from "./backgrounds/BlueTop";
 class Login extends React.Component{
   state = {
     email:'',
-    password:'', 
+    password: '',
+    errMessage: ''
   }
   handleSubmit = (event) =>{
     event.preventDefault();
-    const {email,password} = this.state
+    const { email, password } = this.state
+    if (!email || !password) return;
     login(email,password)
-    .then(response=>{
-      this.setState({ email: "", password: "" });
+      .then(response => {
+        if (!response) {
+          console.log(response)
+          this.setState({ errMessage: "Wrong credentials." });
+          return;
+      }
+      this.setState({ email: "", password: "", errMessage:'' });
       this.props.updateUser(response)
       console.log(this.props.currentUser)
       if (response.profileType==="recruiter") {
@@ -21,7 +28,7 @@ class Login extends React.Component{
         this.props.history.push('/swipeOffer/random')
       }
     })
-    .catch(err=>console.log(err))
+    .catch(err=>console.log(err,"============"))
   }
   handleChange = (event) =>{
     const {name, value}=event.target
@@ -41,6 +48,7 @@ class Login extends React.Component{
              <input type='password' name='password' value={this.state.password} onChange={(e)=>this.handleChange(e)} />
             </label>
             {/* {!this.props.currentUser && <p className='text-red'>{this.state.errorMessage}</p>} */}
+            <p className="text-red"> {this.state.errMessage}</p>
            </div>
             <button className='btn red'>LOG IN</button>
           </form>
