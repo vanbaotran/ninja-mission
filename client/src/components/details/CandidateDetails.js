@@ -156,18 +156,21 @@ class CandidateDetails extends Component {
           <div className="links-candidate flex-row ">
             {this.state.showingCandidate?.usefulLinks && (
               <>
-                <a href={this.state.showingCandidate?.usefulLinks.linkedin} rel="noreferrer" target="_blank">
+                {this.state.showingCandidate.usefulLinks.linkedin && 
+                  <a href={this.state.showingCandidate?.usefulLinks.linkedin} rel="noreferrer" target="_blank">
                   <img src={"/images/icons/linkedin.png"} alt="ico linkedin" />
-                </a>
-                <a href={this.state.showingCandidate?.usefulLinks.github} rel="noreferrer" target="_blank">
-                  <img src={"/images/icons/github.png"} alt="ico github" />
-                </a>
-              </>
-            )}
-            {this.state.showingCandidate?.cvUrl && (
+                </a>}
+                {this.state.showingCandidate.usefulLinks.github &&
+                  <a href={this.state.showingCandidate?.usefulLinks.github} rel="noreferrer" target="_blank">
+                    <img src={"/images/icons/github.png"} alt="ico github" />
+                  </a>
+                }
+            {/* {this.state.showingCandidate.cvUrl === "noCv" || (
               <a href={this.state.showingCandidate?.cvUrl} rel="noreferrer" target="_blank">
                 <img src={"/images/icons/cv.png"} alt="ico cv" />
               </a>
+            )} */console.log(this.state.showingCandidate?.cvUrl)}
+              </>
             )}
           </div>
           {/* <button className="btn red" onClick={this.openChat}> HAVE A CHAT!</button> */}
