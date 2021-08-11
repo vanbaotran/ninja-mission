@@ -18,7 +18,6 @@ class Conversations extends React.Component {
     this.props.history.push(`/chatbox/${roomId}`)
   }
   render() {
-    let recruiter = this.props.currentUser?.profileType === 'recruiter'
     return (
       <div className='conversations'>
         <div className='top-line flex-row'>
@@ -28,20 +27,21 @@ class Conversations extends React.Component {
         </div>
         <p className='headline text-gray'>Messages</p>
         {this.state.conversations.length !== 0 && this.state.conversations.map(el=>{
-          if (recruiter){
+            console.log('CONVERSATION', el, this.props.currentUser?.profileType === 'recruiter')
+          if (this.props.currentUser?.profileType === 'recruiter'){
             return (<div className ='convo-element flex-row' onClick={()=>this.goToChat(el.roomId)} key={el._id}>
-            <img src={el?.candidateId.avatar} alt=''/>
+            <img src={el.candidateId.avatar} alt=''/>
             <div className='flex-column'>
-              <p> {el?.candidateId.name} </p>
+              <p> {el.candidateId.name} </p>
               <p className='text-gray'> {el.candidateId.title} </p>
             </div>
           </div>)
           } else {
              return (<div  className ='convo-element flex-row' onClick={()=>this.goToChat(el.roomId)} key={el._id}>
-            <img src={el?.recruiterId.avatar} alt=''/>
+            <img src={el.recruiterId.avatar} alt=''/>
             <div className='flex-column' style={{alignItems:'flex-start',justifyContent:'center',marginLeft:'40px'}}>
-              <p> {el?.recruiterId.name} </p>
-              <p className='text-gray'> {el?.applicationId?.jobPostId?.position} </p>
+              <p> {el.recruiterId.name} </p>
+              <p className='text-gray'> {el.applicationId.jobPostId.position} </p>
             </div>
           </div>)
           }

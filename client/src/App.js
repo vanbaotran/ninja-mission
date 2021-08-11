@@ -103,7 +103,7 @@ class App extends React.Component {
           <Route path='/myapplications' render={(props)=><MyApplications currentUser={this.state.loggedInUser} {...props} />} />
           <Route path='/overlayupdated' render={(props)=><OverlayUpdated {...props} />} />
           <Route path='/giveBadges' render={(props)=><GiveBadges {...props} />} />
-          <Route path='/conversations' render={(props)=><Conversations {...props} />} />
+          <Route path='/conversations' render={(props)=><Conversations {...props} currentUser={this.state.loggedInUser}/>} />
           
         </Switch>
       </div> 

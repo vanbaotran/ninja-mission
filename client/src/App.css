@@ -1081,18 +1081,22 @@ section {
  ######   #######  ##    ##    ###    ######## ##     ##  ######  ##     ##    ##    ####  #######  ##    ##  ######  */
  .conversations {
    background-color: #F9F7F3;
-   height: 100vh;
+   min-height: 100vh;
  }
  .convo-element {
    background-color: white;
    margin: 10px;
+   height: 100px;
  }
  .convo-element p {
   margin-block-start: 0.5em;
   margin-block-end: 0;
  }
  .convo-element img {
-  max-width: 30%;
+  max-width: 100%;
+  object-fit: cover;
+  width:90px;
+  height:90px;
  }
 .conversations .top-line img{
   width: 20px;
