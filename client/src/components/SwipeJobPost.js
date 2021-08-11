@@ -215,13 +215,14 @@ class SwipeJobPost extends Component {
                 "Loading..."}
             </h1>
           )) || (
-            <div className="block-to-swipe" onClick={this.detailPost}>
-              <img className="company-logo" src={compagnyLogo} alt="logo" />
-              <h1>{this.state.offer.position}</h1>
-              <div className="block-infoico">
+            <div className="block-to-swipe">
+              <img className="company-logo"  onClick={this.detailPost} src={compagnyLogo} alt="logo" />
+              <h1 onClick={this.detailPost} >{this.state.offer.position}</h1>
+              <div onClick={this.detailPost} className="block-infoico">
                 <InfoIco type={this.state.offer.experienceLevel} />
                 <InfoIco type={this.state.offer.contract} />
-              </div>
+                </div>
+                
                <div className="block-btn-swipe">
                 <img
                   className="btn-swipe"
