@@ -181,30 +181,31 @@ class SwipeCandidateProfile extends React.Component {
                     />
                   </div>
                 </div>
+                 <div className="block-btn-swipe">
+                  <img
+                    className="btn-swipe"
+                    src="/images/icons/reverse.png"
+                    alt="reverse ico"
+                    onClick={this.comeBack}
+                  />
+                  <img
+                    className="btn-swipe"
+                    src="/images/icons/cancel.png"
+                    alt="cancel ico"
+                    onClick={this.swipeCandidate}
+                  />
+                  <img
+                    className="btn-swipe"
+                    src="/images/icons/heart.png"
+                    alt="heart ico"
+                    onClick={this.chooseCandidate}
+                  />
+                  <img className="btn-swipe" src="/images/icons/badge.png" alt="badge ico" onClick={() => this.props.history.push({pathname:`/myBadges/${this.state.candidate._id}`, state: {user: this.state.candidate}})} />
+               </div>
               </div>
             )}
           </div>
-          <div className="block-btn-swipe">
-            <img
-              className="btn-swipe"
-              src="/images/icons/reverse.png"
-              alt="reverse ico"
-              onClick={this.comeBack}
-            />
-            <img
-              className="btn-swipe"
-              src="/images/icons/cancel.png"
-              alt="cancel ico"
-              onClick={this.swipeCandidate}
-            />
-            <img
-              className="btn-swipe"
-              src="/images/icons/heart.png"
-              alt="heart ico"
-              onClick={this.chooseCandidate}
-            />
-            <img className="btn-swipe" src="/images/icons/badge.png" alt="badge ico" onClick={() => this.props.history.push({pathname:`/myBadges/${this.state.candidate._id}`, state: {user: this.state.candidate}})} />
-          </div>
+         
         </div>
         {this.state.optionsIsOpen && (
           <OverlayExperience
