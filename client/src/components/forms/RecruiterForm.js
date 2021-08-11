@@ -56,8 +56,13 @@ class RecruiterForm extends React.Component {
     }
   }
   deleteAccount = async (e) => {
-    let data = await deleteUser(this.props.currentUser._id);
-    this.props.history.push({ pathname: "/", state: { from: "delete" } });
+    try {
+      
+      await deleteUser(this.props.currentUser._id);
+      this.props.history.push({ pathname: "/", state: { from: "delete" } });
+    } catch (error) {
+      console.log(error)
+    }
   }
   render() {
     return (

@@ -3,7 +3,7 @@ import BlueTop from "./backgrounds/BlueTop";
 import service from './service'
 
 class GiveBadges extends Component {
-  state: {
+  state = {
     motivation: 0,
     skills: 0,
     humour: 0,
