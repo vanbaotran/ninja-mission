@@ -12,7 +12,7 @@ class LevelPage extends React.Component{
     this.setState({
       level: str
     })
-    editProfile({...this.state})
+    editProfile({level: str})
     .then(response=>{
       this.props.updateUser(response)
     })
@@ -32,22 +32,22 @@ class LevelPage extends React.Component{
           <img src='/images/nunchaku.png'alt='levels'/>
         </header>
       <main>
-          <div onClick = {()=>this.updateLevel('Warrior')} className={`row-level border-blue ${this.props.currentUser?.level==='Warrior' ? 'yellow' : 'white'}`}>
+          <div onClick = {()=>this.updateLevel('Warrior')} className={`row-level border-blue ${this.state.level==='Warrior' ? 'yellow' : 'white'}`}>
             <h3>Warrior</h3>
             <div className='image'><img src='/images/warrior.png' alt='warrior'/></div>
             <h3>0 - 2 yrs experience</h3>
           </div>
-          <div onClick = {()=>this.updateLevel('Ninja')} className={`row-level border-yellow ${this.props.currentUser?.level==='Ninja' ? 'yellow' : 'white'}`}>
+          <div onClick = {()=>this.updateLevel('Ninja')} className={`row-level border-yellow ${this.state.level==='Ninja' ? 'yellow' : 'white'}`}>
             <h3>Ninja</h3>
            <div className='image'> <img src='/images/ninja.png' alt='ninja'/> </div>
             <h3>2 - 3 yrs experience</h3>
           </div>
-          <div onClick = {()=>this.updateLevel('Samurai')} className={`row-level border-orange ${this.props.currentUser?.level==='Samurai' ? 'yellow' : 'white'}`}>
+          <div onClick = {()=>this.updateLevel('Samurai')} className={`row-level border-orange ${this.state.level==='Samurai' ? 'yellow' : 'white'}`}>
             <h3>Samurai</h3>
              <div className='image'><img src='/images/samurai.png' alt='samurai'/></div>
             <h3>3 - 5 yrs experience</h3>
           </div>
-          <div onClick = {()=>this.updateLevel('Sensei')} className={`row-level border-red ${this.props.currentUser?.level==='Sensei' ? 'yellow' : 'white'}`}>
+          <div onClick = {()=>this.updateLevel('Sensei')} className={`row-level border-red ${this.state.level==='Sensei' ? 'yellow' : 'white'}`}>
             <h3>Sensei</h3>
              <div className='image'><img src='/images/sensei.png' alt='sensei'/></div>
             <h3>5 yrs+ experience</h3>
