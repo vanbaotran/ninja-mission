@@ -28,7 +28,6 @@ class Signup extends React.Component {
         } else if (response.profileType === "candidate") {
           this.props.history.push("/editCandidateform");
         }
-        console.log(response);
       })
       .catch((error) => console.log(error));
   };

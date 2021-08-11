@@ -51,10 +51,8 @@ router.post("/signup", (req, res, next) => {
 // LOGIN
 router.post("/login", (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password);
   User.findOne({ email })
     .then((user) => {
-      console.log(user);
       if (!user) {
         return res.status(204).json();
       }
@@ -62,7 +60,6 @@ router.post("/login", (req, res, next) => {
         return res.status(400).json({ message: "Wrong credentials" });
       } else {
         req.session.currentUser = user;
-        console.log(user);
         res.json(user);
       }
     })
@@ -110,7 +107,6 @@ router.get("/random", [isLoggedIn, isRecruiter], async (req, res, next) => {
     user = await User.findOne({ _id: req.session.currentUser._id }).populate(
       "currentApplicationId"
     );
-    console.log(user);
     if (!user.currentApplicationId) {
       return res.status(204).json();
     }
@@ -158,7 +154,6 @@ router.get("/:id", isLoggedIn, (req, res, next) => {
 //PATCH update user profile
 router.patch("/", isLoggedIn, (req, res, next) => {
   const id = req.session.currentUser._id;
-  console.log(id);
   // let newApplicationId;
   if (req.body.password) {
     res.status(403).json("Password cannot be changed by this way.");
@@ -170,7 +165,6 @@ router.patch("/", isLoggedIn, (req, res, next) => {
       { ...body },
       { new: true, runValidators: true },
       function (err, updatedUser) {
-        console.log("=============", updatedUser, "==================", err);
         updatedUser.password = undefined;
         if (err) {
           return res.status(422).json(err);
@@ -179,12 +173,9 @@ router.patch("/", isLoggedIn, (req, res, next) => {
       }
     );
   }
-  //  console.log(req.body)
   if (req.body.currentPostId) {
     Application.findOne({ jobPostId: req.body.currentPostId })
       .then((appliFromDB) => {
-        console.log(id);
-        let currentApplicationId = appliFromDB._id;
         if (id) {
           updateUserInfo(id, { ...req.body, currentApplicationId: appliFromDB._id });
         } else {
@@ -199,7 +190,6 @@ router.patch("/", isLoggedIn, (req, res, next) => {
       return res.status(400).json({ message: "Please log in" });
     }
   }
-  console.log("req.body ", req.body);
 });
 //CANDIDATE SWIPES LEFT TO REFUSE JOB POST
 router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next) => {
@@ -230,18 +220,15 @@ router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next
 router.delete("/:id", /*isLoggedIn,*/ async (req, res, next) => {
   try {
     let user = req.session.currentUser;
-    console.log("user======>", user);
     if (user && req.params.id !== user._id) {
       return res.status(403).json("You cannot delete this user.");
     }
     if (user.profileType === "recruiter") {
       let isdeletePosts = await Post.deleteMany({ recruiterId: user._id });
       let isdeleteApps = await Post.deleteMany({ _id: { $in: user.applicationId } });
-      console.log(isdeletePosts, isdeleteApps);
     }
     if (user.profileType === "candidate") {
       let apps = await Application.find({ candidateId: user._id });
-      console.log(apps)
       for (let app of apps) {
         let { candidateId, acceptedCandidateId, refusedCandidateId } = app;
         candidateId.splice(candidateId.indexOf(user._id), 1);

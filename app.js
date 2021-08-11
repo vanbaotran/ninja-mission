@@ -69,10 +69,7 @@ const server = http.createServer(app);
 const io = require("socket.io")(server, { cors: corsOptions });
 
 io.on("connection", function (socket) {
-  console.log(socket.id);
-
   socket.on("join-room", (room) => {
-    console.log(room);
     socket.join(room);
     socket.on("sendMessage", (mess) => {
       io.to(room).emit("receiveMessageFromOther", mess);

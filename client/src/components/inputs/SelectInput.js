@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class SelectInput extends Component {
   changeMultiple = (e) => {
-    console.log(e);
     let arrMultiple = [];
     for (const key in e.target.options) {
       if (Object.hasOwnProperty.call(e.target.options, key)) {

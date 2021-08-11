@@ -20,7 +20,6 @@ class CandidateDetails extends Component {
             let application = await service.get(
               `applications/${this.props.currentUser.currentApplicationId}`
             );
-            console.log(application);
             if (application.data.acceptedCandidateId.includes(this.props.match.params.id)) {
               apply = "ACCEPTED";
               this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.match.params.id}_${this.props.currentUser.currentApplicationId}`)
@@ -165,11 +164,11 @@ class CandidateDetails extends Component {
                     <img src={"/images/icons/github.png"} alt="ico github" />
                   </a>
                 }
-            {/* {this.state.showingCandidate.cvUrl === "noCv" || (
+           {this.state.showingCandidate.cvUrl === "noCv" || (
               <a href={this.state.showingCandidate?.cvUrl} rel="noreferrer" target="_blank">
                 <img src={"/images/icons/cv.png"} alt="ico cv" />
               </a>
-            )} */console.log(this.state.showingCandidate?.cvUrl)}
+            )} 
               </>
             )}
           </div>

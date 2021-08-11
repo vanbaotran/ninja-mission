@@ -25,7 +25,6 @@ handleSubmit = (e) => {
   } else {
     service.patch(`/users/badges/${this.props.history.location.state._id}`, {badges:review})
     .then(response=>{
-      console.log(response.data)
       this.props.history.goBack()
     })
     .catch(err=>console.log(err))

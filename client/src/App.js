@@ -59,13 +59,11 @@ class App extends React.Component {
   componentDidMount() {
     this.fetchUser()
   }
-  componentDidUpdate(prevProps, prevState){
-    // console.log(this.state.currentUser)
+  componentDidUpdate(prevProps){
     if(prevProps.currentUser !== this.props.currentUser && (this.props.currentUser!==null)){
       editProfile({currentPostId:this.state.currentPostId})
       .then(response=>{
         this.setState({currentPostId:this.state.currentPostId})
-        console.log(response)
       })
       .catch(err=>console.log(err))
     }

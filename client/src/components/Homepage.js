@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 class Homepage extends React.Component {
   loginCheck = ()=>{
     if (this.props.currentUser && this.props.location.state?.from !== "delete"){
-      console.log(this.props.currentUser)
       if (this.props.currentUser.profileType ==='recruiter'){
         this.props.history.push('/swipeCandidate/random')
       } else if (this.props.currentUser.profileType ==='candidate') {

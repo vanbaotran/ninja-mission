@@ -57,7 +57,6 @@ class CandidateForm extends React.Component{
     if (!this.state.level || this.state.level === "none") {
       return 
     }
-    console.log(this.state)
     editProfile({...this.state})
     .then(response=>{
       this.setState({...response, popUp: true})
@@ -66,7 +65,6 @@ class CandidateForm extends React.Component{
         this.setState({popUp:false})
         this.props.history.push("/personalProfile")
       }, 2000);
-      console.log(response)
      
     })
     .catch(error => console.log(error))
@@ -92,8 +90,6 @@ class CandidateForm extends React.Component{
     uploadData.append('imageUrl', e.target.files[0]);
     uploadFile(uploadData)
       .then(response => {
-        // console.log(e)
-        console.log(response.secure_url)
         if (e.target.name ==='cvUrl'){
            this.setState({ cvUrl: response.secure_url});
         } else {
@@ -105,9 +101,13 @@ class CandidateForm extends React.Component{
       })
   }
   deleteAccount = async (e) => {
-    let data = await deleteUser(this.props.currentUser._id);
-    console.log(data);
-    this.props.history.push({ pathname: "/", state: { from: "delete" } });
+    try {
+      await deleteUser(this.props.currentUser._id);
+      this.props.history.push({ pathname: "/", state: { from: "delete" } });
+      
+    } catch (error) {
+      console.log(error)
+    }
   }
   render(){
     function formatDate(date) {

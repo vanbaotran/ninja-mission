@@ -19,7 +19,6 @@ class RecruiterForm extends React.Component {
     e.preventDefault();
     service.patch(`/users`, { ...this.state }).then((response) => {
       let updatedUser = response.data;
-      console.log(updatedUser)
       this.setState({
         name: updatedUser ? updatedUser.name : "",
         email: updatedUser ? updatedUser.email : "",
@@ -58,7 +57,6 @@ class RecruiterForm extends React.Component {
   }
   deleteAccount = async (e) => {
     let data = await deleteUser(this.props.currentUser._id);
-    console.log(data);
     this.props.history.push({ pathname: "/", state: { from: "delete" } });
   }
   render() {

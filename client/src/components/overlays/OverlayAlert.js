@@ -10,7 +10,6 @@ class OverlayAlert extends Component {
     this.props.updateCurrentPost(id);
     editProfile({currentPostId:id})
     .then(response=>{
-      console.log('CHANGING POST ID', response)
       this.props.updateUser(response);
       this.props.random()
     })
@@ -20,11 +19,9 @@ class OverlayAlert extends Component {
     if(this.props.currentUser){
       service.get(`/posts/recruiter/${this.props.currentUser._id}`)
       .then(response=>{
-        console.log(response.data)
         this.setState({
           offerList:response.data
         })
-        console.log(this.state.offerList)
       })
       .catch(err=>console.log(err))
     }  

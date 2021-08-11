@@ -6,7 +6,6 @@ const { isCandidate, isRecruiter, isLoggedIn } = require("./useful");
 const Application = require("../models/Application.model");
 
 postRoutes.post("/", [isLoggedIn, isRecruiter], (req, res, next) => {
-  console.log("CREATING POST");
   if (!req.body.companyLogo) {
     // if no logo choose for post job, logo post job = default company recruiter logo
     req.body.companyLogo = req.session.currentUser.companyLogo;
@@ -70,7 +69,6 @@ postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
       .populate("recruiterId")
       .skip(random);
     // if no post find return 204 no content
-    console.log(randomPost, filter);
     if (!randomPost) {
       res.status(204).json();
       return;
@@ -85,7 +83,6 @@ postRoutes.get("/random", [isLoggedIn, isCandidate], async (req, res, next) => {
 });
 //GET POST BY RECRUITER ID
 postRoutes.get("/recruiter/:recruiterId", [isLoggedIn, isRecruiter], (req, res, next) => {
-  console.log(req.params.recruiterId)
   Post.find({ recruiterId: req.params.recruiterId })
     .populate("applicationId")
     .then((ret) => res.status(200).json(ret))
@@ -93,7 +90,6 @@ postRoutes.get("/recruiter/:recruiterId", [isLoggedIn, isRecruiter], (req, res, 
 });
 //GET ONE POST Details by id
 postRoutes.get("/:id", isLoggedIn, (req, res, next) => {
-  console.log(req.params.id)
   Post.findById(req.params.id)
     .populate('applicationId')
     .then((ret) => {

@@ -24,7 +24,6 @@ class SwipeCandidateProfile extends React.Component {
     service
       .get(url)
       .then((resp) => {
-        console.log(resp);
         if (resp.status === 204) {
           this.setState({
             candidate: false,
