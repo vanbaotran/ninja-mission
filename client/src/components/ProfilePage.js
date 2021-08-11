@@ -18,12 +18,14 @@ class ProfilePage extends React.Component {
     }
     return age
   }
-  componentDidMount(){
-    getPostData(this.props.currentUser.currentPostId)
-    .then(response=>{
-      this.setState({currentPost:response})
-    })
-    .catch(err=>console.log(err))
+  componentDidMount() {
+    if (this.props.currentUser.profileType === "recruiter") { 
+      getPostData(this.props.currentUser.currentPostId)
+      .then(response=>{
+        this.setState({currentPost:response})
+      })
+      .catch(err=>console.log(err))
+    }
   }
   logout = () =>{
     if(this.props.currentUser){
