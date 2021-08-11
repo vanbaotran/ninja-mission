@@ -177,7 +177,7 @@ class CandidateForm extends React.Component{
           />
            <TextInput
             label="Fun Fact"
-            name="funfact"
+            name="funFact"
             value={this.state.funFact}
             change={this.handleChange}
             area={true}

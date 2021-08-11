@@ -226,30 +226,31 @@ class SwipeJobPost extends Component {
                 <InfoIco type={this.state.offer.experienceLevel} />
                 <InfoIco type={this.state.offer.contract} />
               </div>
+               <div className="block-btn-swipe">
+                <img
+                  className="btn-swipe"
+                  src="/images/icons/reverse.png"
+                  alt="reverse ico"
+                  onClick={this.comeBack}
+                />
+                <img
+                  className="btn-swipe"
+                  src="/images/icons/cancel.png"
+                  alt="cancel ico"
+                  onClick={this.swipeOffer}
+                />
+                <img
+                  className="btn-swipe"
+                  src="/images/icons/heart.png"
+                  alt="heart ico"
+                  onClick={this.chooseOffer}
+                />
+                <img className="btn-swipe" onClick={()=>this.showRecruiterBadges()} src="/images/icons/badge.png" alt="badge" />
+              </div>
             </div>
           )}
         </div>
-        <div className="block-btn-swipe">
-          <img
-            className="btn-swipe"
-            src="/images/icons/reverse.png"
-            alt="reverse ico"
-            onClick={this.comeBack}
-          />
-          <img
-            className="btn-swipe"
-            src="/images/icons/cancel.png"
-            alt="cancel ico"
-            onClick={this.swipeOffer}
-          />
-          <img
-            className="btn-swipe"
-            src="/images/icons/heart.png"
-            alt="heart ico"
-            onClick={this.chooseOffer}
-          />
-          <img className="btn-swipe" onClick={()=>this.showRecruiterBadges()} src="/images/icons/badge.png" alt="badge" />
-        </div>
+       
         {this.state.optionsIsOpen && (
           <OverlayWeapon
             filter={this.searchRandom}

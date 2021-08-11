@@ -37,15 +37,16 @@ class Signup extends React.Component {
       return (
         <div>
           <div className="signup">
+           <img className='icon' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt=''/>
             <div className="sub-signup flex-column">
               <h2>You are here to...</h2>
               <div className="flex-row">
                 <div onClick={() => this.updateProfileType("recruiter")}>
-                  <img src="/images/temple.png" alt="temple" />
+                  <div className='image'><img src="/images/temple.png" alt="temple" /></div>
                   <h4 className="text-blue">HIRE A NINJA</h4>
                 </div>
                 <div onClick={() => this.updateProfileType("candidate")}>
-                  <img src="/images/ninja.png" alt="ninja" />
+                  <div className='image'><img src="/images/ninja.png" alt="ninja" /></div>
                   <h4 className="text-red">FIND YOUR MISSION</h4>
                 </div>
               </div>
@@ -58,6 +59,7 @@ class Signup extends React.Component {
       return (
         <div className="signup-form">
           <RedTop />
+           <img className='icon' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt=''/>
           <form onSubmit={this.handleSubmit}>
             <div className="form-no-btn">
               <h1 className="text-blue">LET'S SIGN UP</h1>

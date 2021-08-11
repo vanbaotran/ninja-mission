@@ -38,6 +38,7 @@ class Login extends React.Component{
     return (
       <div className="block-login">
       <BlueTop/>
+       <img className='icon' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt=''/>
        <form onSubmit={this.handleSubmit}>
        <div className="form-no-btn">
       <h1 className='text-blue'>WELCOME BACK!</h1>
