@@ -26,6 +26,11 @@ class SwipeJobPost extends Component {
     let url = "/posts/random";
     if (params) {
       url = `${url}?filterContract=${params.join("_")}`;
+    } else {
+      if (this.state.currentOptions.length > 0) {
+
+        url= `${url}?filterContract=${this.state.currentOptions.join("_")}`;
+      }
     }
     service
       .get(url)
@@ -49,8 +54,13 @@ class SwipeJobPost extends Component {
       });
   };
   newRandom = async () => {
+    let url = "/posts/random";
+    if (this.state.currentOptions.length > 0) {
+
+      url= `${url}?filterContract=${this.state.currentOptions.join("_")}`;
+    }
     return service
-      .get("/posts/random")
+      .get(url)
       .then((resp) => {
         if (resp.status === 204) {
           return false;
