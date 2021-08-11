@@ -2,9 +2,7 @@ import React from 'react';
 import BlueTop from './backgrounds/BlueTop'
 import Rating from './Rating'
 class MyBadges extends React.Component {
-  componentDidMount() {
-    console.log(this.props.history.location.state.user.badges)
-  }
+  
   render(){
     let user = this.props.history.location.state?.user;
     // if (this.props.currentUser.profileType==='candidate'){

@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.get('/byUser', (req,res,next)=>{
   const userId = req.session.currentUser._id
-  console.log(userId)
   let filter = req.session.currentUser.profileType === 'recruiter' ? {recruiterId:userId} : {candidateId:userId}
   Room.find(filter)
   .populate('recruiterId candidateId')
@@ -16,7 +15,6 @@ router.get('/byUser', (req,res,next)=>{
     }
   })
   .then(theRooms =>{
-    console.log('ROOMS', theRooms)
    res.status(200).json(theRooms);
    return;
   })
@@ -50,9 +48,7 @@ router.post("/", async (req, res, next) => {
 });
 router.patch("/:roomId", async (req, res, next) => {
   try {
-      console.log("in PATch")
     let room = await Room.findOne({roomId: req.params.roomId});
-    console.log(room , "<= room patch")
     if(!room) {
       res.status(204).json();
       return;

@@ -15,13 +15,11 @@ class Login extends React.Component{
     login(email,password)
       .then(response => {
         if (!response) {
-          console.log(response)
           this.setState({ errMessage: "Wrong credentials." });
           return;
       }
       this.setState({ email: "", password: "", errMessage:'' });
       this.props.updateUser(response)
-      console.log(this.props.currentUser)
       if (response.profileType==="recruiter") {
         this.props.history.push('/swipeCandidate/random')
       } else {

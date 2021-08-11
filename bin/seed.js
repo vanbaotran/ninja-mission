@@ -62,7 +62,6 @@ async function insertMockData() {
             { _id: postDb._id },
             { recruiterId: recruiter._id, applicationId: app._id }
           );
-          console.log(appIds)
           await User.updateOne(
             { _id: recruiter._id },
             { currentApplicationId: currentApp[0], applicationId: appIds }
@@ -72,6 +71,7 @@ async function insertMockData() {
         }
       });
     }
+    console;log("it's finish!!!")
   } catch (error) {
     console.log(error);
   }

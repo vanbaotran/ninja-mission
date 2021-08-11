@@ -8,7 +8,6 @@ class Conversations extends React.Component {
   componentDidMount() {
     service.get('/rooms/byUser')
     .then(response=>{
-      console.log(response.data)
       this.setState({
         conversations: response.data
       })
@@ -20,7 +19,6 @@ class Conversations extends React.Component {
   }
   render() {
     let recruiter = this.props.currentUser?.profileType === 'recruiter'
-    console.log(this.state.conversations)
     return (
       <div className='conversations'>
         <div className='top-line flex-row'>

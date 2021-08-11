@@ -18,11 +18,7 @@ class Chat extends React.Component {
 
   async componentDidMount() {
     const roomId = this.props.match.params.id;
-    // let prefix_message = (this.props.currentUser.profileType === "recruiter" )? "R_" : "C_";
-    // fetch data users
-    // console.log(prefix_message)
     let arrIds = roomId.split("_"); /// "<recruiterId>_<candidateId>_<application>"
-     console.log(arrIds);
     try {
       let recruiter, candidate;
 
@@ -42,8 +38,6 @@ class Chat extends React.Component {
       } else {
         messages = messages.data.messages;
       }
-      console.log(messages);
-      console.log(roomId)
       this.setState({
         roomId: roomId,
         recruiterId: arrIds[0],
@@ -59,7 +53,7 @@ class Chat extends React.Component {
         this.setState({ messages: [...newRoom.data.messages] });
       });
     } catch (err) {
-      console.log(err, "plop");
+      console.log(err);
     }
     //////////////////////////
   }

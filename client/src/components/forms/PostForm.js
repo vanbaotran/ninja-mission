@@ -75,13 +75,11 @@ export class PostForm extends Component {
         service
           .post("/posts", { ...this.state })
           .then((postFromDB) => {
-            // console.log("in submi", response)
             this.props.updateCurrentPost(postFromDB.data.newPost._id);
             editProfile({ currentPostId: postFromDB.data.newPost._id }).then(
               (response) => {
                 this.props.updateUser(response);
                 this.setState({popUp:true})
-                console.log(response)
                 setTimeout(() => {
                   this.setState({popUp:false})
                   this.props.history.push(`/posts/${postFromDB.data.newPost._id}`);

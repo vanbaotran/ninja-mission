@@ -30,7 +30,6 @@ class ProfilePage extends React.Component {
       logout()
       .then(()=>{
         this.props.updateUser(null)
-        console.log('LOGGED OUT')
         this.props.history.push('/')
         })
       .catch(err=>console.log(err))

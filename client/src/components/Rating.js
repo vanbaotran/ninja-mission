@@ -2,7 +2,6 @@ import React from 'react'
 
 function Rating(props){
     let rating = Math.round(props.children)
-    console.log(props.children)
     let stars='';
     let star = '☆'
     let starFilled = '★'

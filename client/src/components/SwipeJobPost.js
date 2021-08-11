@@ -30,7 +30,6 @@ class SwipeJobPost extends Component {
     service
       .get(url)
       .then((resp) => {
-        console.log(resp);
         if (resp.status === 204) {
           this.setState({
             offer: false,
@@ -114,7 +113,6 @@ class SwipeJobPost extends Component {
       let idApp = this.state.offer.applicationId;
       let copyRemember = [...this.state.remember, `C_${idApp}`]; // stock id for reverse
       // update application with apply of candidate
-      console.log(this.state.offer)
       let theApplication = await service.patch(`/applications/${this.state.offer.applicationId}/add`);
       let newRandom = await this.newRandom();
       //check if it's a match
@@ -163,7 +161,6 @@ class SwipeJobPost extends Component {
         let copySwippedOffer = [...copyCurrentUser.swipedOfferId];
         copySwippedOffer.splice(copySwippedOffer.indexOf(oldId), 1);
         let updatedUser = await service.patch("/users", {swipedOfferId: copySwippedOffer});
-        console.log(updatedUser)
         let oldOffer = await service.get(`/posts/${oldId}`);
         this.props.updateUser(updatedUser.data);
         this.setState({
@@ -174,7 +171,6 @@ class SwipeJobPost extends Component {
       if (action === "C") {
         // if last action is apply update application to remove old choice
         let oldApp = await service.patch(`/applications/${oldId}/remove`);
-        console.log(oldApp)
         let oldOffer = await service.get(`/posts/${oldApp.data.application.jobPostId}`);
         oldOffer.data.applicationId = oldId;
         this.setState({

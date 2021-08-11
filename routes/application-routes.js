@@ -75,7 +75,6 @@ router.patch("/:applicationId/remove", [isLoggedIn, isCandidate], (req, res, nex
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.candidateId.includes(id)) {
-        console.log("test", " idx");
         let idx = AppfromDb.candidateId.findIndex((el) => el === id);
         AppfromDb.candidateId.splice(idx, 1);
         AppfromDb.save().then((updatedApp) => {
@@ -96,7 +95,6 @@ router.patch("/:applicationId/remove", [isLoggedIn, isCandidate], (req, res, nex
 // add candidate in acceptedCandidateId
 router.patch("/:applicationId/accept", [isLoggedIn, isRecruiter], (req, res, next) => {
   let id = req.body.id;
-  console.log(req.params.applicationId, req.body.id)
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.acceptedCandidateId.includes(id)) {
@@ -126,7 +124,6 @@ router.patch("/:applicationId/undoAccept", [isLoggedIn, isRecruiter], (req, res,
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.acceptedCandidateId.includes(id)) {
-        console.log("test", " idx");
         let idx = AppfromDb.acceptedCandidateId.findIndex((el) => el === id);
         AppfromDb.acceptedCandidateId.splice(idx, 1);
         AppfromDb.save().then((updatedApp) => {
@@ -177,7 +174,6 @@ router.patch("/:applicationId/undoRefuse", [isLoggedIn, isRecruiter], (req, res,
   Application.findById(req.params.applicationId)
     .then((AppfromDb) => {
       if (AppfromDb.refusedCandidateId.includes(id)) {
-        console.log("test", " idx");
         let idx = AppfromDb.refusedCandidateId.findIndex((el) => el === id);
         AppfromDb.refusedCandidateId.splice(idx, 1);
         AppfromDb.save().then((updatedApp) => {

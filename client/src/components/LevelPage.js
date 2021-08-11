@@ -14,7 +14,6 @@ class LevelPage extends React.Component{
     })
     editProfile({...this.state})
     .then(response=>{
-      console.log('CHANGING LEVEL',response)
       this.props.updateUser(response)
     })
     .catch(err=>console.log(err))

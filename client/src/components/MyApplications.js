@@ -17,7 +17,6 @@ class MyApplications extends React.Component{
         this.setState({
           applicationList:response.data.arrCandidating
         })
-        console.log(this.state.applicationList)
       })
       .catch(err=>console.log(err))
     }  
