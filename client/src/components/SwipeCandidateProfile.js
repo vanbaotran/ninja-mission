@@ -159,17 +159,11 @@ class SwipeCandidateProfile extends React.Component {
             <img onClick={()=>this.props.history.push('/conversations')} className="ico-swipe ico-chat" src="/images/icons/chat.png" alt="ico" />
           </div>
           <div className="body-swipe">
-            {(!this.state.candidate && (
-              <h1>
-                {(this.state.errorMessage && (
-                  <div className="text-red">{this.state.errorMessage}</div>
-                )) ||
-                  "Loading..."}
-              </h1>
-            )) || (
-              <div className="block-to-swipe" onClick={this.detailPost}>
-                <img className="avatar" src={this.state.candidate.avatar} alt="avatar" />
-                <div className="block-footer">
+          {(!this.state.candidate && ((this.state.errorMessage && <h1 className="text-red">{this.state.errorMessage}</h1>) || <h1>Loading...</h1>))
+            || (
+              <div className="block-to-swipe" >
+                <img onClick={this.detailPost} className="avatar" src={this.state.candidate.avatar} alt="avatar" />
+                <div onClick={this.detailPost} className="block-footer">
                   <h1>{this.state.candidate.title}</h1>
                   <div className="image-level">
                     <img
