@@ -17,13 +17,13 @@ class CandidateDetails extends Component {
           .get(`/users/${this.props.match.params.id}`)
           .then(async (response) => {
             let apply;
-            await service.get(
-              `applications/${this.props.currentUser.currentApplicationId}`
-            ).then(application => {
-              if (application.data.acceptedCandidateId.includes(this.props.match.params.id)) {
+            service.get(`/applications/${this.props.currentUser.currentApplicationId}`)
+            .then(application => {
+              console.log(application)
+              if (application.data.acceptedCandidateId?.includes(this.props.match.params.id)) {
                 apply = "ACCEPTED";
                 // this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.match.params.id}_${this.props.currentUser.currentApplicationId}`)
-              } else if (application.data.refusedCandidateId.includes(this.props.match.params.id)) {
+              } else if (application.data.refusedCandidateId?.includes(this.props.match.params.id)) {
                 apply = "REFUSED";
               } else {
                 apply = false;
@@ -98,7 +98,7 @@ class CandidateDetails extends Component {
             {/* <img src={this.state.avatar ? this.state.avatar : "/images/ninja.png"} alt="avatar" /> */}
             {this.state.showingCandidate && this.props.currentUser.profileType === "recruiter" && (
               <div className="block-btn-swipe-detail flex-row">
-                {(this.state.apply && <h2 className="text-red" onClick={this.chooseCandidate}>{this.state.apply}</h2> 
+                {(this.state.apply && <h2 className="text-red" style={{backgroundColor:'white', borderRadius:'10px'}} onClick={this.chooseCandidate}>{this.state.apply}</h2> 
                   ) || (
                   <>
                     <img

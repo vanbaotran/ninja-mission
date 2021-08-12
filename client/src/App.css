@@ -516,6 +516,9 @@ margin: auto;
   text-align: center;
   z-index: 100;
 }
+.overlay .btn {
+  max-width: 50%;
+}
 .overlay .matched {
   width: 80px;
 }
@@ -1025,15 +1028,16 @@ section {
    height: 100vh;
    padding-bottom: 3.5em;
  }
- .message-box .btn {
+ .message-box .btn-send {
   width: 50px;
   font-size: 0.8em;
-  height: 4em;
+  height: 35px;
   border-radius: 0;
   margin: 0;
+  align-self: center;
  }
  .message-box .chat-area {
-   height: 3em;
+  height: 30px;
   border-radius: 0;
   border: none;
   flex:1;

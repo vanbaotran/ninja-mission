@@ -71,6 +71,9 @@ class Chat extends React.Component {
   sendMyMessage = async (e) => {
     let prefix_message = (this.props.currentUser.profileType === "recruiter" )? "R_" : "C_";
     this.socket.emit("sendMessage", `${prefix_message}${this.state.message}`);
+    this.setState({
+      message:''
+    })
   };
   getPostInfo = () => {
     let theApplicationId = this.state.roomId.split('_')[2]
@@ -115,7 +118,7 @@ class Chat extends React.Component {
             return (
 
               <div className="block-mess flex-row" style={divStyle} key={idx}>
-               {(myChatBuddy.avatar === avatar) && <img  src={avatar} alt="avatar" />}
+               {(myChatBuddy.avatar === avatar && myChatBuddy.avatar!== "https://via.placeholder.com/150" && avatar!== "https://via.placeholder.com/150") && <img  src={avatar} alt="avatar" />}
                <div className='text-message'>
                 <p>{arrMess[1] || mess}</p>
               </div>
@@ -134,7 +137,7 @@ class Chat extends React.Component {
               placeholder='Message'
             />
           <button
-            className="btn blue"
+            className="btn-send btn blue"
             onClick={(e) => {
               this.sendMyMessage(e);
             }}
