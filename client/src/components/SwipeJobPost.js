@@ -217,14 +217,8 @@ class SwipeJobPost extends Component {
           <img onClick={()=>this.props.history.push('/conversations')} className="ico-swipe ico-chat" src="/images/icons/chat.png" alt="ico" />
         </div>
         <div className="body-swipe">
-          {(!this.state.offer && (
-            <h1>
-              {(this.state.errorMessage && (
-                <div className="text-red">{this.state.errorMessage}</div>
-              )) ||
-                "Loading..."}
-            </h1>
-          )) || (
+          {(!this.state.offer && ((this.state.errorMessage && <h1 className="text-red">{this.state.errorMessage}</h1>) || <h1>Loading...</h1>))
+             || (
             <div className="block-to-swipe">
               <img className="company-logo"  onClick={this.detailPost} src={compagnyLogo} alt="logo" />
               <h1 onClick={this.detailPost} >{this.state.offer.position}</h1>
