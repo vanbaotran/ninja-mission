@@ -176,10 +176,7 @@ class SwipeCandidateProfile extends React.Component {
                     />
                   </div>
                 </div>
-               
-              </div>
-            )}
-               <div className="block-btn-swipe">
+                <div className="block-btn-swipe">
                   <img
                     className="btn-swipe"
                     src="/images/icons/reverse.png"
@@ -200,6 +197,9 @@ class SwipeCandidateProfile extends React.Component {
                   />
                   <img className="btn-swipe" src="/images/icons/badge.png" alt="badge ico" onClick={() => this.props.history.push({pathname:`/myBadges/${this.state.candidate._id}`, state: {user: this.state.candidate}})} />
                </div>
+              </div>
+            )}
+              
           </div>
         
         </div>
