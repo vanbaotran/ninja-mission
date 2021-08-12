@@ -11,7 +11,7 @@ class Chat extends React.Component {
     recruiterId: "",
     candidateId: "",
     err: "",
-    overlayisOpen:false
+    overlayisOpen:false,
   };
 
   socket = io(process.env.REACT_APP_API_URL || "http://localhost:5000", { withCredentials: true, autoConnect: false });
@@ -72,6 +72,15 @@ class Chat extends React.Component {
     let prefix_message = (this.props.currentUser.profileType === "recruiter" )? "R_" : "C_";
     this.socket.emit("sendMessage", `${prefix_message}${this.state.message}`);
   };
+  getPostInfo = () => {
+    let theApplicationId = this.state.roomId.split('_')[2]
+      service.get(`/applications/${theApplicationId}`)
+      .then(response=>{
+        let jobPostId = response.data.jobPostId._id;
+        this.props.history.push(`/posts/${jobPostId}`)
+      })
+      .catch(err=>console.log(err))
+  }
   render() {
     let myChatBuddy = this.props.currentUser.profileType === "recruiter" ? this.props.currentCandidate : this.props.currentRecruiter;
     let myself = this.props.currentUser;
@@ -81,8 +90,7 @@ class Chat extends React.Component {
        <div className='chatbox-header flex-row'>
          <img className='icons' onClick={()=>this.props.history.push('/conversations')} src='/images/icons/back-blue.png' alt='back ico'/>
         <div className='avatar flex-column'>
-          {(this.props.currentUser?._id === this.props.currentCandidate?._id) ? <img src={this.props.currentRecruiter?.companyLogo} alt=''/> : <img className='border-blue' src={this.props.currentCandidate?.avatar} alt=''/>}
-          {/* {(this.props.currentUser?._id === this.props.currentRecruiter?._id) && <img className='level-img' src={`/images/${this.props.currentCandidate?.level}.png`} alt='level'/>} */}
+          {(myChatBuddy?.profileType ==='recruiter') ? <img onClick={()=>this.getPostInfo()} src={this.props.currentRecruiter?.companyLogo} alt=''/> : <img className='border-blue' onClick={()=>this.props.history.push(`/users/${this.props.currentCandidate?._id}`)} src={this.props.currentCandidate?.avatar} alt=''/>}
           <p>{myChatBuddy?.name}</p>
         </div>
          <img className='icons' onClick={()=>this.toggleOverlay()} src='/images/icons/settings-blue.png' alt='settings ico'/>

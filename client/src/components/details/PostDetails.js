@@ -70,7 +70,10 @@ class PostDetails extends Component {
     return (
       <div className="details">
         {this.state.overlayisOpen && <OverlayUpdated />}
-        <img className='icon' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt=''/>
+        {(this.props.from ==='swipe' && <img className='icon' onClick={()=>this.back()} src='/images/icons/back-blue.png' alt=''/>) ||
+         (this.props.currentUser.profileType === 'recruiter' && <img className='icon' onClick={()=>this.props.history.push('/myoffers')} src='/images/icons/back-blue.png' alt=''/>) ||
+         (this.props.currentUser.profileType === 'candidate' && this.props.from !=='swipe' && <img className='icon' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt=''/>)}
+       
         <div className="head-post-details flex-column bg-ligth-grey">
           <img
             src={this.state.companyLogo ? this.state.companyLogo : "/images/temple.png"}
@@ -121,7 +124,7 @@ class PostDetails extends Component {
               {this.state?.website}
             </a>
           </div>
-          {(this.props.currentUser?.profileType==='recruiter' && ((this.props.from && <button className="btn blue" onClick={this.back}>GO BACK</button>) || <button className="btn blue" onClick={this.handleEdit}>EDIT THIS POST</button>) )||  <button className="btn red" onClick={this.back}>GO BACK</button>}
+          {(this.props.currentUser?.profileType==='recruiter' && ((this.props.from && <button className="btn blue" onClick={()=>this.back()}>GO BACK</button>) || <button className="btn blue" onClick={this.handleEdit}>EDIT THIS POST</button>) )||  <button className="btn red" onClick={this.back}>GO BACK</button>}
           {this.props.currentUser?.profileType==='recruiter'  && <button className="btn red" onClick={this.deleteThisPost}>DELETE THIS POST</button> }
         </div>
       </div>

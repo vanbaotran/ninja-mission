@@ -25,7 +25,7 @@ class MyOffersList extends React.Component{
     return (
       <div className='wrapper'>
       <div className="top-line flex-row"> 
-        <img src='/images/icons/back.png' onClick={()=>{this.props.history.goBack()}}alt=''/>
+        <img src='/images/icons/back.png' onClick={()=>{this.props.history.push('/profilepage')}}alt=''/>
         <h1 className='text-yellow'>My Offers </h1>
         <img src='' alt=''/>
       </div>

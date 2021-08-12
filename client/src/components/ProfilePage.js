@@ -3,10 +3,12 @@ import {Link} from 'react-router-dom';
 import { getPostData} from './service';
 import BlueTop from "./backgrounds/BlueTop";
 import RedBottom from './backgrounds/RedBottom';
-import {logout} from './service'
+import {logout} from './service';
+import OvelayLogOut from './overlays/OverlayLogOut'
 class ProfilePage extends React.Component {
   state = {
-    currentPost:{}
+    currentPost:{},
+    overlayisOpen: false
   }
   getAge = (dateString) =>{
     let today = new Date();
@@ -37,16 +39,29 @@ class ProfilePage extends React.Component {
       .catch(err=>console.log(err))
     }
   }
+  toggleOverlayLogOut = () =>{
+      if (this.state.overlayisOpen === false) {
+        this.setState({
+          overlayisOpen: true
+      })
+      } else {
+        this.setState({
+          overlayisOpen: false
+      })
+    }
+    console.log(this.state.overlayisOpen)
+  }
   render(){
     if(this.props.currentUser?.profileType==='candidate'){
       return(
         <div className='profile-page'>
+        {this.state.overlayisOpen && <OvelayLogOut toggle={()=>this.toggleOverlayLogOut()} logout={()=>this.logout()} />}
         <BlueTop/>
         <RedBottom/>
          <div className='top-line flex-row'>
         <Link to='/swipeOffer/random'><img src='/images/icons/offer-yellow.png' alt='settings'/></Link>
           <h1 className='text-yellow'>My Profile</h1>
-         <img onClick={()=>{this.logout()}} src='/images/icons/logout.png' alt='logout'/>
+         <img onClick={()=>{this.toggleOverlayLogOut()}} src='/images/icons/logout.png' alt='logout'/>
         </div>
         <header>
           <img src={this.props.currentUser.avatar} alt='avatar'/>
@@ -104,10 +119,11 @@ class ProfilePage extends React.Component {
         <div className='profile-page recruiter'>
           <BlueTop/>
           <RedBottom/>
+          {this.state.overlayisOpen && <OvelayLogOut toggle={()=>this.toggleOverlayLogOut()} logout={()=>this.logout()} />}
            <div className='top-line flex-row'>
           <Link to='/swipeCandidate/random'><img src='/images/icons/people.png' alt='settings'/></Link>
           <h1 className='text-yellow'>My Profile</h1>
-          <img onClick={()=>{this.logout()}}  src='/images/icons/logout.png' alt='logout'/>
+          <img onClick={()=>{this.toggleOverlayLogOut()}}  src='/images/icons/logout.png' alt='logout'/>
         </div>
           <header>
             <img src={this.props.currentUser?.companyLogo || "/images/temple.png"} alt='avatar'/>

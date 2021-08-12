@@ -72,15 +72,16 @@ class SwipeCandidateProfile extends React.Component {
      let theApplication = await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {
         id: this.state.candidate._id,
       });
-      let matched = false;
       let copyRemember = [...this.state.remember, `A_${this.state.candidate._id}`];
       if (theApplication.data.application.candidateId.includes(this.state.candidate._id)) {
-        matched = true;
         this.setState({
           remember: copyRemember,
-          overlayisOpen: matched
+          overlayisOpen: true
         });
         setTimeout(() => {
+          this.setState({
+            overlayisOpen: false
+          })
           this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.state.candidate._id}_${theApplication.data.application._id}`)
         }, 2000);  
       } else {
@@ -174,14 +175,17 @@ class SwipeCandidateProfile extends React.Component {
                     <img
                       src={
                         this.state.candidate
-                          ? `/images/${this.state.candidate.level.toLowerCase()}.png`
+                          ? `/images/${this.state.candidate.level?.toLowerCase()}.png`
                           : `/images/ninja.png`
                       }
                       alt="level-icon"
                     />
                   </div>
                 </div>
-                 <div className="block-btn-swipe">
+               
+              </div>
+            )}
+               <div className="block-btn-swipe">
                   <img
                     className="btn-swipe"
                     src="/images/icons/reverse.png"
@@ -202,10 +206,8 @@ class SwipeCandidateProfile extends React.Component {
                   />
                   <img className="btn-swipe" src="/images/icons/badge.png" alt="badge ico" onClick={() => this.props.history.push({pathname:`/myBadges/${this.state.candidate._id}`, state: {user: this.state.candidate}})} />
                </div>
-              </div>
-            )}
           </div>
-         
+        
         </div>
         {this.state.optionsIsOpen && (
           <OverlayExperience

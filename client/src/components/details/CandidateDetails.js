@@ -22,7 +22,7 @@ class CandidateDetails extends Component {
             );
             if (application.data.acceptedCandidateId.includes(this.props.match.params.id)) {
               apply = "ACCEPTED";
-              this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.match.params.id}_${this.props.currentUser.currentApplicationId}`)
+              // this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.match.params.id}_${this.props.currentUser.currentApplicationId}`)
             } else if (application.data.refusedCandidateId.includes(this.props.match.params.id)) {
               apply = "REFUSED";
             } else {
@@ -97,7 +97,8 @@ class CandidateDetails extends Component {
             {/* <img src={this.state.avatar ? this.state.avatar : "/images/ninja.png"} alt="avatar" /> */}
             {this.state.showingCandidate && this.props.currentUser.profileType === "recruiter" && (
               <div className="block-btn-swipe-detail flex-row">
-                {(this.state.apply && <h2 className="text-red">{this.state.apply}</h2>) || (
+                {(this.state.apply && <h2 className="text-red" onClick={this.chooseCandidate}>{this.state.apply}</h2> 
+                  ) || (
                   <>
                     <img
                       className="btn-swipe"
@@ -174,11 +175,17 @@ class CandidateDetails extends Component {
           </div>
           {/* <button className="btn red" onClick={this.openChat}> HAVE A CHAT!</button> */}
         </div>
-        {(this.props.from === "swipe" && (
+        { (
+        
+           this.props.from === "dashboard" && this.state.apply === "ACCEPTED" && <button onClick={()=>this.chooseCandidate} className="btn blue">HAVE A CHAT</button>
+        
+          ) || 
+          (this.props.from === "swipe" && (
           <Link to={`/swipeCandidate/${this.props.match.params.id}`}>
             <button className="btn red">GO BACK</button>
           </Link>
-        )) ||
+        )) 
+        ||
           (this.props.from === "dashboard" && (
             
             <button onClick={() => this.props.history.goBack()} className="btn red">
@@ -189,7 +196,7 @@ class CandidateDetails extends Component {
             <Link to="/editCandidateform">
               <button className="btn red">Edit my info</button>
             </Link>
-          )}
+          ) }
       </div>
     );
   }

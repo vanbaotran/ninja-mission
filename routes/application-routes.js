@@ -193,8 +193,9 @@ router.patch("/:applicationId/undoRefuse", [isLoggedIn, isRecruiter], (req, res,
     );
 });
 // get application by id
-router.get("/:applicationId", [isLoggedIn, isRecruiter], (req, res, next) => {
+router.get("/:applicationId", [isLoggedIn], (req, res, next) => {
   Application.findOne({ _id: req.params.applicationId })
+    .populate('jobPostId')
     .then((AppsfromDb) => {
       res.status(200).json(AppsfromDb);
       return;

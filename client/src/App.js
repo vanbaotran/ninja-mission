@@ -82,7 +82,7 @@ class App extends React.Component {
           <Route path='/profilepage' render={(props)=><ProfilePage  {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} currentPostId={this.state.currentPostId}/>} />
           <Route path='/postform/:id' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
           <Route path='/postform/new' render={(props) => <PostForm {...props} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>}/> 
-          <Route path='/posts/:id/fromswipe' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} fromswipe={true} />} />
+          <Route path='/posts/:id/fromswipe' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} from={"swipe"} />} />
           <Route exact path='/posts/:id' render={(props) => <PostDetails {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId} />} />
           <Route path='/recruiterform' render={(props) => <RecruiterForm {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} />} />
           <Route path='/swipeOffer/random' render={(props)=><SwipeJobPost currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} {...props}/>} />
@@ -91,6 +91,7 @@ class App extends React.Component {
           <Route path='/chatbox/:id' render={(props) => <Chat {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} currentCandidate={this.state.candidate} updateCandidate={this.updateCandidate} currentRecruiter={this.state.recruiter} updateRecruiter={this.updateRecruiter}/>}/>
           <Route path='/swipeCandidate/random' render={(props)=><SwipeCandidateProfile  {...props} currentUser={this.state.loggedInUser} updateUser={this.updateLoggedInUser} updateCurrentPost={this.updateCurrentPostId}/>} />
           <Route path='/swipeCandidate/:id' render={(props)=><SwipeCandidateProfile {...props} currentUser={this.state.loggedInUser}/>} />
+          <Route exact path='/users/:id' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} />} />
           <Route path='/users/:id/fromswipe' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"swipe"}/>} />
           <Route path='/users/:id/fromdashboard' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"dashboard"}/>} />
           <Route path='/personalProfile' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser}/>} />

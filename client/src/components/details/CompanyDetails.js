@@ -10,7 +10,10 @@ class CompanyDetails extends React.Component{
   render(){
     return (
       <div className='company-details'>
-        <img className='icon' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt=''/>
+        <div className='flex-row'>
+          <img className='icon' onClick={()=>this.props.history.goBack()} src='/images/icons/back-blue.png' alt=''/>
+          <img className='icon' onClick={()=>this.props.history.push('/profilepage')} src='/images/icons/profile.png' alt=''/>
+        </div>
         <div className='company-details-head'>
           <img src={this.state.currentUser.companyLogo? this.state.currentUser.companyLogo:'/images/temple.png' } alt='company-logo'/>
           <h1>MY COMPANY</h1>

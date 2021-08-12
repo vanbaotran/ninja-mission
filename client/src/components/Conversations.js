@@ -38,9 +38,9 @@ class Conversations extends React.Component {
           </div>)
           } else {
              return (<div  className ='convo-element flex-row' onClick={()=>this.goToChat(el.roomId)} key={el._id}>
-            <img src={el.recruiterId.avatar} alt=''/>
-            <div className='flex-column' style={{alignItems:'flex-start',justifyContent:'center',marginLeft:'40px'}}>
-              <p> {el.recruiterId.name} </p>
+            <img src={el.recruiterId.companyLogo} alt=''/>
+            <div className='flex-column' style={{alignItems:'flex-start',justifyContent:'center'}}>
+              <p> {el.recruiterId.companyName} </p>
               <p className='text-gray'> {el.applicationId.jobPostId.position} </p>
             </div>
           </div>)
