@@ -27,7 +27,6 @@ class Conversations extends React.Component {
         </div>
         <p className='headline text-gray'>Messages</p>
         {this.state.conversations.length !== 0 && this.state.conversations.map(el=>{
-            console.log('CONVERSATION', el, this.props.currentUser?.profileType === 'recruiter')
           if (this.props.currentUser?.profileType === 'recruiter'){
             return (<div className ='convo-element flex-row' onClick={()=>this.goToChat(el.roomId)} key={el._id}>
             <img src={el.candidateId.avatar} alt=''/>

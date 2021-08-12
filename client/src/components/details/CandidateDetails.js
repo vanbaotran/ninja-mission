@@ -20,6 +20,7 @@ class CandidateDetails extends Component {
             let application = await service.get(
               `applications/${this.props.currentUser.currentApplicationId}`
             );
+            console.log('ALOOO')
             if (application.data.acceptedCandidateId.includes(this.props.match.params.id)) {
               apply = "ACCEPTED";
               // this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.match.params.id}_${this.props.currentUser.currentApplicationId}`)
