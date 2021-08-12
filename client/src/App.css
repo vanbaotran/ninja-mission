@@ -1134,7 +1134,7 @@ section {
   margin-right: 30px;
  }
 .conversations .top-line img{
-  width: 20px;
+  max-width: 30px;
 }
 .conversations .top-line {
   padding: 10px 20px;
