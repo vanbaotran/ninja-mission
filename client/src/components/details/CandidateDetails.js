@@ -17,24 +17,24 @@ class CandidateDetails extends Component {
           .get(`/users/${this.props.match.params.id}`)
           .then(async (response) => {
             let apply;
-            let application = await service.get(
+            await service.get(
               `applications/${this.props.currentUser.currentApplicationId}`
-            );
-            console.log('ALOOO')
-            if (application.data.acceptedCandidateId.includes(this.props.match.params.id)) {
-              apply = "ACCEPTED";
-              // this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.match.params.id}_${this.props.currentUser.currentApplicationId}`)
-            } else if (application.data.refusedCandidateId.includes(this.props.match.params.id)) {
-              apply = "REFUSED";
-            } else {
-              apply = false;
-            }
-            // this.props.updateCandidate(response.data)
-            this.setState({
-              from: this.props.from || false,
-              apply: apply,
-              showingCandidate:response.data
-            });
+            ).then(application => {
+              if (application.data.acceptedCandidateId.includes(this.props.match.params.id)) {
+                apply = "ACCEPTED";
+                // this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.match.params.id}_${this.props.currentUser.currentApplicationId}`)
+              } else if (application.data.refusedCandidateId.includes(this.props.match.params.id)) {
+                apply = "REFUSED";
+              } else {
+                apply = false;
+              }
+              // this.props.updateCandidate(response.data)
+              this.setState({
+                from: this.props.from || false,
+                apply: apply,
+                showingCandidate:response.data
+              });
+            })
           })
           .catch((err) => console.log(err));
       } else {
@@ -74,13 +74,13 @@ class CandidateDetails extends Component {
       await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/accept`, {
         id: this.props.match.params.id,
       });
-      this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.props.currentUser._id}_${this.props.currentUser.currentApplicationId}`)
+      this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.state.showingCandidate._id}_${this.props.currentUser.currentApplicationId}`)
     } catch (error) {
       console.log(error);
     }
   };
   openChat = () => {
-
+    this.props.history.push(`/chatbox/${this.props.currentUser._id}_${this.state.showingCandidate._id}_${this.props.currentUser.currentApplicationId}`)
   }
   render() {
     let age = this.state.birthday ? this.getAge(this.state.birthday) : false;
@@ -178,7 +178,7 @@ class CandidateDetails extends Component {
         </div>
         { (
         
-           this.props.from === "dashboard" && this.state.apply === "ACCEPTED" && <button onClick={()=>this.chooseCandidate} className="btn blue">HAVE A CHAT</button>
+           this.props.from === "dashboard" && this.state.apply === "ACCEPTED" && <button onClick={()=>this.openChat()} className="btn blue">HAVE A CHAT</button>
         
           ) || 
           (this.props.from === "swipe" && (

@@ -448,7 +448,6 @@ h4 {
 .body-swipe  h1 {
   margin: auto;
   align-self: center;
-  margin-top: 40%;
 }
 .block-to-swipe {
   position: relative;
@@ -1112,6 +1111,8 @@ section {
  .conversations {
    background-color: #F9F7F3;
    min-height: 100vh;
+   max-width: 500px;
+   margin: auto;
  }
  .convo-element {
    background-color: white;
