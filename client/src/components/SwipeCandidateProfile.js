@@ -162,7 +162,7 @@ class SwipeCandidateProfile extends React.Component {
           {(!this.state.candidate && ((this.state.errorMessage && <h1 className="text-red">{this.state.errorMessage}</h1>) || <h1>Loading...</h1>))
             || (
               <div className="block-to-swipe" >
-                <img onClick={this.detailPost} className="avatar" src={this.state.candidate.avatar} alt="avatar" />
+                <img onClick={this.detailPost} className="company-logo" src={this.state.candidate.avatar} alt="avatar" />
                 <div onClick={this.detailPost} className="block-footer">
                   <h1>{this.state.candidate.title}</h1>
                   <div className="image-level">
