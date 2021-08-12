@@ -41,11 +41,11 @@ class Signup extends React.Component {
               <h2>You are here to...</h2>
               <div className="flex-row">
                 <div onClick={() => this.updateProfileType("recruiter")}>
-                  <div className='image'><img src="/images/temple.png" alt="temple" /></div>
+                  <img className='signup-image' src="/images/temple.png" alt="temple" />
                   <h4 className="text-blue">HIRE A NINJA</h4>
                 </div>
                 <div onClick={() => this.updateProfileType("candidate")}>
-                  <div className='image'><img src="/images/ninja.png" alt="ninja" /></div>
+                  <img className='signup-image' src="/images/ninja.png" alt="ninja" />
                   <h4 className="text-red">FIND YOUR MISSION</h4>
                 </div>
               </div>
