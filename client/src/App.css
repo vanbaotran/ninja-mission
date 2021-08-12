@@ -247,6 +247,7 @@ input[type='file'] {
  }
  .company-details .flex-row {
    justify-content: space-between;
+   align-items: center;
  }
  .company-details .icon {
   width: 20px;

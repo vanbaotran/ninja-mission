@@ -14,7 +14,7 @@ class Chat extends React.Component {
     overlayisOpen:false,
   };
 
-  socket = io(process.env.REACT_APP_API_URL || "http://localhost:5000", { withCredentials: true, autoConnect: false });
+  socket = io(process.env.REACT_APP_API_URL , { withCredentials: true, autoConnect: false });
 
   async componentDidMount() {
     const roomId = this.props.match.params.id;
