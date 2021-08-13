@@ -496,8 +496,7 @@ margin: auto;
 }
 
 .btn-swipe {
-  max-width: 100%;
-  max-height: 50px;
+  max-width: 50px;
 }
 
 /* OVERLAY*/
@@ -863,6 +862,7 @@ margin: auto;
   margin: auto;
   justify-content: space-between;
   transform: translateY(-60px);
+  align-items: center;
 }
 
 .block-btn-swipe-detail > h2{
