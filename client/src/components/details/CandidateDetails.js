@@ -100,7 +100,7 @@ class CandidateDetails extends Component {
             {this.state.showingCandidate && this.props.currentUser.profileType === "recruiter" && (
               <div className="block-btn-swipe-detail flex-row">
                 {(this.state.apply && <h2 className="text-red" style={{backgroundColor:'white', borderRadius:'10px'}} onClick={this.chooseCandidate}>{this.state.apply}</h2> 
-                  ) || (
+                  ) || ( this.state.from !== 'chat' &&
                   <>
                     <img
                       className="btn-swipe"
@@ -188,13 +188,14 @@ class CandidateDetails extends Component {
           </Link>
         )) 
         ||
-          (this.props.from === "dashboard" && (
+          (this.props.from && (
             
             <button onClick={() => this.props.history.goBack()} className="btn red">
               GO BACK
             </button>
             
           )) || (
+
             <Link to="/editCandidateform">
               <button className="btn red">Edit my info</button>
             </Link>
