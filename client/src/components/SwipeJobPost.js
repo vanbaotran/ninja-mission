@@ -133,7 +133,7 @@ class SwipeJobPost extends Component {
           overlayisOpen: matched
         })
         setTimeout(() => {
-          this.props.history.push(`/chatbox/${this.state.offer.recruiterId}_${this.props.currentUser._id}_${theApplication.data.application._id}`)
+          this.props.history.push(`/chatbox/${this.state.offer.recruiterId._id}_${this.props.currentUser._id}_${theApplication.data.application._id}`)
         }, 2000);
         return;
       } 

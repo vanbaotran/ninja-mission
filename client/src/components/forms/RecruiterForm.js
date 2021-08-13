@@ -84,7 +84,7 @@ class RecruiterForm extends React.Component {
               accept=".png,.jpg,.jpeg"
               onChange={this.handleLogo}
             />
-              <img src='/images/icons/edit.png' alt=''/>
+              <img className='pencil' src='/images/icons/edit.png' alt=''/>
             </label>
             </div>
           </div>

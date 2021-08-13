@@ -32,7 +32,7 @@ class OverlayAlert extends Component {
       <div className='overlay'>
         <img src='/images/alerte.png' className='alert' alt=''/>
           <p>Make sure to choose a post before looking for a candidate</p>
-           {this.state.offerList.length === 0 && <button onClick={()=>this.props.history.push('/postform/new')} className='btn red'>CREATE A JOB POST</button>}
+           
           <div>
             {this.state.offerList.map((offer)=>{
               return (this.props.currentUser.currentPostId===offer._id && <div onClick={()=>this.updateCurrentPost(offer._id)} style={{backgroundColor:'#F7E194'}} className="list element" key={offer._id}> 
@@ -43,7 +43,7 @@ class OverlayAlert extends Component {
                 </div>)
             })}
             </div>
-   
+           <button onClick={()=>this.props.history.push('/postform/new')} className='btn red'>CREATE A JOB POST</button>
       </div>
     )
   }
