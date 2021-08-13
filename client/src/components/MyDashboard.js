@@ -45,7 +45,7 @@ class MyDashBoard extends React.Component {
           {this.state.offerList.map((offer) => {
             let dateNumber = this.getDate(offer.createdAt)
             return (
-              (this.props.currentPostId === offer._id && (
+              (this.props.currentUser.currentPostId === offer._id && (
                 <div
                   onClick={() => this.goToDetails(offer._id)}
                   style={{ backgroundColor: "#F7E194" }}
