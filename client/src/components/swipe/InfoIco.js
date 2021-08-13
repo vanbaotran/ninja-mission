@@ -8,19 +8,21 @@ const level = {
 
 class InfoIco extends Component {
   state = {
-    image: `/images/${this.props.type.toLowerCase()}.png`,
+    image: '',
     blueText: "",
     redText: "",
   };
   setgoogState = () => {
     if (["Warrior", "Ninja", "Samurai", "Sensei"].includes(this.props.type)) {
       this.setState({
+        image: `/images/${this.props.type.toLowerCase()}.png`,
         blueText: level[this.props.type],
         redText: "Experience",
       });
     }
     if (["Internship", "Freelance", "Permanent", "Temporary"].includes(this.props.type)) {
       this.setState({
+        image: `/images/${this.props.type.toLowerCase()}.png`,
         blueText: this.props.type,
         redText: "Contract",
       });
