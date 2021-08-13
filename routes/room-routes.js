@@ -61,4 +61,13 @@ router.patch("/:roomId", async (req, res, next) => {
     return;
   }
 });
+router.delete("/:roomId", async (req, res, next) => {
+  try {
+    await Room.deleteOne({_id: req.params.roomId});
+    res.status(200).json("Room is deleted.");
+  } catch (error) {
+    res.status(500).json({message: "We have a problem"});
+    return;
+  }
+});
 module.exports = router;
