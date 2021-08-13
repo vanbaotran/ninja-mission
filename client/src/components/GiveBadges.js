@@ -70,9 +70,9 @@ handleSubmit = (e) => {
                 <label for="star5" >☆
                 </label>
               </div>
-          {/* </section>
+          </section>
 
-          <section> */}
+          <section>
             <div className="element">
               <img src="/images/humour.png" alt="humour" />
               <p>Humour</p>
