@@ -71,7 +71,7 @@ async function insertMockData() {
         }
       });
     }
-    console;log("it's finish!!!")
+    console.log("it's finish!!!")
   } catch (error) {
     console.log(error);
   }
