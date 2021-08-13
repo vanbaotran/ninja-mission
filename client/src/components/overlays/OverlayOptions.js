@@ -3,7 +3,7 @@ import service from "../service";
 const OverlayOptions = (props) => {
   async function deleteChat() {
     try {
-      await service.delete(`/applications/${props.roomId}`);
+      await service.delete(`/rooms/${props.roomId}`);
       props.history.push("/conversations");
     } catch (error) {
       console.log(error);
