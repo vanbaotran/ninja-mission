@@ -47,7 +47,7 @@ handleSubmit = (e) => {
         </div>
         <div className="my-badges">
             <form onSubmit={this.handleSubmit}>
-          <div className ='eachBadges'>
+          <section>
             <div className="element">
               <img src="/images/motivation.png" alt="motiv" />
               <p>Motivation</p>
@@ -70,9 +70,9 @@ handleSubmit = (e) => {
                 <label for="star5" >☆
                 </label>
               </div>
-          {/* </div className ='eachBadges'>
+          </section>
 
-          <div className ='eachBadges'> */}
+          <section>
             <div className="element">
               <img src="/images/humour.png" alt="humour" />
               <p>Humour</p>
@@ -96,8 +96,8 @@ handleSubmit = (e) => {
                 </label>
               </div>
 
-          </div>
-          <div className ='eachBadges'>
+          </section>
+          <section>
             <div className="element">
               <img src="/images/skills.png" alt="skills" />
               <p>Skills</p>
@@ -120,8 +120,8 @@ handleSubmit = (e) => {
                 <label for="star15" >☆
                 </label>
               </div>
-          </div>
-          <div className ='eachBadges'>
+          </section>
+          <section>
             <div className="element">
               <img src="/images/culture.png" alt="culture" />
               <p>Culture</p>
@@ -145,7 +145,7 @@ handleSubmit = (e) => {
                 </label>
               </div>
   
-          </div>
+          </section>
             <button className='btn red'>SUBMIT</button>
             </form>
         </div>

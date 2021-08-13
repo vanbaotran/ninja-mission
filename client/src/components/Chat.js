@@ -69,6 +69,9 @@ class Chat extends React.Component {
     this.props.updateCandidate({});
   }
   sendMyMessage = async (e) => {
+    if (this.state.message === "") {
+      return;
+    }
     let prefix_message = (this.props.currentUser.profileType === "recruiter" )? "R_" : "C_";
     this.socket.emit("sendMessage", `${prefix_message}${this.state.message}`);
     this.setState({
