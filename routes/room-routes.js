@@ -63,9 +63,10 @@ router.patch("/:roomId", async (req, res, next) => {
 });
 router.delete("/:roomId", async (req, res, next) => {
   try {
-    await Room.deleteOne({_id: req.params.roomId});
+    await Room.deleteOne({roomId: req.params.roomId});
     res.status(200).json("Room is deleted.");
   } catch (error) {
+    console.log(error)
     res.status(500).json({message: "We have a problem"});
     return;
   }
