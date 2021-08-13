@@ -191,6 +191,39 @@ router.patch("/", isLoggedIn, (req, res, next) => {
     }
   }
 });
+//PATCH AND CALCULATE BADGES FOR USERS 
+router.patch('/badges/:id', isLoggedIn, (req,res,next)=>{
+ let id = req.params.id;
+ updatedBadges = {};
+ User.findOne({_id:id})
+ .then(userFromDb=>{
+    let oldBadges = userFromDb.badges;
+    for (eachBadge in req.body.badges) {
+      let newRating;
+      let newBadgeValue = Number(req.body.badges[eachBadge]);
+      let oldBadgeValue = Number(oldBadges[eachBadge])
+      //if newBadge is given for the 1st time (oldBadge === NaN)
+      if (newBadgeValue !== 0 && (oldBadgeValue===0 || isNaN(oldBadgeValue))) {
+        console.log('new rating')
+        newRating = newBadgeValue;
+      //if newBadge is given and oldBadge exists
+      } else if (newBadgeValue !== 0 && oldBadgeValue){
+        newRating = Math.round((oldBadgeValue + newBadgeValue)/2);
+      //if newBadge is not given
+      } else {
+        newRating = oldBadgeValue
+      }
+       updatedBadges[eachBadge] = newRating
+    }
+    userFromDb.badges= updatedBadges;
+    userFromDb.save()
+    .then(updatedUser => {
+      res.status(200).json(updatedUser)
+    })
+    .catch(err=>res.status(500).json({message:'Updating DB went wrong'}))
+ })
+ .catch(err=>res.status(500).json({message:'Calculating badges went wrong'}))
+})
 //CANDIDATE SWIPES LEFT TO REFUSE JOB POST
 router.patch("/:jobPostId/swipeLeft", [isLoggedIn, isCandidate], (req, res, next) => {
   const id = req.session.currentUser._id;
