@@ -96,7 +96,7 @@ class Chat extends React.Component {
        <div className='chatbox-header flex-row'>
          <img className='icons' onClick={()=>this.props.history.push('/conversations')} src='/images/icons/back-blue.png' alt='back ico'/>
         <div className='avatar flex-column'>
-          {(myChatBuddy?.profileType ==='recruiter') ? <img onClick={()=>this.getPostInfo()} src={this.props.currentRecruiter?.companyLogo} alt=''/> : <img className='border-blue' onClick={()=>this.props.history.push(`/users/${this.props.currentCandidate?._id}`)} src={this.props.currentCandidate?.avatar} alt=''/>}
+          {(myChatBuddy?.profileType ==='recruiter') ? <img onClick={()=>this.getPostInfo()} src={this.props.currentRecruiter?.companyLogo} alt=''/> : <img className='border-blue' onClick={()=>this.props.history.push(`/users/${myChatBuddy._id}`)} src={this.props.currentCandidate?.avatar} alt=''/>}
           <p>{myChatBuddy?.name}</p>
         </div>
          <img className='icons' onClick={()=>this.toggleOverlay()} src='/images/icons/settings-blue.png' alt='settings ico'/>

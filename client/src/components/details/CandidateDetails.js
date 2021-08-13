@@ -65,6 +65,7 @@ class CandidateDetails extends Component {
       await service.patch(`/applications/${this.props.currentUser.currentApplicationId}/refuse`, {
         id: this.props.match.params.id,
       });
+      this.setState({apply:'REFUSED'});
     } catch (error) {
       console.log(error);
     }
@@ -105,13 +106,13 @@ class CandidateDetails extends Component {
                       className="btn-swipe"
                       src="/images/icons/cancel.png"
                       alt="cancel ico"
-                      onClick={this.swipeCandidate}
+                      onClick={()=>this.swipeCandidate()}
                     />
                     <img
                       className="btn-swipe"
                       src="/images/icons/heart.png"
                       alt="heart ico"
-                      onClick={this.chooseCandidate}
+                      onClick={()=>this.chooseCandidate()}
                     />
                   </>
                 )}
