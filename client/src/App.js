@@ -93,6 +93,7 @@ class App extends React.Component {
           <Route path='/swipeCandidate/:id' render={(props)=><SwipeCandidateProfile {...props} currentUser={this.state.loggedInUser}/>} />
           <Route exact path='/users/:id' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} />} />
           <Route path='/users/:id/fromswipe' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"swipe"}/>} />
+          <Route path='/users/:id/fromchat' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"chat"}/>} />
           <Route path='/users/:id/fromdashboard' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser} from={"dashboard"}/>} />
           <Route path='/personalProfile' render={(props)=><CandidateDetails {...props} currentUser={this.state.loggedInUser}/>} />
           <Route path='/myoffers' render={(props)=><MyOffersList {...props} currentPostId={this.state.currentPostId} currentUser={this.state.loggedInUser}/>} />
