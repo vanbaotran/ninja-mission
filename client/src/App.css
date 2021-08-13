@@ -981,7 +981,7 @@ section {
   direction: rtl;
   text-align: center;
   position: relative;
-  align-items: center;
+  align-items: center;  
   margin-left: 5px; 
   justify-content: center;
 }
