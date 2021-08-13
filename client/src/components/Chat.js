@@ -89,7 +89,7 @@ class Chat extends React.Component {
     let myself = this.props.currentUser;
     return (
       <div className='chatbox'>
-      {this.state.overlayisOpen && <OverlayOptions {...this.props} toggle={this.toggleOverlay} reviewedPerson={myChatBuddy}/> }
+        {this.state.overlayisOpen && <OverlayOptions {...this.props} toggle={this.toggleOverlay} reviewedPerson={myChatBuddy} roomId={this.state.roomId}/> }
        <div className='chatbox-header flex-row'>
          <img className='icons' onClick={()=>this.props.history.push('/conversations')} src='/images/icons/back-blue.png' alt='back ico'/>
         <div className='avatar flex-column'>
