@@ -20,6 +20,10 @@ class SwipeCandidateProfile extends React.Component {
     let url = "/users/random";
     if (params) {
       url = `${url}?filterLevel=${params.join("_")}`;
+    } else {
+      if (this.state.currentOptions.length > 0) {
+        url = `${url}?filterLevel=${this.state.currentOptions.join("_")}`;
+      }
     }
     service
       .get(url)
