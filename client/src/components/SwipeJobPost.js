@@ -194,7 +194,7 @@ class SwipeJobPost extends Component {
     }
   };
   showRecruiterBadges = () =>{
-    this.props.history.push({pathname:`/myBadges/${(this.state.offer.recruiterId._id)}`, state: {user: this.state.offer.recruiterId}})
+    this.props.history.push({pathname:`/myBadges/${(this.state.offer.recruiterId._id)}`, state: {user: this.state.offer.recruiterId, jobPostId:this.state.offer._id}})
   }
   render() {
     let compagnyLogo =
